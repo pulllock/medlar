@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="MybatisLearn:war exploded">
+    <output-path>$PROJECT_DIR$/MybatisLearn/target/learn.mybatis</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="MybatisLearn" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/MybatisLearn/target/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="MybatisLearn/web/Web" />
+    </root>
+  </artifact>
+</component>
