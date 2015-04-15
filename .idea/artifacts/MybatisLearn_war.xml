@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="MybatisLearn:war">
-    <output-path>$PROJECT_DIR$/MybatisLearn/target</output-path>
-    <root id="archive" name="learn.mybatis.war">
-      <element id="artifact" artifact-name="MybatisLearn:war exploded" />
-    </root>
-  </artifact>
-</component>
