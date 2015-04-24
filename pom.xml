@@ -12,6 +12,7 @@
         <module>MybatisLearn</module>
         <module>JedisLearn</module>
         <module>ssshiro</module>
+        <module>ShiroLearn</module>
     </modules>
 
 
