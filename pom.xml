@@ -13,6 +13,7 @@
         <module>JedisLearn</module>
         <module>ssshiro</module>
         <module>ShiroLearn</module>
+        <module>SMS</module>
     </modules>
 
 
