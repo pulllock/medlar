@@ -25,7 +25,7 @@
 <form action="/sendSms" method="post" name="sendSms">
     Number:<input name="phoneNumber" id="phoneNumber" type="text"/><br>
     Text:<textarea rows="3" cols="10" name="smsText" id="smsText"></textarea><br>
-    <button type="submit">Send</button>
+    <button type="submit">Send---></button>
 </form>
 
 </body>
