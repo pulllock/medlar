@@ -23,7 +23,7 @@ public class HelloJedis {
         try{
             System.out.println("dbSize1:" + jedis.dbSize());
             for(int i = 0 ; i < 100;i++){
-                jedis.set("key-" + i,"value-" + i);
+                jedis.set("key2-" + i,"value-" + i);
             }
             System.out.println("dbSize2:" + jedis.dbSize());
         }catch (Exception e){
@@ -42,6 +42,8 @@ public class HelloJedis {
     }
 
     public static void main(String[] args){
+        String keyString = String.format("u_token","123123123123");
+        System.out.println("keyString:" + keyString);
         System.out.println("-------");
         HelloJedis helloJedis = new HelloJedis();
         helloJedis.testConn();
