@@ -17,8 +17,9 @@ public class SendSmsRedisDaoimpl implements SendSmsRedisDao {
     public void saveSmsToRedis() {
         System.out.println("saveSmsToRedis()");
         ShardedJedis jedis =  shardedJedisPool.getResource();
-        jedis.set("test", "test-0=-0-0-");
-
+        //jedis.set("test", "test-0=-0-0-");
+        long result = jedis.del("test");
+        System.out.println(result);
         String getText = jedis.get("test");
         System.out.println(getText);
     }
