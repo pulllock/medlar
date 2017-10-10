@@ -1,6 +1,7 @@
 package me.cxis.spi;
 
-import me.cxis.test.spi.service.HelloWorldService;
+
+import me.cxis.spi.service.HelloWorldService;
 
 import java.util.ServiceLoader;
 
