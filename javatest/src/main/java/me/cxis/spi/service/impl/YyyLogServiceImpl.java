@@ -1,6 +1,6 @@
 package me.cxis.spi.service.impl;
 
-import me.cxis.test.spi.service.CommonLogService;
+import me.cxis.spi.service.CommonLogService;
 
 /**
  * Created by cheng.xi on 2017-03-03 19:54.
