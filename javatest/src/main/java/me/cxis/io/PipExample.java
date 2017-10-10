@@ -1,4 +1,4 @@
-package me.cxis.instrument;
+package me.cxis.io;
 
 import java.io.IOException;
 import java.io.PipedInputStream;
