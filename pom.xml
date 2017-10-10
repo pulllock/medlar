@@ -15,6 +15,7 @@
         <module>ShiroLearn</module>
         <module>SMS</module>
         <module>SDR</module>
+        <module>javatest</module>
     </modules>
 
 
