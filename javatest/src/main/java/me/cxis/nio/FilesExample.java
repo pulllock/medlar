@@ -46,6 +46,6 @@ public class FilesExample {
             public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
                 return null;
             }
-        })
+        });
     }
 }
