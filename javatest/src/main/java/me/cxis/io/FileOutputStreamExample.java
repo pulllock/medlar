@@ -16,12 +16,12 @@ public class FileOutputStreamExample {
             outputStream.write(data);
         }
 
-        outputStream.close();
+        // outputStream.close();
 
         //
 
-        OutputStream outputStream1 = new FileOutputStream("xxx", true);
-        OutputStream outputStream2 = new FileOutputStream("xxx", false);
+        // OutputStream outputStream1 = new FileOutputStream("xxx", true);
+        // OutputStream outputStream2 = new FileOutputStream("xxx", false);
 
 
     }
