@@ -7,6 +7,8 @@ public class MyObject {
 
     private String name;
     private int age;
+    public int id;
+    public String a;
 
     public MyObject(String name) {
         this.name = name;
