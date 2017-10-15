@@ -21,7 +21,7 @@ public class ThreadLocalExample {
         }
     }
 
-    public static void ma   in(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         MyRunnable runnable = new MyRunnable();
         Thread thread1 = new Thread(runnable);
         Thread thread2 = new Thread(runnable);
