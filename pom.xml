@@ -16,6 +16,7 @@
         <module>SMS</module>
         <module>SDR</module>
         <module>javatest</module>
+        <module>jmeter</module>
     </modules>
 
 
