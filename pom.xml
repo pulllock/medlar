@@ -17,6 +17,7 @@
         <module>SDR</module>
         <module>javatest</module>
         <module>jmeter</module>
+        <module>junittest</module>
     </modules>
 
 
