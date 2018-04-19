@@ -19,4 +19,10 @@ public class AsyncController {
         asyncService.testAsync();
         return "sucess";
     }
+
+    @RequestMapping(value = "/testAsync1", method = RequestMethod.GET)
+    public String testAsync1() {
+        asyncService.testAsync1();
+        return "sucess";
+    }
 }
