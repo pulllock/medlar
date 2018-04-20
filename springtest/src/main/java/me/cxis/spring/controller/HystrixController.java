@@ -25,6 +25,21 @@ public class HystrixController {
 
     @RequestMapping(value = "/semaphore", method = RequestMethod.GET)
     public String hystrixSemaphreo() {
-        return hystrixService.hystrixSemaphreo();
+        return hystrixService.hystrixSemaphore();
+    }
+
+    @RequestMapping(value = "/annotation/threadpool", method = RequestMethod.GET)
+    public String hystrixAnnotationThreadPool() {
+        return hystrixService.hystrixAnnotationThreadPool();
+    }
+
+    @RequestMapping(value = "/annotation/semaphore", method = RequestMethod.GET)
+    public String hystrixAnnotationSemaphore() {
+        return hystrixService.hystrixAnnotationSemaphore();
+    }
+
+    @RequestMapping(value = "/annotation/hello", method = RequestMethod.GET)
+    public String hystrixHelloAnnotation() {
+        return hystrixService.helloAnnotation();
     }
 }
