@@ -17,5 +17,8 @@ public class HystrixHelloCmommand extends HystrixCommand<String> {
         return "Hello: " + name;
     }
 
-
+    @Override
+    protected String getFallback() {
+        return "access limit...";
+    }
 }
