@@ -6,6 +6,12 @@ public interface HystrixService {
 
     String hystrixThreadPool();
 
-    String hystrixSemaphreo();
+    String hystrixSemaphore();
+
+    String helloAnnotation();
+
+    String hystrixAnnotationThreadPool();
+
+    String hystrixAnnotationSemaphore();
 
 }

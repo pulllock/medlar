@@ -2,11 +2,11 @@ package me.cxis.spring.hystrix.command;
 
 import com.netflix.hystrix.*;
 
-public class HystrixSemaphoreCmommand extends HystrixCommand<String> {
+public class HystrixSemaphoreCommand extends HystrixCommand<String> {
 
     private final String name;
 
-    public HystrixSemaphoreCmommand(String name) {
+    public HystrixSemaphoreCommand(String name) {
         super(
             Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("HystrixSemaphoreGroup"))
             .andCommandKey(HystrixCommandKey.Factory.asKey("HystrixSemaphoreTest"))
