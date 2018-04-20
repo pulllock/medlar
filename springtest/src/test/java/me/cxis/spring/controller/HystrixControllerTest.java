@@ -22,4 +22,10 @@ public class HystrixControllerTest extends AbstractTestNGSpringContextTests {
         String result = hystrixController.hello();
         System.out.println(result);
     }
+
+    @Test(threadPoolSize = 100, invocationCount = 1000)
+    public void testConcurrentHystrixThreadPool() {
+        String result = hystrixController.hystrixThreadPool();
+        System.out.println(result);
+    }
 }
