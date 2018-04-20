@@ -17,4 +17,9 @@ public class HystrixController {
     public String hello() {
         return hystrixService.hello();
     }
+
+    @RequestMapping(value = "/threadpool", method = RequestMethod.GET)
+    public String hystrixThreadPool() {
+        return hystrixService.hystrixThreadPool();
+    }
 }
