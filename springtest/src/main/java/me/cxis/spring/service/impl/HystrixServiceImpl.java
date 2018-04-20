@@ -1,0 +1,16 @@
+package me.cxis.spring.service.impl;
+
+import me.cxis.spring.hystrix.command.HystrixHelloCmommand;
+import me.cxis.spring.service.HystrixService;
+import org.springframework.stereotype.Service;
+
+@Service("hystrixService")
+public class HystrixServiceImpl implements HystrixService {
+
+    @Override
+    public String hello() {
+        String name = Thread.currentThread().getName();
+        String result = new HystrixHelloCmommand(name).execute();
+        return result;
+    }
+}
