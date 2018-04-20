@@ -22,4 +22,9 @@ public class HystrixController {
     public String hystrixThreadPool() {
         return hystrixService.hystrixThreadPool();
     }
+
+    @RequestMapping(value = "/semaphore", method = RequestMethod.GET)
+    public String hystrixSemaphreo() {
+        return hystrixService.hystrixSemaphreo();
+    }
 }

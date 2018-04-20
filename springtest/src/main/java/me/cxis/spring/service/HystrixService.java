@@ -5,4 +5,7 @@ public interface HystrixService {
     String hello();
 
     String hystrixThreadPool();
+
+    String hystrixSemaphreo();
+
 }
