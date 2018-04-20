@@ -28,4 +28,10 @@ public class HystrixControllerTest extends AbstractTestNGSpringContextTests {
         String result = hystrixController.hystrixThreadPool();
         System.out.println(result);
     }
+
+    @Test(threadPoolSize = 100, invocationCount = 1000)
+    public void testConcurrentHystrixSemaphore() {
+        String result = hystrixController.hystrixSemaphreo();
+        System.out.println(result);
+    }
 }
