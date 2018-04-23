@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.cxis.second.kill.dao.mapper.SecondKillMapper">
+
+    <update id="reduceNumber">
+        update second_kill
+        set number = number - 1
+        where second_kill_id = #{secondKillId}
+        and start_time <![CDATA[ <= ]]> #{killTime},
+        and end_time >= #{killTime},
+        and number > 0
+    </update>
+
+    <select id="queryById" resultType="SecondKill" parameterType="long">
+        select second_kill_id, name, number, start_time, end_time, create_time
+        from second_kill
+        where second_kill_id = #{secondKillId}
+    </select>
+
+    <select id="queryAll" resultType="SecondKill">
+        select second_kill_id, name, number, start_time, end_time, create_time
+        from second_kill
+        order by create_time desc
+        limit #{offset}, #{limit}
+    </select>
+
+</mapper>

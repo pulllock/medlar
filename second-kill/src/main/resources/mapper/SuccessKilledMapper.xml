@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.cxis.second.kill.dao.mapper.SuccessKilledMapper">
+
+    <insert id="insertSuccessKilled">
+        insert ignore into success_killed (second_kill_id, user_phone)
+        value (#{secondKillId}, #{userPhone})
+    </insert>
+
+    <select id="queryBySecondKillId" resultType="SuccessKilled">
+        select second_kill_id, userPhone, state, cteate_time
+        from success_killed
+        where second_kill_id = #{secondKillId}
+    </select>
+
+</mapper>
