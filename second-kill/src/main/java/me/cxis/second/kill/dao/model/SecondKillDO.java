@@ -66,7 +66,7 @@ public class SecondKillDO {
 
     @Override
     public String toString() {
-        return "SecondKillDTO{" +
+        return "SecondKillDO{" +
                 "secondKillId=" + secondKillId +
                 ", name='" + name + '\'' +
                 ", mumber=" + mumber +

@@ -48,7 +48,7 @@ public class SuccessKilledDO {
 
     @Override
     public String toString() {
-        return "SuccessKilledDTO{" +
+        return "SuccessKilledDO{" +
                 "secondKillId=" + secondKillId +
                 ", userPhone=" + userPhone +
                 ", state=" + state +

@@ -13,7 +13,7 @@ public class SuccessKilledDao {
         return successKilledMapper.insertSuccessKilled(secondSkillId, userPhone);
     }
 
-    public SuccessKilledDO queryBySecondKillId(long secondKillId) {
-        return successKilledMapper.queryBySecondKillId(secondKillId);
+    public SuccessKilledDO queryBySecondKillId(long secondKillId, long userPhone) {
+        return successKilledMapper.queryBySecondKillId(secondKillId, userPhone);
     }
 }
