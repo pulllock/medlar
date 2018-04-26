@@ -5,14 +5,15 @@
 <mapper namespace="me.cxis.second.kill.dao.mapper.SuccessKilledMapper">
 
     <insert id="insertSuccessKilled">
-        insert ignore into success_killed (second_kill_id, user_phone)
-        value (#{secondKillId}, #{userPhone})
+        insert ignore into success_killed (second_kill_id, user_phone, state)
+        value (#{secondKillId}, #{userPhone}, 0)
     </insert>
 
-    <select id="queryBySecondKillId" resultType="SuccessKilled">
-        select second_kill_id, userPhone, state, cteate_time
+    <select id="queryBySecondKillId" resultType="SuccessKilledDO">
+        select second_kill_id, user_phone, state, create_time
         from success_killed
         where second_kill_id = #{secondKillId}
+          and user_phone = #{userPhone}
     </select>
 
 </mapper>
