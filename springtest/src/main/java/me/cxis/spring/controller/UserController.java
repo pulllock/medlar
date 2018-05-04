@@ -1,5 +1,6 @@
 package me.cxis.spring.controller;
 
+import me.cxis.spring.annotation.Timed;
 import me.cxis.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/name", method = RequestMethod.GET)
+    @Timed
     public String getUserName(@RequestParam int userId) {
         return userService.getUserName(userId);
     }
