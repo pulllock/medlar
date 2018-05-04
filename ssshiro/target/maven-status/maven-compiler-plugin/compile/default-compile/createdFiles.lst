@@ -1,5 +1,0 @@
-com/shiro/controller/UserController.class
-com/shiro/model/User.class
-com/shiro/controller/LoginController.class
-com/shiro/Utils/EncryptUtils.class
-com/shiro/service/MonitorRealm.class
