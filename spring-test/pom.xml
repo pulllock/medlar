@@ -12,7 +12,7 @@
     <artifactId>spring-test</artifactId>
     <packaging>jar</packaging>
 
-    <name>springtest</name>
+    <name>spring-test</name>
     <url>http://maven.apache.org</url>
 
     <properties>

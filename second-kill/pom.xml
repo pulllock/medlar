@@ -12,7 +12,7 @@
     <artifactId>second-kill</artifactId>
     <packaging>war</packaging>
 
-    <name>second-kill Maven Webapp</name>
+    <name>second-kill</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

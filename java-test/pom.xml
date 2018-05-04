@@ -8,7 +8,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>java-test</artifactId>
     <packaging>jar</packaging>
-    <name>java.test Maven Webapp</name>
+    <name>java-test</name>
     <url>http://maven.apache.org</url>
     <properties>
         <jmh.version>1.19</jmh.version>

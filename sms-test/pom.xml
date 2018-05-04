@@ -8,7 +8,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sms-test</artifactId>
     <packaging>war</packaging>
-    <name>test.sms Maven Webapp</name>
+    <name>sms-test</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
