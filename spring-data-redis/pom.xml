@@ -8,7 +8,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spring-data-redis</artifactId>
     <packaging>war</packaging>
-    <name>spring.data.redis Maven Webapp</name>
+    <name>spring-data-redis</name>
     <url>http://maven.apache.org</url>
 
     <properties>

@@ -8,7 +8,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>mybatis-learn</artifactId>
     <packaging>war</packaging>
-    <name>learn.mybatis Maven Webapp</name>
+    <name>mybatis-learn</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
