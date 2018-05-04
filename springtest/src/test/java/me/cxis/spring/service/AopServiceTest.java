@@ -21,5 +21,6 @@ public class AopServiceTest {
     @Test
     public void testCalculateSomething() {
         logger.info(aopService.calculateSomething());
+        logger.info(aopService.calculateSomething1());
     }
 }
