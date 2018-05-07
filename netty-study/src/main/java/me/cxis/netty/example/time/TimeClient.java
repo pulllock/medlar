@@ -25,7 +25,7 @@ public class TimeClient {
             client.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel socketChannel) throws Exception {
-                    socketChannel.pipeline().addLast(new TimeClientHandler());
+                    socketChannel.pipeline().addLast(new TimeDecoder(), new TimeClientHandler());
                 }
             });
 
