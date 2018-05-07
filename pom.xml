@@ -32,6 +32,7 @@
         <module>junit-test</module>
         <module>spring-test</module>
         <module>second-kill</module>
+        <module>netty-study</module>
     </modules>
 
 </project>
