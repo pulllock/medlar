@@ -33,6 +33,7 @@
         <module>spring-test</module>
         <module>second-kill</module>
         <module>netty-study</module>
+        <module>guice-test</module>
     </modules>
 
 </project>
