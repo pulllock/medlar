@@ -34,6 +34,7 @@
         <module>second-kill</module>
         <module>netty-study</module>
         <module>guice-test</module>
+        <module>resteasy-test</module>
     </modules>
 
 </project>
