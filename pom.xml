@@ -35,6 +35,7 @@
         <module>netty-study</module>
         <module>guice-test</module>
         <module>resteasy-test</module>
+        <module>jersey-test</module>
     </modules>
 
 </project>
