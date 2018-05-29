@@ -8,6 +8,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("")
@@ -17,15 +19,17 @@ public class UserController {
 
     @GET
     @Path("/user/{id}")
-    @Produces("application/json")
-    public User getUserById(@PathParam("id") long id) {
-        return userService.getUserById(id);
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserById(@PathParam("id") long id) {
+        User user = userService.getUserById(id);
+        return Response.ok(user).build();
     }
 
     @GET
     @Path("/users")
-    @Produces("application/json")
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return Response.ok(users).build();
     }
 }
