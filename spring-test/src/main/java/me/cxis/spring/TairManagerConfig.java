@@ -1,4 +1,4 @@
-package me.cxis.spring.service;
+package me.cxis.spring;
 
 import com.taobao.tair.impl.DefaultTairManager;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 
-@Configuration
+// @Configuration
 public class TairManagerConfig {
 
     @Bean(initMethod = "init", destroyMethod = "close")
