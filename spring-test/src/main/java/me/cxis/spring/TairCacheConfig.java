@@ -11,9 +11,9 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.Resource;
 import java.util.Arrays;
 
-@Configuration
-@EnableCaching
-public class CacheConfig {
+// @Configuration
+// @EnableCaching
+public class TairCacheConfig {
 
     private int namespace = 1;
 
