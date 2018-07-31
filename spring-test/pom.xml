@@ -65,7 +65,7 @@
             <groupId>com.taobao.tair</groupId>
             <artifactId>tair-client</artifactId>
             <version>2.3.5</version>
-            <exclusions>
+            <!--<exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
                     <artifactId>slf4j-log4j12</artifactId>
@@ -78,7 +78,7 @@
                     <groupId>commons-lang</groupId>
                     <artifactId>commons-lang</artifactId>
                 </exclusion>
-            </exclusions>
+            </exclusions>-->
         </dependency>
 
         <dependency>
