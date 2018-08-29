@@ -19,25 +19,26 @@
     </properties>
 
     <groupId>me.cxis</groupId>
-    <artifactId>learn-test</artifactId>
+    <artifactId>medlar</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>mybatis-learn</module>
-        <module>jedis-learn</module>
-        <module>ssshiro-learn</module>
-        <module>shiro-learn</module>
-        <module>sms-test</module>
+        <module>mybatis</module>
+        <module>jedis</module>
+        <module>ssshiro</module>
+        <module>shiro</module>
+        <module>sms</module>
         <module>spring-data-redis</module>
-        <module>java-test</module>
+        <module>java</module>
         <module>jmeter</module>
-        <module>junit-test</module>
-        <module>spring-test</module>
+        <module>junit</module>
+        <module>spring</module>
         <module>second-kill</module>
-        <module>netty-study</module>
-        <module>guice-test</module>
-        <module>resteasy-test</module>
-        <module>jersey-test</module>
+        <module>netty</module>
+        <module>guice</module>
+        <module>resteasy</module>
+        <module>jersey</module>
+        <module>distributedlock</module>
     </modules>
 
 </project>
