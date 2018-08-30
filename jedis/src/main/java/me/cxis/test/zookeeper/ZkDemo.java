@@ -7,7 +7,7 @@ public class ZkDemo {
 
     public static void main(String[] args) throws IOException, KeeperException, InterruptedException {
         // 创建一个连接
-        ZooKeeper zk = new ZooKeeper("127.0.0.1:2180", 60000, new Watcher() {
+        ZooKeeper zk = new ZooKeeper("127.0.0.1:2181", 60000, new Watcher() {
             // 监控所有被触发的事件
             @Override
             public void process(WatchedEvent watchedEvent) {
