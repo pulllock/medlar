@@ -1,4 +1,10 @@
 package me.cxis.gof.simple_factory_pattern;
 
-public class Product {
+public abstract class Product {
+
+    public void methodSame(){
+
+    }
+
+    public abstract void methodDiff();
 }
