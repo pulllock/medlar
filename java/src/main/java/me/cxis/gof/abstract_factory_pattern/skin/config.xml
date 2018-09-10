@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<config>
+    <className>me.cxis.gof.abstract_factory_pattern.skin.SpringSkinFactory</className>
+</config>
