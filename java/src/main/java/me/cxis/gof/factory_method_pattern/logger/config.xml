@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<config>
+    <className>me.cxis.gof.factory_method_pattern.logger.FileLoggerFactory</className>
+</config>
