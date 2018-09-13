@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<config>
+    <className>me.cxis.gof.builder_pattern.actor.HeroBuilder</className>
+</config>
