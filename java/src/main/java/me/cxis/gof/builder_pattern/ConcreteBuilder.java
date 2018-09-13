@@ -4,7 +4,7 @@ public class ConcreteBuilder extends Builder {
 
     @Override
     public void buildPartA() {
-
+        product.setPartA("xxxx");
     }
 
     @Override
@@ -15,10 +15,5 @@ public class ConcreteBuilder extends Builder {
     @Override
     public void buildPartC() {
 
-    }
-
-    @Override
-    public Product getResult() {
-        return super.getResult();
     }
 }
