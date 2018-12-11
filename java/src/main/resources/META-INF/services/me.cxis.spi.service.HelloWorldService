@@ -1,0 +1,2 @@
+me.cxis.spi.service.impl.DefaultHelloWorldServiceImpl
+me.cxis.spi.service.impl.CustomHelloWorldServiceImpl
