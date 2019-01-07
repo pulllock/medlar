@@ -1,4 +1,4 @@
-package me.cxis.spring.context;
+package me.cxis.spring.aware;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ApplicationContextUtil implements ApplicationContextAware {
+public class SpringApplicationContextUtil implements ApplicationContextAware {
 
     private static ApplicationContext applicationContext;
 
@@ -15,11 +15,11 @@ public class ApplicationContextUtil implements ApplicationContextAware {
         applicationContext = applicationContext;
     }
 
-    public static Object getBean(String name) {
-        return applicationContext.getBean(name);
+    public static <T> T getBean(Class<T> clazz) {
+        return applicationContext.getBean(clazz);
     }
 
-    public static String[] listBeanNames() {
-        return applicationContext.getBeanDefinitionNames();
+    public static Object getBean(String beanName) {
+        return applicationContext.getBean(beanName);
     }
 }
