@@ -12,7 +12,7 @@
     <artifactId>spring</artifactId>
     <packaging>jar</packaging>
 
-    <name>spring</name>
+    <name>spring-boot</name>
     <url>http://maven.apache.org</url>
 
     <properties>
