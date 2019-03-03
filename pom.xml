@@ -32,7 +32,7 @@
         <module>java</module>
         <module>jmeter</module>
         <module>junit</module>
-        <module>spring</module>
+        <module>spring-boot</module>
         <module>second-kill</module>
         <module>netty</module>
         <module>guice</module>
