@@ -39,6 +39,7 @@
         <module>resteasy</module>
         <module>jersey</module>
         <module>distributedlock</module>
+        <module>spring</module>
     </modules>
 
 </project>
