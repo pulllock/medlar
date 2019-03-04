@@ -40,6 +40,7 @@
         <module>jersey</module>
         <module>distributedlock</module>
         <module>spring</module>
+        <module>zookeeper</module>
     </modules>
 
 </project>
