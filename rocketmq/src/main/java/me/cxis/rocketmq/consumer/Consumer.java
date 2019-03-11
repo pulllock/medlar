@@ -10,11 +10,11 @@ import org.apache.rocketmq.common.message.MessageExt;
 
 import java.util.List;
 
+import static me.cxis.rocketmq.constants.Constants.NAME_SERVER_ADDR;
+
 public class Consumer {
 
     private static final String GROUP_NAME = "user_center_mq_group_consumer";
-
-    private static final String NAME_SERVER_ADDR = "192.168.56.101:9876";
 
     public static void main(String[] args) throws MQClientException {
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(GROUP_NAME);
@@ -27,6 +27,7 @@ public class Consumer {
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> list, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
                 System.out.println(list);
+                System.out.println(new String(list.get(0).getBody()));
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
         });

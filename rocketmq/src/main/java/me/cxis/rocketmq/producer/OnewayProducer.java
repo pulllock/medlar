@@ -10,11 +10,11 @@ import org.apache.rocketmq.remoting.exception.RemotingException;
 
 import java.io.UnsupportedEncodingException;
 
+import static me.cxis.rocketmq.constants.Constants.NAME_SERVER_ADDR;
+
 public class OnewayProducer {
 
     private static final String GROUP_NAME = "user_center_mq_group";
-
-    private static final String NAME_SERVER_ADDR = "192.168.56.101:9876";
 
     public static void main(String[] args) throws MQClientException, UnsupportedEncodingException, RemotingException, InterruptedException, MQBrokerException {
         DefaultMQProducer producer = new DefaultMQProducer(GROUP_NAME);
