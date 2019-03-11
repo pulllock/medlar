@@ -5,7 +5,7 @@ public enum UCTopic {
     /**
      * 用户注册
      */
-    USER_REGISTERED("USER", "USER_REGISTERED", "用户注册");
+    USER_REGISTERED("USER_CENTER", "USER_REGISTERED", "用户注册");
 
     private String topic;
 
