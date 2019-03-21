@@ -42,6 +42,7 @@
         <module>spring</module>
         <module>zookeeper</module>
         <module>rocketmq</module>
+        <module>tomcat</module>
     </modules>
 
 </project>
