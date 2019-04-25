@@ -1,0 +1,110 @@
+cafe babe
+0000
+0034
+001a 常量池数量 26 - 1 = 25
+0a   10，CONSTANT_Methodref_info
+0005 #5 -> #24 -> java/lang/Thread
+0014 #20 -> #11:#12 -> <init>:()V
+08   8，CONSTANT_String_info
+0015 #21 -> test-value
+09   9，CONSTANT_Fieldref_info
+0004 #4 -> #23 -> me/cxis/clazz/TestClazz
+0016 #22 -> #9#:10 -> m:I
+07   7, CONSTANT_Class_info
+0017 #23 -> me/cxis/clazz/TestClazz
+07   7, CONSTANT_Class_info
+0018 #24 -> java/lang/Thread
+07   7, CONSTANT_Class_info
+0019 #25 -> java/io/Serializable
+01   1，CONSTANT_Utf8_info
+0001 1个字节长度
+73   转为字符为：s
+01   1，CONSTANT_Utf8_info
+0012 18个字节长度
+4c 6a 61 76 61 2f 6c 61 6e 67 2f 53 74 72 69 6e 67 3b 转换为字符为：Ljava/lang/String;
+01   1，CONSTANT_Utf8_info
+0001 1个字节长度
+6d   转换为字符为：m
+01   1，CONSTANT_Utf8_info
+0001 1个字节长度
+49   转为字符为：I
+01   1，CONSTANT_Utf8_info
+0006 6个字节长度
+3c 69 6e 69 74 3e 转为字符为：<init>
+01   1，CONSTANT_Utf8_info
+0003 3个字节长度
+28 29 56 转换为字符为：()V
+01   1，CONSTANT_Utf8_info
+0004 4个字节长度
+43 6f 64 65 转换为字符为：Code
+01   1，CONSTANT_Utf8_info
+000f 15个字节长度
+4c 69 6e 65 4e 75 6d 62 65 72 54 61 62 6c 65 转换为字符为：LineNumberTable
+01   1，CONSTANT_Utf8_info
+0003 3个字节长度
+67 65 74 转换为字符串为：get
+01   1，CONSTANT_Utf8_info
+0015 21个字节长度
+28 49 29 4c 6a 61 76 61 2f 6c 61 6e 67 2f 53 74 72 69 6e 67 3b 转换为字符为：(I)Ljava/lang/String;
+01   1，CONSTANT_Utf8_info
+0008 8个字节长度
+3c 63 6c 69 6e 69 74 3e 转换为字符为：<clinit>
+01   1，CONSTANT_Utf8_info
+000a 10个字节长度
+53 6f 75 72 63 65 46 69 6c 65 转换为字符串为：SourceFile
+01   1，CONSTANT_Utf8_info
+000e 14个字节长度
+54 65 73 74 43 6c 61 7a 7a 2e 6a 61 76 61 转换为字符串为：TestClazz.java
+0c   12，CONSTANT_NameAndType_info
+000b #11 -> <init>
+000c #12 -> ()V
+01   1，CONSTANT_Utf8_info
+000a 10个字节长度
+74 65 73 74 2d 76 61 6c 75 65 转换为字符串为：test-value
+0c   12，CONSTANT_NameAndType_info
+0009 #9 -> m
+000a #10 -> I
+01   1，CONSTANT_Utf8_info
+0017 23个字节长度
+6d 65 2f 63 78 69 73 2f 63 6c 61 7a 7a 2f 54 65 73 74 43 6c 61 7a 7a 转换为字符串为：me/cxis/clazz/TestClazz
+01   1，CONSTANT_Utf8_info
+0010 16个字节长度
+6a 61 76 61 2f 6c 61 6e 67 2f 54 68 72 65 61 64 转换为字符串为：java/lang/Thread
+01   1，CONSTANT_Utf8_info
+0014 20个字节长度
+6a 61 76 61 2f 69 6f 2f 53 65 72 69 61 6c 69 7a 61 62 6c 65 转换为字符串为：java/io/Serializable
+0021 ACC_PUBLIC
+0004 #4 -> #23 -> me/cxis/clazz/TestClazz
+0005 #5 -> #24 -> java/lang/Thread
+0001 1个接口
+0006 #6 -> #25 -> java/io/Serializable
+0002 2个字段
+0002 private
+0007 #7 -> s
+0008 #8 -> Ljava/lang/String;
+0000 0个属性
+000a ACC_PRIVATE，ACC_STATIC
+0009 #9 -> m
+000a #10 -> I
+0000 0个属性
+0003 3个方法
+0001 ACC_PUBLIC
+000b #11 -> <init>
+000c #12 -> ()V
+0001 1个属性
+000d #13 -> Code
+0000001d 29个字节的属性长度
+0001 max_stack = 1
+0001 max_locals  = 1
+00000005 5个字节的字节码长度
+2a aload_0
+b7 invokespecial
+0001 #1 -> java/lang/Thread."<init>":()V
+b1 return
+0000 0个异常表
+0001 1个属性
+000e #14 -> LineNumberTable
+00000006 6个字节长度
+0001 行号表长度1
+00 0
+
