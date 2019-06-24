@@ -8,6 +8,8 @@ public class BinaryNode {
 
     private BinaryNode right;
 
+    private BinaryNode parent;
+
     public BinaryNode(int value, BinaryNode left, BinaryNode right) {
         this.value = value;
         this.left = left;
@@ -38,12 +40,21 @@ public class BinaryNode {
         this.right = right;
     }
 
+    public BinaryNode getParent() {
+        return parent;
+    }
+
+    public void setParent(BinaryNode parent) {
+        this.parent = parent;
+    }
+
     @Override
     public String toString() {
         return "BinaryNode{" +
                 "value=" + value +
                 ", left=" + left +
                 ", right=" + right +
+                ", parent=" + parent +
                 '}';
     }
 }
