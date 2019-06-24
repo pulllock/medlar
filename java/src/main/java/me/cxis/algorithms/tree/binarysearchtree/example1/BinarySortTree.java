@@ -111,11 +111,18 @@ public class BinarySortTree {
         }
     }
 
+    /**
+     * 前序遍历
+     */
     public void preOrder() {
         System.out.println("preOrder:");
         preOrder(root);
     }
 
+    /**
+     * 前序遍历
+     * @param root
+     */
     private void preOrder(BinaryNode root) {
         if (root != null) {
             System.out.println(root.getValue());
@@ -124,11 +131,18 @@ public class BinarySortTree {
         }
     }
 
+    /**
+     * 后序遍历
+     */
     public void postOrder() {
         System.out.println("postOrder:");
         postOrder(root);
     }
 
+    /**
+     * 后序遍历
+     * @param root
+     */
     private void postOrder(BinaryNode root) {
         if (root != null) {
             postOrder(root.getLeft());
@@ -136,6 +150,68 @@ public class BinarySortTree {
             System.out.println(root.getValue());
         }
     }
+
+    /**
+     * 最大值
+     * @return
+     */
+    public BinaryNode max() {
+        return max(root);
+    }
+
+    private BinaryNode max(BinaryNode node) {
+        if (node == null) {
+            return null;
+        }
+
+        while (node.getRight() != null) {
+            node = node.getRight();
+        }
+        return node;
+    }
+
+    /**
+     * 最小值
+     * @return
+     */
+    public BinaryNode min() {
+        return min(root);
+    }
+
+    private BinaryNode min(BinaryNode node) {
+        if (node == null) {
+            return null;
+        }
+
+        while (node.getLeft() != null) {
+            node = node.getLeft();
+        }
+        return node;
+    }
+
+    /**
+     * 前驱，node的左子树中的最大值
+     * @param node
+     * @return
+     */
+    public BinaryNode predecessor(BinaryNode node) {
+        if (node.getLeft() != null) {
+            return max(node.getLeft());
+        }
+
+        // 如果x没有左孩子，有两种可能
+        // x是一个右孩子，x的前驱就是它的父节点
+        // x是一个左孩子，x的前驱就是x的最低父节点，并且该父节点需要有右孩子
+        BinaryNode p =  node.getParent();
+
+        while ((p != null) && (node == p.getLeft())) {
+            node = p;
+            p = p.getParent();
+        }
+
+        return node;
+    }
+
 
     public BinaryNode getRoot() {
         return root;
@@ -155,6 +231,7 @@ public class BinarySortTree {
 
         tree.postOrder();
 
+        System.out.println("root:");
         System.out.println(tree.getRoot());
 
         System.out.println(tree.search(40));
@@ -163,5 +240,10 @@ public class BinarySortTree {
         System.out.println(tree.search(tree.getRoot(), 87));
         System.out.println(tree.search(1));
         System.out.println(tree.search(tree.getRoot(), 1));
+
+        System.out.println("max:");
+        System.out.println(tree.max());
+        System.out.println("min:");
+        System.out.println(tree.min());
     }
 }
