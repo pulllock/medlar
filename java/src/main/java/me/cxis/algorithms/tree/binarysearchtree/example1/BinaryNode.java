@@ -1,40 +1,40 @@
 package me.cxis.algorithms.tree.binarysearchtree.example1;
 
-public class BinaryNode<E> {
+public class BinaryNode {
 
-    private E value;
+    private int value;
 
-    private BinaryNode<E> left;
+    private BinaryNode left;
 
-    private BinaryNode<E> right;
+    private BinaryNode right;
 
-    public BinaryNode(E value, BinaryNode left, BinaryNode right) {
+    public BinaryNode(int value, BinaryNode left, BinaryNode right) {
         this.value = value;
         this.left = left;
         this.right = right;
     }
 
-    public E getValue() {
+    public int getValue() {
         return value;
     }
 
-    public void setValue(E value) {
+    public void setValue(int value) {
         this.value = value;
     }
 
-    public BinaryNode<E> getLeft() {
+    public BinaryNode getLeft() {
         return left;
     }
 
-    public void setLeft(BinaryNode<E> left) {
+    public void setLeft(BinaryNode left) {
         this.left = left;
     }
 
-    public BinaryNode<E> getRight() {
+    public BinaryNode getRight() {
         return right;
     }
 
-    public void setRight(BinaryNode<E> right) {
+    public void setRight(BinaryNode right) {
         this.right = right;
     }
 
