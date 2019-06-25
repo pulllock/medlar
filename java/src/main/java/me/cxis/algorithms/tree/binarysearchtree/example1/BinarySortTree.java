@@ -212,6 +212,97 @@ public class BinarySortTree {
         return node;
     }
 
+    /**
+     * 后继，node的右子树的最小值
+     * @param node
+     * @return
+     */
+    public BinaryNode successor(BinaryNode node) {
+        if (node.getRight() != null) {
+            return min(node.getRight());
+        }
+
+        // 如果x没有右孩子，有两种可能
+        // x是一个左孩子，x的后继就是他的父节点
+        // x是一个右孩子，x的后继就是x的最低父节点，并且该父节点需要有左孩子
+        BinaryNode p = node.getParent();
+
+        while ((p != null) && (node == p.getRight())) {
+            node = p;
+            p = p.getParent();
+        }
+
+        return node;
+    }
+
+    public boolean delete(int value) {
+
+        BinaryNode parent = root;
+        BinaryNode current = root;
+
+        boolean isLeftChild = false;
+
+        while (current.getValue() != value) {
+            parent = current;
+            if (current.getValue() > value) {
+                isLeftChild = true;
+                current = current.getLeft();
+            } else {
+                isLeftChild = false;
+                current = current.getRight();
+            }
+
+            if (current == null) {
+                return false;
+            }
+        }
+
+        // 如果要删除的节点没有子节点
+        if (current.getLeft() == null && current.getRight() == null) {
+            if (current == root) {
+                root = null;
+            } else if (isLeftChild) {
+                parent.setLeft(null);
+            } else {
+                parent.setRight(null);
+            }
+        } else if (current.getRight() == null) {
+            // 要删除的节点只有一个左子节点
+            if (current == root) {
+                root = current.getLeft();
+            } else if (isLeftChild) {
+                parent.setLeft(current.getLeft());
+            } else {
+                parent.setRight(current.getLeft());
+            }
+        } else if (current.getLeft() == null) {
+            // 要删除的节点只有一个右子节点
+            if (current == root) {
+                root = current.getRight();
+            } else if (isLeftChild) {
+                parent.setLeft(current.getRight());
+            } else {
+                parent.setRight(current.getRight());
+            }
+        } else if (current.getRight() != null && current.getLeft() != null) {
+            // 要删除的节点有两个子节点
+            // 查找右子树中最小的
+
+            BinaryNode successor = successor(current);
+
+            if (current == root) {
+                root = successor;
+            } else if (isLeftChild) {
+                parent.setLeft(successor);
+            } else {
+                parent.setRight(successor);
+            }
+
+            successor.setLeft(current.getLeft());
+        }
+        return true;
+    }
+
 
     public BinaryNode getRoot() {
         return root;
@@ -224,6 +315,29 @@ public class BinarySortTree {
         for (int i = 0; i < values.length; i++) {
             tree.insert(values[i]);
         }
+
+        tree.inOrder();
+
+        tree.preOrder();
+
+        tree.postOrder();
+
+        System.out.println("root:");
+        System.out.println(tree.getRoot());
+
+        System.out.println(tree.search(40));
+        System.out.println(tree.search(tree.getRoot(), 40));
+        System.out.println(tree.search(87));
+        System.out.println(tree.search(tree.getRoot(), 87));
+        System.out.println(tree.search(1));
+        System.out.println(tree.search(tree.getRoot(), 1));
+
+        System.out.println("max:");
+        System.out.println(tree.max());
+        System.out.println("min:");
+        System.out.println(tree.min());
+
+        tree.delete(40);
 
         tree.inOrder();
 
