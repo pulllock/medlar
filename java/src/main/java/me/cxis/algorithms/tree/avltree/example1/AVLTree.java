@@ -140,13 +140,27 @@ public class AVLTree {
             node.setLeft(remove(root.getLeft(), node));
 
             // 删除节点后，看AVL是否失衡
-            // TODO
+            if (height(node.getRight()) - height(node.getLeft()) == 2) {
+                AVLTreeNode right = root.getRight();
+                if (height(right.getLeft()) > height(right.getRight())) {
+                    root = rightLeftRotation(root);
+                } else {
+                    rightRightRotation(root);
+                }
+            }
         } else if (node.getKey() > root.getKey()) {
             // 要删除的在右子树
             node.setRight(remove(root.getRight(), node));
 
-            // 删除结点后，看AVK是否失衡
-            // TODO
+            // 删除结点后，看AVL是否失衡
+            if (height(root.getLeft()) - height(root.getRight()) == 2) {
+                AVLTreeNode left = root.getLeft();
+                if (height(left.getRight()) > height(left.getLeft())) {
+                    root = leftRightRotation(root);
+                } else {
+                    root = leftLeftRotation(root);
+                }
+            }
         } else {
             // 找到了删除的结点
             // 要删除的节点root的左右结点都不为空
@@ -157,6 +171,10 @@ public class AVLTree {
                     AVLTreeNode max = max(root.getLeft());
                     root.setKey(max.getKey());
                     root.setLeft(remove(root.getLeft(), max));
+                } else {
+                    AVLTreeNode min = min(root.getRight());
+                    root.setKey(min.getKey());
+                    root.setRight(remove(root.getRight(), min));
                 }
             } else if (root.getLeft() == null && root.getRight() != null) {
                 // 右结点不为空
@@ -166,7 +184,7 @@ public class AVLTree {
                 root = root.getLeft();
             } else if (root.getLeft() == null && root.getRight() == null);
         }
-        return null;
+        return root;
     }
 
     public int max() {
@@ -186,6 +204,26 @@ public class AVLTree {
             node = node.getRight();
         }
 
+        return node;
+    }
+
+    public int min() {
+        AVLTreeNode node = min(root);
+        if (node != null) {
+            return node.getKey();
+        }
+
+        return 0;
+    }
+
+    public AVLTreeNode min(AVLTreeNode node) {
+        if (node == null) {
+            return null;
+        }
+
+        while (node.getLeft() != null) {
+            node = node.getLeft();
+        }
         return node;
     }
 
