@@ -71,6 +71,28 @@ public class AVLTree {
         return node.getHeight();
     }
 
+    public void insert(int key) {
+        root = insert(root, key);
+    }
+
+    private AVLTreeNode insert(AVLTreeNode root, int key) {
+        if (root == null) {
+            return new AVLTreeNode(key, null, null);
+        }
+
+        if (key < root.getKey()) {
+            root.setLeft(insert(root.getLeft(), key));
+            if (height(root.getLeft()) - height(root.getRight()) == 2) {
+                if (key < root.getLeft().getKey()) {
+                    root = leftLeftRotation(root);
+                } else {
+                    root = leftRightRotation(root);
+                }
+            }
+        }
+        return null;
+    }
+
     public int height() {
         return height(root);
     }
