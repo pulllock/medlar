@@ -89,8 +89,104 @@ public class AVLTree {
                     root = leftRightRotation(root);
                 }
             }
+        } else if (key > root.getKey()) {
+            root.setRight(insert(root.getRight(), key));
+            if (height(root.getRight()) - height(root.getLeft()) == 2) {
+                if (key > root.getRight().getKey()) {
+                    root = rightRightRotation(root);
+                } else {
+                    root = rightLeftRotation(root);
+                }
+            }
+        }
+
+        root.setHeight(Math.max(height(root.getLeft()), height(root.getRight())) + 1);
+        return root;
+    }
+
+    public AVLTreeNode search(int key) {
+        return search(root, key);
+    }
+
+    private AVLTreeNode search(AVLTreeNode root, int key) {
+        if (root == null) {
+            return null;
+        }
+
+        if (key < root.getKey()) {
+            return search(root.getLeft(), key);
+        } else if (key > root.getKey()) {
+            return search(root.getRight(), key);
+        } else {
+            return root;
+        }
+    }
+
+    public void remove(int key) {
+        AVLTreeNode node;
+
+        if ((node = search(root, key)) != null) {
+            root = remove(root, node);
+        }
+    }
+
+    private AVLTreeNode remove(AVLTreeNode root, AVLTreeNode node) {
+        if (root == null || node == null) {
+            return null;
+        }
+
+        if (node.getKey() < root.getKey()) {
+            // 要删除的在左子树
+            node.setLeft(remove(root.getLeft(), node));
+
+            // 删除节点后，看AVL是否失衡
+            // TODO
+        } else if (node.getKey() > root.getKey()) {
+            // 要删除的在右子树
+            node.setRight(remove(root.getRight(), node));
+
+            // 删除结点后，看AVK是否失衡
+            // TODO
+        } else {
+            // 找到了删除的结点
+            // 要删除的节点root的左右结点都不为空
+            if (root.getLeft() != null && root.getRight() != null) {
+                if (height(root.getLeft()) > height(root.getRight())) {
+                    // 要删除的节点的左子树比右子树高
+                    // 找出root的左子树中的最大结点，并赋值给root
+                    AVLTreeNode max = max(root.getLeft());
+                    root.setKey(max.getKey());
+                    root.setLeft(remove(root.getLeft(), max));
+                }
+            } else if (root.getLeft() == null && root.getRight() != null) {
+                // 右结点不为空
+                root = root.getRight();
+            } else if (root.getLeft() != null && root.getRight() == null) {
+                // 左结点不为空
+                root = root.getLeft();
+            } else if (root.getLeft() == null && root.getRight() == null);
         }
         return null;
+    }
+
+    public int max() {
+        AVLTreeNode node = max(root);
+        if (node != null) {
+            return node.getKey();
+        }
+        return 0;
+    }
+
+    public AVLTreeNode max(AVLTreeNode node) {
+        if (node == null) {
+            return null;
+        }
+
+        while (node.getRight() != null) {
+            node = node.getRight();
+        }
+
+        return node;
     }
 
     public int height() {
