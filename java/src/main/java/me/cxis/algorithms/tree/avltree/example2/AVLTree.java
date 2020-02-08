@@ -20,6 +20,92 @@ public class AVLTree<T extends Comparable> {
     }
 
     /**
+     * 删除
+     * @param data
+     */
+    public void remove(T data) {
+        if (data == null) {
+            throw new RuntimeException("null data not allowed");
+        }
+        this.root = remove(data, root);
+    }
+
+    /**
+     * 删除
+     * @param data
+     * @param node
+     * @return
+     */
+    private AVLNode<T> remove(T data, AVLNode<T> node) {
+        if (node == null) {
+            return null;
+        }
+
+        int com = data.compareTo(node.getData());
+        if (com < 0) {
+            // 左子树
+            node.setLeft(remove(data, node.getLeft()));
+            // 检测是否失衡
+            if (height(node.getRight()) - height(node.getLeft()) == 2) {
+                if (height(node.getRight().getLeft()) > height(node.getRight().getRight())) {
+                    // 右左双旋转RL
+                    node = rightLeftRotate(node);
+                } else {
+                    // 右右旋转（RR）左单旋
+                    node = rightRightRotate(node);
+                }
+            }
+        } else if (com > 0) {
+            // 右子树
+            node.setRight(remove(data, node.getRight()));
+            // 检测是否失衡
+            if (height(node.getLeft()) - height(node.getRight()) == 2) {
+                if (height(node.getLeft().getRight()) > height(node.getLeft().getLeft())) {
+                    // 左右双旋转LR
+                    node = leftRightRotate(node);
+                } else {
+                    // 左左旋转（LL）又单旋
+                    node = leftLeftRotate(node);
+                }
+            }
+        } else {
+            // 找到了要删除的点
+            if (node.getRight() != null && node.getLeft() != null) {
+                // 要删除的节点有两个子节点
+                // 找到一个替换节点
+                node.setData(findMin(node.getRight()).getData());
+
+                // 删除用于替换的那个节点
+                node.setRight(remove(node.getData(), node.getRight()));
+            } else {
+                // 要删除的节点只有一个子节点或者一个子节点都没有
+                node = (node.getLeft() != null) ? node.getLeft() : node.getRight();
+            }
+        }
+
+        // 更新高度
+        if (node != null) {
+            node.setHeight(Math.max(height(node.getLeft()), height(node.getRight())) + 1);
+        }
+        return node;
+    }
+
+    /**
+     * 查找最小结点
+     * @param node
+     * @return
+     */
+    private AVLNode<T> findMin(AVLNode<T> node) {
+        if (node == null) {
+            return null;
+        } else if (node.getLeft() == null) {
+            return node;
+        } else {
+            return findMin(node.getLeft());
+        }
+    }
+
+    /**
      * 插入
      * @param data
      * @param node
