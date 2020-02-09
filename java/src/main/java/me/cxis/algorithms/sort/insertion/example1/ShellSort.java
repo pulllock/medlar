@@ -1,5 +1,7 @@
 package me.cxis.algorithms.sort.insertion.example1;
 
+import java.util.Arrays;
+
 public class ShellSort<T extends Comparable> {
 
     public void shellSort(T[] array) {
@@ -16,5 +18,12 @@ public class ShellSort<T extends Comparable> {
                 array[j] = temp;
             }
         }
+    }
+
+    public static void main(String[] args) {
+        Integer[] array = new Integer[] {1, 3, 2, 5, 4};
+        System.out.println("before: " + Arrays.asList(array));
+        new ShellSort<Integer>().shellSort(array);
+        System.out.println("after: " + Arrays.asList(array));
     }
 }
