@@ -24,6 +24,32 @@ public class MinHeap {
         heap[current] = data;
     }
 
+    public int deleteMin() {
+        int min = heap[1];
+        heap[1] = heap[currentIndex--];
+        percolateDown(1);
+        return min;
+    }
+
+    private void percolateDown(int start) {
+        int child;
+        int temp = heap[start];
+
+        for (; start * 2 <= currentIndex; start = child) {
+            child = start * 2;
+            if (child != currentIndex && heap[child + 1] < heap[child]) {
+                child++;
+            }
+
+            if (heap[child] < temp) {
+                heap[start] = heap[child];
+            } else {
+                break;
+            }
+        }
+        heap[start] = temp;
+    }
+
     public static void main(String[] args) {
         // [26, 31, 58, 41, 53, 59, 97]
         MinHeap minHeap = new MinHeap(10);
@@ -35,6 +61,9 @@ public class MinHeap {
         minHeap.insert(58);
         minHeap.insert(97);
 
+        Arrays.stream(minHeap.heap).forEach(System.out::println);
+        minHeap.deleteMin();
+        System.out.println("-----");
         Arrays.stream(minHeap.heap).forEach(System.out::println);
     }
 }
