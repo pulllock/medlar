@@ -50,4 +50,17 @@ public class MaxHeap<T extends Comparable> {
 
         heap.set(current, temp);
     }
+
+    public static void main(String[] args) {
+        MaxHeap maxHeap = new MaxHeap();
+        maxHeap.insert(31);
+        maxHeap.insert(41);
+        maxHeap.insert(59);
+        maxHeap.insert(26);
+        maxHeap.insert(53);
+        maxHeap.insert(58);
+        maxHeap.insert(97);
+
+        System.out.println(maxHeap.heap);
+    }
 }
