@@ -36,4 +36,17 @@ public class MinHeap<T extends Comparable> {
 
         heap.set(current, temp);
     }
+
+    public static void main(String[] args) {
+        MinHeap minHeap = new MinHeap();
+        minHeap.insert(31);
+        minHeap.insert(41);
+        minHeap.insert(59);
+        minHeap.insert(26);
+        minHeap.insert(53);
+        minHeap.insert(58);
+        minHeap.insert(97);
+
+        System.out.println(minHeap.heap);
+    }
 }
