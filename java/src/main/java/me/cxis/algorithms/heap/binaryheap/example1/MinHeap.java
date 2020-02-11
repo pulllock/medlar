@@ -37,6 +37,29 @@ public class MinHeap<T extends Comparable> {
         heap.set(current, temp);
     }
 
+    public void deleteMin() {
+        T min = heap.set(0, heap.remove(heap.size() - 1));
+        percolateDown(0);
+    }
+
+    public void percolateDown(int start) {
+        int child;
+        T temp = heap.get(start);
+        int currentSize = heap.size() - 1;
+        for (; (start * 2 + 1) <= currentSize; start = child) {
+            child = (start * 2 + 1);
+            if (child != currentSize && heap.get(child).compareTo(heap.get(child + 1)) > 0) {
+                child++;
+            }
+
+            if (heap.get(child).compareTo(temp) < 0) {
+                heap.set(start, heap.get(child));
+            }
+        }
+
+        heap.set(start, temp);
+    }
+
     public static void main(String[] args) {
         MinHeap minHeap = new MinHeap();
         minHeap.insert(31);
@@ -47,6 +70,10 @@ public class MinHeap<T extends Comparable> {
         minHeap.insert(58);
         minHeap.insert(97);
 
+        // [26, 31, 58, 41, 53, 59, 97]
+        System.out.println(minHeap.heap);
+        minHeap.deleteMin();
+        // [31, 41, 58, 97, 53, 59]
         System.out.println(minHeap.heap);
     }
 }
