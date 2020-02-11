@@ -61,9 +61,11 @@ public class MinHeap {
         minHeap.insert(58);
         minHeap.insert(97);
 
+        // [26, 31, 58, 41, 53, 59, 97]
         Arrays.stream(minHeap.heap).forEach(System.out::println);
         minHeap.deleteMin();
         System.out.println("-----");
+        // [31, 41, 58, 97, 53, 59]
         Arrays.stream(minHeap.heap).forEach(System.out::println);
     }
 }
