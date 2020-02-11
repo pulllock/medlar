@@ -51,6 +51,32 @@ public class MaxHeap<T extends Comparable> {
         heap.set(current, temp);
     }
 
+    public T deleteMax() {
+        T max = heap.set(0, heap.remove(heap.size() - 1));
+        percolateDown(0);
+        return max;
+    }
+
+    private void percolateDown(int start) {
+        int child;
+        T temp = heap.get(start);
+        int currentSize = heap.size() - 1;
+        for (; (start * 2 + 1) < currentSize; start = child) {
+            child = (start * 2 + 1);
+
+            if (child != currentSize && heap.get(child).compareTo(heap.get(child + 1)) < 0) {
+                child++;
+
+                if (temp.compareTo(heap.get(child)) < 0) {
+                    heap.set(start, heap.get(child));
+                } else {
+                    break;
+                }
+            }
+        }
+        heap.set(start, temp);
+    }
+
     public static void main(String[] args) {
         MaxHeap maxHeap = new MaxHeap();
         maxHeap.insert(31);
@@ -61,6 +87,10 @@ public class MaxHeap<T extends Comparable> {
         maxHeap.insert(58);
         maxHeap.insert(97);
 
+        // [97, 53, 59, 26, 31, 41, 58]
+        System.out.println(maxHeap.heap);
+        maxHeap.deleteMax();
+        // [59, 53, 58, 26, 31, 41]
         System.out.println(maxHeap.heap);
     }
 }
