@@ -37,9 +37,10 @@ public class MinHeap<T extends Comparable> {
         heap.set(current, temp);
     }
 
-    public void deleteMin() {
+    public T deleteMin() {
         T min = heap.set(0, heap.remove(heap.size() - 1));
         percolateDown(0);
+        return min;
     }
 
     public void percolateDown(int start) {
@@ -54,6 +55,8 @@ public class MinHeap<T extends Comparable> {
 
             if (heap.get(child).compareTo(temp) < 0) {
                 heap.set(start, heap.get(child));
+            } else {
+                break;
             }
         }
 
