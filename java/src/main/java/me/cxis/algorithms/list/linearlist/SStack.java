@@ -1,4 +1,4 @@
-package me.cxis.algorithms.linearlist;
+package me.cxis.algorithms.list.linearlist;
 
 /**
  * Created by cheng.xi on 2017-05-31 17:32.

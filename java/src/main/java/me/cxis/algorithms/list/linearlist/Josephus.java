@@ -1,4 +1,4 @@
-package me.cxis.algorithms.linearlist;
+package me.cxis.algorithms.list.linearlist;
 
 import java.util.ArrayList;
 import java.util.List;
