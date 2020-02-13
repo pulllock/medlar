@@ -1,7 +1,10 @@
-package me.cxis.algorithms.linearlist;
+package me.cxis.algorithms.linearlist.example1;
 
 import java.util.Arrays;
 
+/**
+ * 顺序存储结构
+ */
 public class LinearList {
 
     /**
