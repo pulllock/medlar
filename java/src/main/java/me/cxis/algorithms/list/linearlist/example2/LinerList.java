@@ -1,4 +1,4 @@
-package me.cxis.algorithms.linearlist.example2;
+package me.cxis.algorithms.list.linearlist.example2;
 
 /**
  * 链式存储结构
