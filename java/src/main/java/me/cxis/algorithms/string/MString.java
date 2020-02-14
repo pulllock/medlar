@@ -36,6 +36,41 @@ public class MString {
         return false;
     }
 
+    public boolean containsKMP(String origin, String pattern) {
+        // 主串
+        char[] a = origin.toCharArray();
+        // 字串
+        char[] b = pattern.toCharArray();
+
+        int[] next = next(pattern);
+        int i = 0;
+        int j= 0;
+
+        while (i < a.length - 1 && j < b.length - 1) {
+            // j = -1或者当前字符匹配成功，都继续比较下一个字符
+            if (j == -1 || a[i] == b[j]) {
+                i++;
+                j++;
+            } else {
+                // j != -1并且匹配失败，i不变，j移到新位置next[j]
+                j = next[j];
+            }
+        }
+
+        if (j == b.length - 1) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public int[] next(String pattern) {
+        int[] next = new int[pattern.length()];
+
+        return next;
+    }
+
+
     public static void main(String[] args) {
         String origin = "00000000000000000000000000000000000000000000000000001";
         String pattern = "00000001";
