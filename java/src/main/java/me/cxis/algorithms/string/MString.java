@@ -65,7 +65,21 @@ public class MString {
     }
 
     public int[] next(String pattern) {
+        char[] p = pattern.toCharArray();
         int[] next = new int[pattern.length()];
+        next[0] = -1;
+        int k = -1;
+        int j = 0;
+
+        while (j < pattern.length() - 1) {
+            if (k == -1 || p[j] == p[k]) {
+                k++;
+                j++;
+                next[j] = k;
+            } else {
+                k = next[k];
+            }
+        }
 
         return next;
     }
@@ -76,5 +90,6 @@ public class MString {
         String pattern = "00000001";
         MString mString = new MString();
         System.out.println(mString.contains(origin, pattern));
+        System.out.println(mString.containsKMP(origin, pattern));
     }
 }
