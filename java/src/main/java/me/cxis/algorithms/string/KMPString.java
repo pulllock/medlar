@@ -2,7 +2,7 @@ package me.cxis.algorithms.string;
 
 import java.util.Arrays;
 
-public class MString {
+public class KMPString {
 
     /**
      * 匹配字符串，朴素模式（Brute-Force）
@@ -204,10 +204,10 @@ public class MString {
     public static void main(String[] args) {
         String origin = "00000000000000000000000000000000000000000000000000001";
         String pattern = "00000001";
-        MString mString = new MString();
-        System.out.println(mString.contains(origin, pattern));
-        System.out.println(mString.containsKMP(origin, pattern));
-        System.out.println(mString.containsKMP1(origin, pattern));
-        System.out.println(mString.containsKMP2(origin, pattern));
+        KMPString kmpString = new KMPString();
+        System.out.println(kmpString.contains(origin, pattern));
+        System.out.println(kmpString.containsKMP(origin, pattern));
+        System.out.println(kmpString.containsKMP1(origin, pattern));
+        System.out.println(kmpString.containsKMP2(origin, pattern));
     }
 }
