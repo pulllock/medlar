@@ -2,6 +2,9 @@ package me.cxis.algorithms.string;
 
 import java.util.Arrays;
 
+/**
+ * KMP 时间复杂度 O(m + n)
+ */
 public class KMPString {
 
     /**
