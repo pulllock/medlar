@@ -6,6 +6,10 @@ public class HuffmanTree {
 
     private int start;
 
+    public HuffmanTree() {
+        start = 0;
+    }
+
     /**
      * 构造huffman树
      * @param nodes 外节点数组
@@ -69,6 +73,62 @@ public class HuffmanTree {
         return -1;
     }
 
+    /**
+     * 赫夫曼编码
+     * @param nodes
+     * @return
+     */
+    public Code[] encode(Node[] nodes) {
+        Node[] huffmanTree = buildTree(nodes);
+        int n = nodes.length;
+
+        Code[] code = new Code[n];
+        String bit;
+        for (int i = 0; i < n; i++) {
+            bit = "";
+            int current = i;
+            int parent = huffmanTree[i].getParent();
+            while (parent != 0) {
+                if (huffmanTree[parent].getLeft() == current) {
+                    bit = "0" + bit;
+                } else {
+                    bit = "1" + bit;
+                }
+                current = parent;
+                parent = huffmanTree[parent].getParent();
+            }
+            code[i] = new Code(huffmanTree[i].getData(), bit);
+        }
+        return code;
+    }
+
+    /**
+     * 解码
+     * @param nodes
+     * @param code
+     * @return
+     */
+    public String decode(Node[] nodes, String code) {
+        String result = "";
+        Node[] huffmanTree = buildTree(nodes);
+        int n = huffmanTree.length - 1;
+        for (int i = 0; i < code.length(); i++) {
+            char c = code.charAt(i);
+            if (c == '1') {
+                n = huffmanTree[n].getRight();
+            } else {
+                n= huffmanTree[n].getLeft();
+            }
+
+            if (huffmanTree[n].getLeft() == 0) {
+                result += huffmanTree[n].getData();
+                n = huffmanTree.length - 1;
+            }
+        }
+
+        return result;
+    }
+
     public static void main(String[] args) {
         Node[] nodes = new Node[4];
         nodes[0] = new Node("a", 7);
@@ -76,11 +136,30 @@ public class HuffmanTree {
         nodes[2] = new Node("c", 2);
         nodes[3] = new Node("d", 4);
 
-        System.out.println(Arrays.asList(nodes));
+        System.out.println("origin: " + Arrays.asList(nodes));
 
         HuffmanTree huffmanTree = new HuffmanTree();
         Node[] result = huffmanTree.buildTree(nodes);
-        System.out.println(Arrays.asList(result));
+        System.out.println("build tree: " + Arrays.asList(result));
+
+        Node[] nodes1 = new Node[4];
+        nodes1[0] = new Node("a", 7);
+        nodes1[1] = new Node("b", 5);
+        nodes1[2] = new Node("c", 2);
+        nodes1[3] = new Node("d", 4);
+
+        HuffmanTree huffmanTree1 = new HuffmanTree();
+        Code[] codes = huffmanTree1.encode(nodes1);
+        System.out.println("encode: " + Arrays.asList(codes));
+
+        Node[] nodes2 = new Node[4];
+        nodes2[0] = new Node("a", 7);
+        nodes2[1] = new Node("b", 5);
+        nodes2[2] = new Node("c", 2);
+        nodes2[3] = new Node("d", 4);
+
+        HuffmanTree huffmanTree2 = new HuffmanTree();
+        System.out.println("decode: " + huffmanTree2.decode(nodes2, "010110111"));
     }
 
     class QuickSort {
