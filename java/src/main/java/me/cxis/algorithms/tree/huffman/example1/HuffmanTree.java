@@ -52,10 +52,9 @@ public class HuffmanTree {
     }
 
     private int select(Node[] huffmanNodes, int range, int rank) {
-        // TODO wrong
-        System.out.println("huffmanNodes: " + Arrays.asList(huffmanNodes));
         // 将huffmanNodes中从0到range中的元素拷贝出来
         Node[] subNodes = Arrays.copyOf(huffmanNodes, range);
+
         // 拷贝元素进行排序，使用快排
         QuickSort sort = new QuickSort();
         sort.quickSort(subNodes);
@@ -90,35 +89,77 @@ public class HuffmanTree {
         }
 
         private void quickSort(Node[] array, int left, int right) {
-            if (left < right) {
-                // 最左边的作为基准值
-                int pivot = array[left].getWeight();
+            if (left + 10 <= right) {
+                // 选择一个基准值，left right center由小到大排序后取中间值
+                int pivot = median3(array, left, right);
+                System.out.println("pivot: " + Arrays.asList(array));
+                System.out.println("pivot: " + pivot);
+
                 int i = left;
-                int j = right;
-                while (i < j) {
-                    while (i < j && array[j].getWeight() > pivot) {
-                        j--;
+                int j = right - 1;
+
+                for (; ; ) {
+                    while (array[++i].getWeight() < pivot) {
+                    }
+
+                    while (array[--j].getWeight() > pivot) {
                     }
 
                     if (i < j) {
-                        array[i] = array[j];
-                        i++;
-                    }
-
-                    while (i < j && array[i].getWeight() < pivot) {
-                        i++;
-                    }
-
-                    if (i < j) {
-                        array[j] = array[i];
-                        j--;
+                        swap(array, i, j);
+                        System.out.println(Arrays.asList(array));
+                    } else {
+                        break;
                     }
                 }
 
-                array[i].setWeight(pivot);
+                swap(array, i, right - 1);
+                System.out.println(Arrays.asList(array));
                 quickSort(array, left, i - 1);
                 quickSort(array, i + 1, right);
+            } else {
+                insertionSort(array, left, right);
             }
+        }
+
+        private void insertionSort(Node[] array, int left, int right) {
+            int j;
+            for (int i = left; i <= right; i++) {
+                Node temp = array[i];
+                for (j = i; j > 0 && temp.getWeight() < array[j - 1].getWeight(); j--) {
+                    array[j] = array[j - 1];
+                }
+                array[j] = temp;
+            }
+        }
+
+        private int median3(Node[] array, int left, int right) {
+            int center = (left + right) / 2;
+            if (array[left].getWeight() > array[center].getWeight()) {
+                swap(array, left, center);
+                System.out.println(Arrays.asList(array));
+            }
+
+            if (array[left].getWeight() > array[right].getWeight()) {
+                swap(array, left, right);
+                System.out.println(Arrays.asList(array));
+            }
+
+            if (array[center].getWeight() > array[right].getWeight()) {
+                swap(array, center, right);
+                System.out.println(Arrays.asList(array));
+            }
+
+            // 将center和right - 1交换下，left center right已经排序，center作为pivot，left + 1 和right -1 可以作为两端
+            swap(array, center, right - 1);
+            System.out.println(Arrays.asList(array));
+            return array[right - 1].getWeight();
+        }
+
+        private void swap(Node[] array, int m, int n) {
+            Node temp = array[m];
+            array[m] = array[n];
+            array[n] = temp;
         }
     }
 
