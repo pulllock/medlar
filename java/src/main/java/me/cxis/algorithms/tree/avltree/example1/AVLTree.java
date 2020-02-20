@@ -8,37 +8,49 @@ public class AVLTree {
     }
 
     /**
-     * 左左单旋转
-     * @param k2 失衡点
+     * 左左旋转（右单旋）
+     * @param node 失衡点
      * @return 旋转后的根节点
      */
-    public AVLTreeNode leftLeftRotation(AVLTreeNode k2) {
-        AVLTreeNode k1;
+    public AVLTreeNode leftLeftRotation(AVLTreeNode node) {
+        // node的左子节点
+        AVLTreeNode left = node.getLeft();
 
-        k1 = k2.getLeft();
-        k2.setLeft(k1.getRight());
-        k1.setRight(k2);
+        // left的右子节点变成node的左子节点
+        node.setLeft(left.getRight());
 
-        k2.setHeight(Math.max(height(k2.getLeft()), height(k2.getRight())) + 1);
-        k1.setHeight(Math.max(height(k1.getLeft()), k2.getHeight()) + 1);
-        return k1;
+        // node变成left的右子节点
+        left.setRight(node);
+
+        // 重新计算node和left的高度
+        node.setHeight(Math.max(height(node.getLeft()), height(node.getRight())) + 1);
+        left.setHeight(Math.max(height(left.getLeft()), node.getHeight()) + 1);
+
+        // 返回新的根节点
+        return left;
     }
 
     /**
-     * 右右单旋转
-     * @param k1 失衡点
+     * 右右旋转（左单旋）
+     * @param node 失衡点
      * @return 旋转后的根节点
      */
-    public AVLTreeNode rightRightRotation(AVLTreeNode k1) {
-        AVLTreeNode k2;
+    public AVLTreeNode rightRightRotation(AVLTreeNode node) {
+        // node的右子节点
+        AVLTreeNode right = node.getRight();
 
-        k2 = k1.getRight();
-        k1.setRight(k2.getLeft());
-        k2.setLeft(k1);
+        // right的左子节点变成node的右子节点
+        node.setRight(right.getLeft());
 
-        k1.setHeight(Math.max(height(k1.getLeft()), height(k1.getRight())) + 1);
-        k2.setHeight(Math.max(height(k2.getRight()), k1.getHeight()) + 1);
-        return k2;
+        // node变成了right的左子节点
+        right.setLeft(node);
+
+        // 重新计算node和right的高度
+        node.setHeight(Math.max(height(node.getLeft()), height(node.getRight())) + 1);
+        right.setHeight(Math.max(height(right.getRight()), node.getHeight()) + 1);
+
+        // 返回新的根节点
+        return right;
     }
 
     /**
