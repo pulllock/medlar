@@ -1,4 +1,4 @@
-package me.cxis.algorithms.sort.insertion.example1;
+package me.cxis.algorithms.sort.insertion.straight.example2;
 
 import java.util.Arrays;
 
