@@ -21,9 +21,7 @@ public class MergeSort {
 
     private void merge(Integer[] array, Integer[] temp, int left, int middle, int right) {
         int leftStart = left;
-        int leftEnd = middle;
         int rightStart = middle + 1;
-        int rightEnd = right;
         int tempIndex = 0;
         while (leftStart <= middle && rightStart <= right) {
             if (array[leftStart] < array[rightStart]) {
