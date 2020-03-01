@@ -1,4 +1,4 @@
-package me.cxis.algorithms.dynamic_programming.uniquepath;
+package me.cxis.algorithms.dynamic_programming.unique_path;
 
 /**
  * 给定m行n列网格，有一个机器人从左上角(0,0)出发，每一步可向下或向右走一步，问有多少种不同的方式走到右下角。
