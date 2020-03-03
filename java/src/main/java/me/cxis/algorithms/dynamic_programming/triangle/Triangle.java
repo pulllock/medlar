@@ -75,6 +75,21 @@ public class Triangle {
         return f[0];
     }
 
+    public static int triangle3(int[][] m) {
+        // TODO
+        int[][] f = new int[m.length][m[0].length];
+        for (int i = 0; i < m[m.length - 1].length; i++) {
+            f[m.length - 1][i] = m[m.length - 1][i];
+        }
+
+        for (int i = m.length - 2; i >= 0; i--) {
+            for (int j = 0; j < m[j].length - 1; j++) {
+                f[i][j] = Math.min(f[i + 1][j], f[i + 1][j + 1]) + m[i][j];
+            }
+        }
+        return f[0][0];
+    }
+
     private static int triangle2(int i, int j, int[][] m, Map<String, Integer> map) {
         String key = i + "-" + j;
         if (map.get(key) != null) {
@@ -108,5 +123,6 @@ public class Triangle {
         System.out.println(triangle1(triangle));
         System.out.println(triangle2(triangle));
         System.out.println(triangle(triangle));
+        System.out.println(triangle3(triangle));
     }
 }
