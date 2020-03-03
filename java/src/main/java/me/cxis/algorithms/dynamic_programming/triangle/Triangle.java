@@ -64,7 +64,10 @@ public class Triangle {
         int row = m.length;
 
         // f中保存每一行各个结点到最后的最小的路径和，初始值是最后一行
-        int[] f = m[row - 1];
+        int[] f = new int[m[m.length - 1].length];
+        for (int i = 0; i < m[m.length - 1].length; i++) {
+            f[i] = m[m.length - 1][i];
+        }
 
         // 从倒数第二行开始
         for (int i = row - 2; i >= 0; i--) {
@@ -76,7 +79,6 @@ public class Triangle {
     }
 
     public static int triangle3(int[][] m) {
-        // TODO
         int[][] f = new int[m.length][m[0].length];
         for (int i = 0; i < m[m.length - 1].length; i++) {
             f[m.length - 1][i] = m[m.length - 1][i];
