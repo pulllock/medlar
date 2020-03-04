@@ -71,6 +71,53 @@ public class MinimumPathSum {
          return f[m-1][n-1];
      }
 
+    public static int minPathSum1(int[][] a) {
+        int m = a.length;
+        if (m == 0) {
+            return 0;
+        }
+
+        int n = a[0].length;
+        if (n == 0) {
+            return 0;
+        }
+
+        int[][] f = new int[2][n];
+        int old = 0;
+        int now = 0;
+        for (int i = 0; i < m; i++) {
+            // 滚动数组
+            old = now;
+            now = 1- now;
+            for (int j = 0; j < n; j++) {
+                if (i == 0 && j == 0) {
+                    f[now][j]= a[i][j];
+                    continue;
+                }
+                f[now][j] = Integer.MAX_VALUE;
+                if (i > 0) {
+                    f[now][j] = Math.min(f[old][j], f[now][j]);
+                }
+
+                if (j > 0) {
+                    f[now][j] = Math.min(f[now][j], f[now][j-1]);
+                }
+                f[now][j] += a[i][j];
+
+                 /*int t = Integer.MAX_VALUE;
+                 if (i > 0) {
+                     t = Math.min(t, f[i-1][j]);
+                 }
+
+                 if (j > 0) {
+                     t = Math.min(t, f[i][j-1]);
+                 }
+                 f[i][j] = t + a[i][j];*/
+            }
+        }
+        return f[now][n-1];
+    }
+
     public static void main(String[] args) {
         int[][] a = {
                 {1,5,7,6,8},
@@ -79,5 +126,6 @@ public class MinimumPathSum {
         };
 
         System.out.println(minPathSum(a));
+        System.out.println(minPathSum1(a));
     }
 }
