@@ -49,10 +49,12 @@ package me.cxis.algorithms.dynamic_programming.gold;
  * n==1 w>=p[0] f(n, w)=g[0]
  * n>1 w<p[n-1] f(n, w)=f(n-1, w)
  * n>1 w>=p[n-1] f(n, w)=max(f(n-1, w), f(n-1, w-p[n-1])+g[n-1])
+ *
+ * w个人挖n个金矿，能挖到最多黄金，则
  */
 public class KingAndGold {
 
-    // TODO
+    // TODO 0-1背包问题，待解决
     public int getMostGold(int n, int w, int[] g, int[] p) {
         // 用来存放第n个金矿，能挖取的最大金子数量
         int[] res = new int[w];
