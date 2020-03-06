@@ -34,5 +34,21 @@ package me.cxis.algorithms.dynamic_programming.house_robber;
  */
 public class HouseRobber {
 
-    // TODO
+    public static int houseRobber(int[] a) {
+        int n = a.length;
+
+        int[] f = new int[n];
+        f[0] = 0;
+        f[1] = a[0];
+        f[2] = Math.max(a[0], a[1]);
+        for (int i = 3; i < n; i++) {
+            f[i] = Math.max(f[i-1], f[i-2] + a[i-1]);
+        }
+        return f[n -1];
+    }
+
+    public static void main(String[] args) {
+        int[] a = {3, 8, 4};
+        System.out.println(houseRobber(a));
+    }
 }
