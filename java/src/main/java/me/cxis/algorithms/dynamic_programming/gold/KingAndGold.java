@@ -54,32 +54,37 @@ package me.cxis.algorithms.dynamic_programming.gold;
  */
 public class KingAndGold {
 
-    // TODO 0-1背包问题，待解决
+    /**
+     *
+     * @param n 金矿数
+     * @param w 矿工数
+     * @param g 金子含量
+     * @param p 使用的矿工数
+     * @return
+     */
     public int getMostGold(int n, int w, int[] g, int[] p) {
-        // 用来存放第n个金矿，能挖取的最大金子数量
-        int[] res = new int[w];
+        // 用来存放第n个金矿w个人，能挖取的最大金子数量
+        int[][] f = new int[n + 1][w + 1];
 
-        // 第1个金矿最多金子为g[0]
-        res[0] = g[0];
+        for (int i = 0; i <= w; i++) {
+            f[0][i] = 0;
+        }
 
-        int result = Integer.MIN_VALUE;
 
         // 金矿
-        for (int i = 1; i < n; i++) {
+        for (int i = 1; i <= n; i++) {
             // 矿工
             for (int j = 1; j <= w; j++) {
-                System.out.println(i + ":" + j);
-
+                f[i][j] = Integer.MIN_VALUE;
                 // 矿工人数比第i个金矿所需的人数少
                 if (j < p[i - 1]) {
-                    res[j] = res[j - 1];
+                    f[i][j] = f[i - 1][j];
                 } else {
-                    res[j] = Math.max(res[j - 1], g[i] + res[j - p[i]]);
+                    f[i][j] = Math.max(f[i - 1][j], g[i - 1] + f[i - 1][j - p[i - 1]]);
                 }
             }
-            result = Math.max(result, res[i]);
         }
-        return result;
+        return f[n][w];
     }
 
     public int getMostGold1(int w, int[][] a) {
@@ -100,7 +105,6 @@ public class KingAndGold {
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < w + 1; j++) {
-                System.out.println(i + ":" + j);
                 if (j < p[i]) {
                     results[j] = preResults[j];
                 } else {
@@ -122,5 +126,6 @@ public class KingAndGold {
         int[] g = {400, 500, 200, 300, 350};
         int[] p = {5, 5, 3, 4, 3};
         System.out.println(gold.getMostGold(n, w, g, p));
+        System.out.println(gold.getMostGold2(n, w, g, p));
     }
 }
