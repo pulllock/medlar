@@ -47,8 +47,20 @@ public class HouseRobber {
         return f[n];
     }
 
+    public static int houseRobber1(int[] a) {
+        int n = a.length;
+
+        int old = 0;
+        int now = a[0];
+        for (int i = 2; i <= n; i++) {
+            now = Math.max(now, old + a[i-1]);
+        }
+        return now;
+    }
+
     public static void main(String[] args) {
         int[] a = {3, 8, 4};
         System.out.println(houseRobber(a));
+        System.out.println(houseRobber1(a));
     }
 }
