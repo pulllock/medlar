@@ -37,14 +37,14 @@ public class HouseRobber {
     public static int houseRobber(int[] a) {
         int n = a.length;
 
-        int[] f = new int[n];
+        int[] f = new int[n + 1];
         f[0] = 0;
         f[1] = a[0];
         f[2] = Math.max(a[0], a[1]);
-        for (int i = 3; i < n; i++) {
+        for (int i = 3; i <= n; i++) {
             f[i] = Math.max(f[i-1], f[i-2] + a[i-1]);
         }
-        return f[n -1];
+        return f[n];
     }
 
     public static void main(String[] args) {
