@@ -41,7 +41,6 @@ public class BackPack {
             f[0][i] = 0;
         }
 
-        // TODO
         // n件物品
         for (int i = 1; i <= n; i++) {
 
