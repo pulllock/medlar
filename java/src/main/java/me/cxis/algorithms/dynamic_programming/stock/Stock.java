@@ -18,4 +18,26 @@ package me.cxis.algorithms.dynamic_programming.stock;
  */
 public class Stock {
 
+    public static int stock(int[] a) {
+        int n = a.length;
+        if (n == 0) {
+            return 0;
+        }
+
+        int result = 0;
+        // 到当前为止的最小值
+        int minV = a[0];
+
+        for (int i = 1; i < n; i++) {
+            result = Math.max(result, a[i] - minV);
+            minV = Math.min(minV, a[i]);
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int[] a = {3,2,3,1,2};
+        System.out.println(stock(a));
+    }
 }
