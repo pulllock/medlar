@@ -1,8 +1,5 @@
 package me.cxis.mybatis.test;
 
-/**
- * Created by justdoit on 15-5-22.
- */
 public class SequenceList<T> {
     private int DEFAULT_SIZE = 16;
     private int capacity;
