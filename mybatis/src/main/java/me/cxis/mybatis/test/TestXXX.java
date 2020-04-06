@@ -1,8 +1,5 @@
 package me.cxis.mybatis.test;
 
-/**
- * Created by justdoit on 15-5-8.
- */
 public class TestXXX {
 
     /*int a = b + 1;

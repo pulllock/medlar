@@ -8,9 +8,6 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.Reader;
 
-/**
- * Created by justdoit on 15-4-15.
- */
 public class UserTest {
     private static SqlSessionFactory sqlSessionFactory;
     private static Reader reader;
@@ -32,7 +29,7 @@ public class UserTest {
         System.out.println(System.getProperty("user.dir"));
         SqlSession session = sqlSessionFactory.openSession();
         try {
-            User user = (User) session.selectOne("cheng.xi.mybatis.models.UserMapper.selectUserByID", 1);
+            User user = (User) session.selectOne("me.cxis.mybatis.model.UserMapper.selectUserByID", 1);
             System.out.println(user.getUserAddress());
             System.out.println(user.getUserName());
         } finally {

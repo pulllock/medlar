@@ -1,6 +1,6 @@
 package me.cxis.mybatis.model;
 
-public class User {
+public class UserQuery {
     private int id;
     private String userName;
     private String userAge;
@@ -33,7 +33,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserQuery{" +
                 "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", userAge='" + userAge + '\'' +
