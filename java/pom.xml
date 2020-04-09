@@ -37,6 +37,13 @@
             <artifactId>cglib</artifactId>
             <version>3.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>commons-chain</groupId>
+            <artifactId>commons-chain</artifactId>
+            <version>1.2</version>
+        </dependency>
+
     </dependencies>
     <build>
         <finalName>java.test</finalName>
