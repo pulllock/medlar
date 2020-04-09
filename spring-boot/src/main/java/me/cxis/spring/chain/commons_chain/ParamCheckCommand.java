@@ -1,10 +1,13 @@
-package me.cxis.commons_chain;
+package me.cxis.spring.chain.commons_chain;
 
-public class ParamCheckHandler extends AbstractCommand {
+import org.springframework.stereotype.Component;
+
+@Component
+public class ParamCheckCommand extends AbstractCommand {
 
     @Override
     public boolean execute(CommonContext context) {
-        System.out.println("ParamCheckHandler...");
+        System.out.println("ParamCheckCommand...");
         String request = String.valueOf(context.get("request"));
         if (request.contains("error")) {
             context.put("error", "param error!");

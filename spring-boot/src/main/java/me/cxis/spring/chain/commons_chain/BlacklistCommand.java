@@ -1,10 +1,13 @@
-package me.cxis.commons_chain;
+package me.cxis.spring.chain.commons_chain;
 
-public class BlacklistHandler extends AbstractCommand {
+import org.springframework.stereotype.Component;
+
+@Component
+public class BlacklistCommand extends AbstractCommand {
 
     @Override
     public boolean execute(CommonContext context) {
-        System.out.println("BlacklistHandler...");
+        System.out.println("BlacklistCommand...");
         String request = String.valueOf(context.get("request"));
         if (request.contains("hack")) {
             context.put("error", "ip locked");
