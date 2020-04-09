@@ -7,8 +7,8 @@ public class ParamCheckHandler extends AbstractCommand {
         String request = String.valueOf(context.get("request"));
         if (request.contains("error")) {
             context.put("error", "param error!");
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 }

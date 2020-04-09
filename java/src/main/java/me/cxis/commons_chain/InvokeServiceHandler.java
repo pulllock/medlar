@@ -8,6 +8,6 @@ public class InvokeServiceHandler extends AbstractCommand {
 
         String result = "result for request: " + request;
         context.put("result", result);
-        return true;
+        return false;
     }
 }

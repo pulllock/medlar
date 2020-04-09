@@ -7,8 +7,8 @@ public class BlacklistHandler extends AbstractCommand {
         String request = String.valueOf(context.get("request"));
         if (request.contains("hack")) {
             context.put("error", "ip locked");
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 }

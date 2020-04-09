@@ -4,6 +4,6 @@ public class FlowControlHandler extends AbstractCommand {
 
     @Override
     public boolean execute(CommonContext context) {
-        return true;
+        return false;
     }
 }
