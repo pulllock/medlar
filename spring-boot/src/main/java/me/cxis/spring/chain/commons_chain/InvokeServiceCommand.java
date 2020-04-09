@@ -1,10 +1,13 @@
-package me.cxis.commons_chain;
+package me.cxis.spring.chain.commons_chain;
 
-public class InvokeServiceHandler extends AbstractCommand {
+import org.springframework.stereotype.Component;
+
+@Component
+public class InvokeServiceCommand extends AbstractCommand {
 
     @Override
     public boolean execute(CommonContext context) {
-        System.out.println("InvokeServiceHandler...");
+        System.out.println("InvokeServiceCommand...");
         String request = String.valueOf(context.get("request"));
 
         String result = "result for request: " + request;
