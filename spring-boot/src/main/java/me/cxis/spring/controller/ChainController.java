@@ -2,8 +2,8 @@ package me.cxis.spring.controller;
 
 import com.alibaba.fastjson.JSON;
 import me.cxis.spring.chain.GatewayHandler;
-import me.cxis.spring.chain.commons_chain.Chains;
 import me.cxis.spring.chain.commons_chain.CommonContext;
+import org.apache.commons.chain.impl.ChainBase;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +20,7 @@ public class ChainController {
     private List<GatewayHandler> gatewayHandlers;
 
     @Resource
-    private Chains chains;
+    private ChainBase chains;
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test(@RequestParam String str) {
