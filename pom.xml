@@ -43,6 +43,7 @@
         <module>zookeeper</module>
         <module>rocketmq</module>
         <module>tomcat</module>
+        <module>elasticsearch</module>
     </modules>
 
 </project>
