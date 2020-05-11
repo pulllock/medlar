@@ -21,7 +21,7 @@ public class UpdateIndexExample {
     public static void main(String[] args) {
         Analyzer analyzer = new IKAnalyzer();
         IndexWriterConfig indexWriterConfig = new IndexWriterConfig(analyzer);
-        Path indexPath = Paths.get("/index_dir");
+        Path indexPath = Paths.get("index_dir");
         Directory directory = null;
 
         try {

@@ -19,21 +19,21 @@ public class CreateIndexExample {
     public static void main(String[] args) {
         Article article1 = new Article(
             1L,
-            "井冈山兰考等28个贫困县脱贫“摘帽”",
+            "快讯井冈山兰考等28个贫困县脱贫“摘帽”",
             "2月26日，江西省井冈山市宣布脱贫“摘帽”，成为我国贫困退出机制建立后首个脱贫“摘帽”的贫困县。3月27日，河南省兰考县宣布退出贫困县。2017年全国共有28个贫困县脱贫“摘帽”。党的十八大以来，我国脱贫攻坚战取得决定性进展，6000多万贫困人口稳定脱贫，贫困发生率从10.2%降到4%以下，预计2017年减贫人数在1000万人以上",
             232
         );
 
         Article article2 = new Article(
             2L,
-            "河北雄安新区设立",
+            "快讯河北雄安新区设立",
             "4月1日，我国发布中共中央、国务院决定设立河北雄安新区的通知。设立河北雄安新区是以习近平同志为核心的党中央作出的一项重大的历史性战略选择，是千年大计、国家大事，对于集中疏解北京非首都功能，探索人口经济密集地区优化开发新模式，调整优化京津冀城市布局和空间结构，培育创新驱动发展新引擎，具有重大现实意义和深远历史意义。",
             23444
         );
 
         Article article3 = new Article(
             3L,
-            "“一带一路”国际合作高峰论坛等成功举办",
+            "快讯“一带一路”国际合作高峰论坛等成功举办",
             "5月14日至15日，“一带一路”国际合作高峰论坛在北京成功举行，国家主席习近平出席开幕式并发表主旨演讲。这是“一带一路”框架下最高规格的国际会议，也是新中国成立以来由中国首倡、中国主办的层级最高、规模最大的多边外交活动。",
             88997
         );
@@ -48,7 +48,7 @@ public class CreateIndexExample {
         IndexWriter indexWriter = null;
 
         // 索引目录
-        Path indexPath = Paths.get("/index_dir");
+        Path indexPath = Paths.get("index_dir");
 
         long startTime = System.currentTimeMillis();
         try {
