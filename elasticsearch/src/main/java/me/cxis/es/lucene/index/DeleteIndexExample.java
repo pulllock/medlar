@@ -20,7 +20,7 @@ public class DeleteIndexExample {
     private static void deleteDocument(String field, String key) {
         Analyzer analyzer = new IKAnalyzer();
         IndexWriterConfig indexWriterConfig = new IndexWriterConfig(analyzer);
-        Path indexPath = Paths.get("/index_dir");
+        Path indexPath = Paths.get("index_dir");
         Directory directory;
 
         try {
