@@ -43,6 +43,7 @@ public class CreateIndexExample {
 
         IndexWriterConfig indexWriterConfig = new IndexWriterConfig(analyzer);
         indexWriterConfig.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
+        // indexWriterConfig.setUseCompoundFile(false);
 
         Directory directory = null;
         IndexWriter indexWriter = null;
