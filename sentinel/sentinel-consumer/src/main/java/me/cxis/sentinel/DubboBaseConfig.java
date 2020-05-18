@@ -14,18 +14,6 @@ public class DubboBaseConfig {
     @Value("${dubbo.application.name}")
     protected String dubboApplicationName;
 
-    @Value("${dubbo.provider.version}")
-    protected String dubboProviderVersion;
-
-    @Value("${dubbo.provider.retries}")
-    protected int dubboProviderRetries;
-
-    @Value("${dubbo.provider.timeout}")
-    protected int dubboProviderTimeout;
-
-    @Value("${dubbo.provider.port}")
-    protected int dubboProviderPort;
-
     @Value("${dubbo.consumer.version}")
     protected String dubboConsumerVersion;
 
