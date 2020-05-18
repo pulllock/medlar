@@ -44,6 +44,7 @@
         <module>rocketmq</module>
         <module>tomcat</module>
         <module>elasticsearch</module>
+        <module>sentinel</module>
     </modules>
 
 </project>
