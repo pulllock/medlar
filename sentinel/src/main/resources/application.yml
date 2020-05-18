@@ -1,0 +1,16 @@
+dubbo:
+  application:
+    name: sentinel
+  registry:
+    url: localhost:2181
+  provider:
+    port: 20880
+    version: LATEST
+    retries: 0
+    timeout: 1000
+  consumer:
+    port: 20880
+    version: LATEST
+    retries: 0
+    timeout: 1000
+    check: false
