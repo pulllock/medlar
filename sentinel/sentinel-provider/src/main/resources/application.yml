@@ -8,6 +8,3 @@ dubbo:
     version: LATEST
     retries: 0
     timeout: 1000
-
-project:
-  name: sentinel-provider

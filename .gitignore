@@ -21,3 +21,4 @@ segments_*
 *.tim
 *.tip
 *.liv
+logs/
