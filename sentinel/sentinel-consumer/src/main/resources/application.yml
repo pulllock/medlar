@@ -9,3 +9,5 @@ dubbo:
     retries: 0
     timeout: 1000
     check: false
+server:
+  port: 8083
