@@ -1,4 +1,4 @@
-package me.cxis.blockingqueue.self;
+package me.cxis.queue.blockingqueue.self;
 
 public class MyArrayBlockingQueue<T> {
 

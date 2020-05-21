@@ -1,4 +1,4 @@
-package me.cxis.blockingqueue.arrayblockingqueue;
+package me.cxis.queue.blockingqueue.arrayblockingqueue;
 
 import java.util.concurrent.BlockingQueue;
 

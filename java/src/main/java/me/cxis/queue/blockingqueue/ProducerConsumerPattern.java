@@ -1,4 +1,4 @@
-package me.cxis.blockingqueue;
+package me.cxis.queue.blockingqueue;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
