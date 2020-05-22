@@ -6,11 +6,11 @@ public class Client {
         SmsSender smsSender = new SmsSender();
 
         long createTime = System.currentTimeMillis();
-        smsSender.sendDelaySms("短信1", createTime, 10 * 1000);
+        smsSender.sendDelaySms("短信1", createTime, 20 * 1000);
 
-        smsSender.sendDelaySms("短信2", createTime, 5 * 1000);
+        smsSender.sendDelaySms("短信2", createTime, 30 * 1000);
 
-        smsSender.sendDelaySms("短信3", createTime, 30 * 1000);
+        smsSender.sendDelaySms("短信3", createTime, 10 * 1000);
 
     }
 }
