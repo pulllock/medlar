@@ -42,7 +42,7 @@ public class DelayedSms implements Delayed {
      */
     @Override
     public int compareTo(Delayed other) {
-        return Long.compare(sendTime, ((DelayedSms) other).getSendTime());
+        return Long.compare(this.getDelay(TimeUnit.MILLISECONDS), other.getDelay(TimeUnit.MILLISECONDS));
     }
 
     public String getSms() {
