@@ -84,6 +84,23 @@ public class Client {
             outputStream.write(data);
             outputStream.flush();
         } catch (IOException e) {
+            if (outputStream != null) {
+                try {
+                    outputStream.close();
+                    outputStream = null;
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+
+            if (socket != null) {
+                try {
+                    socket.close();
+                    socket = null;
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
             e.printStackTrace();
         } finally {
             System.out.println(Thread.currentThread().getName());
