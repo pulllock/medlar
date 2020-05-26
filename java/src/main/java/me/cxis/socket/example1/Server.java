@@ -13,8 +13,8 @@ public class Server {
             public void run() {
                 try {
                     ServerSocket serverSocket = new ServerSocket(8888);
+                    Socket socket = serverSocket.accept();
                     while (true) {
-                        Socket socket = serverSocket.accept();
                         handleSocket(socket);
                     }
                 } catch (IOException e) {
