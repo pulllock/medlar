@@ -1,4 +1,4 @@
-package me.cxis.socket.example2.example1;
+package me.cxis.socket.example2;
 
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
