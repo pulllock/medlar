@@ -1,4 +1,4 @@
-package me.cxis.socket.example2.example1;
+package me.cxis.socket.example2;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
