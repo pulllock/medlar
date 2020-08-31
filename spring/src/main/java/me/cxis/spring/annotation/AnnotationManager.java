@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class AnnotationManager {
 
+    @Autowired
+    private AnnotationDao annotationDao;
+
     /**
      * 注解在构造器上，构造器需要有参数
      * 无参构造器使用@Autowired注解会报错：Autowired annotation requires at least one argument
