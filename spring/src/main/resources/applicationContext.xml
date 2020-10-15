@@ -3,13 +3,36 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:cache="http://www.springframework.org/schema/cache" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
 	http://www.springframework.org/schema/context 
-	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 自动扫描dao和service包(自动注入) -->
     <context:component-scan base-package="me.cxis.spring.*" />
 
     <context:property-placeholder location="application.properties"/>
+
+    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <set>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="simpleMapCacheManager"/>
+            </set>
+        </property>
+    </bean>
+
+    <cache:annotation-driven/>
+
+    <cache:advice id="cacheAdvice" cache-manager="cacheManager">
+        <cache:caching cache="simpleMapCacheManager">
+            <cache:cacheable method="getUserById" key="#userId"/>
+            <cache:cache-evict method="evictUserById" key="#userId"/>
+        </cache:caching>
+    </cache:advice>
+
+    <aop:config proxy-target-class="false">
+        <aop:pointcut id="userCachePointcut" expression="execution(* me.cxis.spring.cache.UserCacheManager.*(..))"/>
+        <aop:advisor advice-ref="cacheAdvice" pointcut-ref="userCachePointcut"/>
+    </aop:config>
 </beans>
