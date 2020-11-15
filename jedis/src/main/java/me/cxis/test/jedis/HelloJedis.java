@@ -69,7 +69,7 @@ public class HelloJedis {
 
         TestModel model = new TestModel();
         model.setId(1L);
-        model.setChannel("pajk");
+        model.setChannel("xxxxx");
         Date date = new Date();
         model.setEndTime(date.getTime());
         model.setStartTime(model.getEndTime());

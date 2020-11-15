@@ -45,6 +45,7 @@
         <module>tomcat</module>
         <module>elasticsearch</module>
         <module>sentinel</module>
+        <module>spring-boot-mybatis</module>
     </modules>
 
 </project>
