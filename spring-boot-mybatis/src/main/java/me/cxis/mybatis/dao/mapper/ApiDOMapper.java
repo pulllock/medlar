@@ -24,4 +24,10 @@ public interface ApiDOMapper {
     ApiDO selectByNameAndMethod(@Param("name") String name, @Param("method") String method);
 
     List<ApiDO> selectByName(String name);
+
+    ApiDO selectByNameMethodAndUserId(
+            @Param("name") String name,
+            @Param("method") String method,
+            @Param("userId") Long userId
+    );
 }

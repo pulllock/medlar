@@ -24,4 +24,8 @@ public class ApiDao {
     public List<ApiDO> queryByName(String name) {
         return apiDOMapper.selectByName(name);
     }
+
+    public ApiDO queryByNameMethodAndUserId(String name, String method, Long userId) {
+        return apiDOMapper.selectByNameMethodAndUserId(name, method, userId);
+    }
 }

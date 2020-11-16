@@ -55,6 +55,14 @@ public class ApiManager {
                 .collect(toList());
     }
 
+    public Api queryByNameMethodAndUserId(String name, String method, Long userId) {
+        ApiDO apiDO = apiDao.queryByNameMethodAndUserId(name, method, userId);
+        if (apiDO == null) {
+            return null;
+        }
+        return toApi(apiDO);
+    }
+
     private Api toApi(ApiDO source) {
         Api target = new Api();
         BeanUtils.copyProperties(source, target);

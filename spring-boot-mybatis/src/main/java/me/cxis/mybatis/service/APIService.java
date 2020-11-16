@@ -28,4 +28,13 @@ public interface APIService {
      * @return api集合
      */
     Result<List<Api>> queryApiByName(String name);
+
+    /**
+     * 根据name和method以及userId查询api
+     * @param name api名称
+     * @param method 方法名
+     * @param userId 用户id
+     * @return
+     */
+    Result<Api> queryApiByNameMethodAndUserId(String name, String method, Long userId);
 }
