@@ -21,4 +21,10 @@ public class APIServiceTest {
         Result<Api> result = apiService.queryApiByCode("1TRW556GGH#TEST");
         System.out.println(result);
     }
+
+    @Test
+    public void testQueryApiByNameMethodAndUserId() {
+        Result<Api> result = apiService.queryApiByNameMethodAndUserId("me.cxis.xxxService", "create", 100002101L);
+        System.out.println(result);
+    }
 }

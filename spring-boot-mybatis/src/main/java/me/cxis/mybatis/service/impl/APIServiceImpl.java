@@ -38,4 +38,10 @@ public class APIServiceImpl implements APIService {
         List<Api> apis = apiManager.queryByName(name);
         return new Result<>(apis);
     }
+
+    @Override
+    public Result<Api> queryApiByNameMethodAndUserId(String name, String method, Long userId) {
+        Api api = apiManager.queryByNameMethodAndUserId(name, method, userId);
+        return new Result<>(api);
+    }
 }

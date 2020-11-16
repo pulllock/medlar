@@ -185,4 +185,13 @@
     from mt_api
     where name = #{name,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectByNameMethodAndUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mt_api
+    where name = #{name,jdbcType=VARCHAR}
+    and method = #{method,jdbcType=VARCHAR}
+    and user_id = #{userId, jdbcType=BIGINT}
+  </select>
 </mapper>
