@@ -1,5 +1,7 @@
 package me.cxis.mybatis.plugin;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.executor.statement.RoutingStatementHandler;
@@ -15,15 +17,16 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.SystemMetaObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.expression.EvaluationContext;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
 
 import java.sql.Connection;
 import java.util.List;
 
 /**
  * 自定义分表插件
- * 假设分了100张表，表的后缀是00、01、...、99
- * 查询的语句中都必须带有用户id，用户id后缀是00、01、...、99
- * 根据用户id后缀来决定使用哪个表
  */
 @Intercepts({
         @Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})
@@ -31,6 +34,15 @@ import java.util.List;
 public class SplitTableInterceptor implements Interceptor {
     
     private final static Logger LOGGER = LoggerFactory.getLogger(SplitTableInterceptor.class);
+
+    /**
+     * 分表规则，可以配置到动态配置中心或者写到配置文件中等等
+     * 当前规则：
+     * 根据用户id后缀来决定使用哪个表
+     * 假设分了100张表，表的后缀是00、01、...、99
+     * 查询的语句中都必须带有用户id，用户id后缀是00、01、...、99
+     */
+    private final static String SHARDING_RULE = "{\"table\":\"mt_api\",\"key\":\"userId\",\"rule\":\"#userId.substring(#userId.length() - 2)\"}";
     
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
@@ -50,41 +62,65 @@ public class SplitTableInterceptor implements Interceptor {
         String originSql = boundSql.getSql();
         LOGGER.info("原始sql：{}", originSql);
 
-        List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
-        LOGGER.info("参数：{}", parameterMappings);
-        if (CollectionUtils.isEmpty(parameterMappings)) {
-            throw new RuntimeException("分表需要有userId参数");
-        }
+        JSONObject ruleObject = JSON.parseObject(SHARDING_RULE);
+        String key = ruleObject.getString("key");
+        String tableName = ruleObject.getString("table");
 
-        if (parameterMappings.size() == 1) {
-            ParameterMapping parameterMapping = parameterMappings.get(0);
-            if (!parameterMapping.getProperty().equals("userId")) {
-                throw new RuntimeException("分表需要有userId参数");
+        // 规则中有配置需要分表
+        if (originSql.contains(tableName)) {
+            Long userId = null;
+            List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
+            LOGGER.info("参数：{}", parameterMappings);
+            if (CollectionUtils.isEmpty(parameterMappings)) {
+                throw new RuntimeException(String.format("分表需要有%s参数", key));
             }
-            Long userId = (Long) boundSql.getParameterObject();
-            LOGGER.info("分表需要的userId：{}", userId);
-        } else {
-            for (int i = 0; i < parameterMappings.size(); i++) {
-                ParameterMapping parameterMapping = parameterMappings.get(i);
-                if (parameterMapping.getProperty().equals("userId")) {
-                    MapperMethod.ParamMap paramMap = (MapperMethod.ParamMap) boundSql.getParameterObject();
-                    Long userId = (Long) paramMap.get("userId");
-                    LOGGER.info("分表需要的userId: {}", userId);
 
-                    String tableName = "mt_api";
-                    LOGGER.info("原始表名：{}", tableName);
-
-                    String userIdStr = String.valueOf(userId);
-                    String shardTableName = tableName + "_" +userIdStr.substring(userIdStr.length() - 2);
-                    LOGGER.info("路由后的表名：{}", shardTableName);
-
-                    String newSql = originSql.replace(tableName, shardTableName);
-                    LOGGER.info("路由后的sql：{}", newSql);
-
-                    metaObject.setValue("delegate.boundSql.sql", newSql);
+            if (parameterMappings.size() == 1) {
+                ParameterMapping parameterMapping = parameterMappings.get(0);
+                if (!parameterMapping.getProperty().equals(key)) {
+                    throw new RuntimeException(String.format("分表需要有%s参数", key));
+                }
+                userId = (Long) boundSql.getParameterObject();
+                LOGGER.info("分表需要的{}：{}", key, userId);
+            } else {
+                for (int i = 0; i < parameterMappings.size(); i++) {
+                    ParameterMapping parameterMapping = parameterMappings.get(i);
+                    if (parameterMapping.getProperty().equals(key)) {
+                        MapperMethod.ParamMap paramMap = (MapperMethod.ParamMap) boundSql.getParameterObject();
+                        userId = (Long) paramMap.get("userId");
+                    }
                 }
             }
+
+            if (userId == null || userId <= 0) {
+                throw new RuntimeException(String.format("分表需要有%s参数", key));
+            }
+
+            LOGGER.info("分表需要的{}: {}", key, userId);
+
+            LOGGER.info("原始表名：{}", tableName);
+
+            String rule = ruleObject.getString("rule");
+            LOGGER.info("分表规则rule: {}", rule);
+
+            String userIdStr = String.valueOf(userId);
+
+            // 解析spel表达式
+            ExpressionParser ep= new SpelExpressionParser();
+            EvaluationContext ctx = new StandardEvaluationContext();
+            ctx.setVariable(key, userIdStr);
+            String tableSuffix = ep.parseExpression(rule).getValue(ctx).toString();
+
+            String shardTableName = tableName + "_" + tableSuffix;
+            LOGGER.info("路由后的表名：{}", shardTableName);
+
+            String newSql = originSql.replace(tableName, shardTableName);
+            LOGGER.info("路由后的sql：{}", newSql);
+
+            metaObject.setValue("delegate.boundSql.sql", newSql);
         }
+
+
 
         return invocation.proceed();
     }
