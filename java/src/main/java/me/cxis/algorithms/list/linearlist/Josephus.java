@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by cheng.xi on 2017-05-30 16:10.
  * 约瑟夫环
  */
 public class Josephus {
@@ -26,7 +25,7 @@ public class Josephus {
             System.out.println("删除：" + list.remove(index) + ",剩余：" + list.toString());
         }
 
-        System.out.println("被赦免的是：" + list.get(0).toString());
+        System.out.println("被赦免的是：" + list.get(0));
     }
 
     public static void main(String[] args) {
