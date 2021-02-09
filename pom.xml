@@ -25,19 +25,10 @@
     <modules>
         <module>mybatis</module>
         <module>jedis</module>
-        <module>ssshiro</module>
-        <module>shiro</module>
-        <module>sms</module>
-        <module>spring-data-redis</module>
         <module>java</module>
         <module>jmeter</module>
-        <module>junit</module>
         <module>spring-boot</module>
-        <module>second-kill</module>
         <module>netty</module>
-        <module>guice</module>
-        <module>resteasy</module>
-        <module>jersey</module>
         <module>distributedlock</module>
         <module>spring</module>
         <module>zookeeper</module>
