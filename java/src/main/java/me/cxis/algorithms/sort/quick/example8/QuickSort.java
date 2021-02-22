@@ -43,8 +43,9 @@ public class QuickSort {
                 else if (source[k] <= pivot2) {
                     k++;
                 }
-                // 大于等于基准1或大于基准2
+                // 大于基准2
                 else {
+                    // 从右向左扫描待排序元素
                     while (source[--j] > pivot2) {
                         if (j <= k) {
                             break outer;
@@ -57,7 +58,7 @@ public class QuickSort {
                         i++;
                         swap(source, i, k);
                     }
-                    // 等于基准1
+                    // 大于等于基准1或者小于等于基准2
                     else {
                         swap(source, j, k);
                     }
