@@ -6,37 +6,37 @@ package me.cxis.algorithms.string;
 public class BFString {
 
     public static void main(String[] args) {
-        String target = "ssfass";
-        String model = "asdfsaasfssfasseerer";
-        int result = bfMatch(target, model);
+        String pattern = "ssfass";
+        String target = "asdfsaasfssfasseerer";
+        int result = bfMatch(pattern, target);
         System.out.println(result);
     }
 
     /**
      * BF算法
+     * @param pattern 模式串
      * @param target 目标串
-     * @param model 模式串
      * @return
      */
-    private static int bfMatch(String target, String model) {
+    private static int bfMatch(String pattern, String target) {
         int i = 0;
         int j = 0;
         String s = "";
-        while (i < target.length() && j < model.length()) {
-            if (target.charAt(i) == model.charAt(j)) {
-                s = s + model.charAt(j);
+        while (j < pattern.length() && i < target.length()) {
+            if (pattern.charAt(j) == target.charAt(i)) {
+                s = s + target.charAt(i);
                 i++;
                 j++;
             } else {
-                j  = j - i + 1;
-                i = 0;
+                i  = i - j + 1;
+                j = 0;
                 s = "";
             }
         }
 
-        if (i == target.length()) {
+        if (j == pattern.length()) {
             System.out.println(s);
-            return j - target.length();
+            return i - pattern.length();
         }
 
         return -1;
