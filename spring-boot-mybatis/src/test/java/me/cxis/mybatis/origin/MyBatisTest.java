@@ -1,6 +1,7 @@
 package me.cxis.mybatis.origin;
 
 import com.alibaba.fastjson.JSON;
+import me.cxis.mybatis.dao.mapper.ApiDOMapper;
 import me.cxis.mybatis.dao.model.ApiDO;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -20,6 +21,18 @@ public class MyBatisTest {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         try (SqlSession session = sqlSessionFactory.openSession()) {
             ApiDO apiDO = session.selectOne("me.cxis.mybatis.dao.mapper.ApiDOMapper.selectByPrimaryKey", 1L);
+            System.out.println(JSON.toJSONString(apiDO));
+        }
+    }
+
+    @Test
+    public void test1() throws IOException {
+        String resource = "mybatis/origin/mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            ApiDOMapper apiDOMapper = session.getMapper(ApiDOMapper.class);
+            ApiDO apiDO = apiDOMapper.selectByPrimaryKey( 1L);
             System.out.println(JSON.toJSONString(apiDO));
         }
     }
