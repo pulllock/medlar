@@ -1,8 +1,10 @@
-package me.cxis.spring.context;
+package me.cxis.spring.utils;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,5 +23,10 @@ public class ApplicationContextUtil implements ApplicationContextAware {
 
     public static String[] listBeanNames() {
         return applicationContext.getBeanDefinitionNames();
+    }
+
+    public static BeanDefinition getBeanDefinition(String name) {
+        GenericApplicationContext webApplicationContext = (GenericApplicationContext) applicationContext;
+        return webApplicationContext.getBeanDefinition(name);
     }
 }

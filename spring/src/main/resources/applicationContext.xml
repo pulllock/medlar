@@ -35,4 +35,6 @@
         <aop:pointcut id="userCachePointcut" expression="execution(* me.cxis.spring.cache.UserCacheManager.*(..))"/>
         <aop:advisor advice-ref="cacheAdvice" pointcut-ref="userCachePointcut"/>
     </aop:config>
+
+    <bean id="userXml" class="me.cxis.spring.xml.UserXml"/>
 </beans>
