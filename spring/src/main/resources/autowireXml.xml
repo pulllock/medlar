@@ -7,4 +7,8 @@
     <bean id="userDao" class="me.cxis.spring.autowire.xml.dao.impl.UserDaoImpl"/>
     <!--<bean id="userDao1" class="me.cxis.spring.autowire.xml.dao.impl.UserDaoImpl1"/>-->
     <bean id="userService" class="me.cxis.spring.autowire.xml.service.impl.UserServiceImpl"/>
+
+    <bean id="applicationContextUtilXml" class="me.cxis.spring.utils.ApplicationContextUtilXml"/>
+
+    <bean id="ignoreDependencyType" class="me.cxis.spring.autowire.xml.IgnoreDependencyType"/>
 </beans>
