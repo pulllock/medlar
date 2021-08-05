@@ -25,17 +25,22 @@ public class ControllerLogAspect {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
 
-        System.out.println(request.getRequestURL().toString());
-        System.out.println(request.getMethod());
-        System.out.println(request.getRemoteAddr());
-        System.out.println(joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        System.out.println(Arrays.toString(joinPoint.getArgs()));
+        String msg = String.format(
+                "Request url: %s, remote address: %s, class: %s.%s, method: %s, args: %s",
+                request.getRequestURL().toString(),
+                request.getRemoteAddr(),
+                joinPoint.getSignature().getDeclaringTypeName(),
+                joinPoint.getSignature().getName(),
+                request.getMethod(),
+                Arrays.toString(joinPoint.getArgs())
+        );
+        System.out.println(msg);
     }
 
     @AfterReturning(returning = "ret", pointcut = "webLog()")
     public void afterReturning(Object ret) {
         // 处理完之后返回内容
-        System.out.println(ret);
+        System.out.println("After returning: " + ret);
     }
 
     @AfterThrowing("webLog()")
@@ -46,7 +51,7 @@ public class ControllerLogAspect {
 
     @After("webLog()")
     public void after(JoinPoint joinPoint) {
-        //方法正常与否，都会在在最后执行
+        // 方法正常与否，都会在在最后执行
         System.out.println("方法最后执行");
     }
 
@@ -56,7 +61,7 @@ public class ControllerLogAspect {
 
         try {
             Object o = joinPoint.proceed();
-            System.out.println("环绕的preceed," + o);
+            System.out.println("环绕的proceed: " + o);
             return o;
         } catch (Throwable throwable) {
             throwable.printStackTrace();
