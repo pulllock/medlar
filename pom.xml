@@ -37,6 +37,7 @@
         <module>elasticsearch</module>
         <module>sentinel</module>
         <module>spring-boot-mybatis</module>
+        <module>springmvc</module>
     </modules>
 
 </project>
