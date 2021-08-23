@@ -38,6 +38,7 @@
         <module>sentinel</module>
         <module>spring-boot-mybatis</module>
         <module>springmvc</module>
+        <module>nacos-sample</module>
     </modules>
 
 </project>
