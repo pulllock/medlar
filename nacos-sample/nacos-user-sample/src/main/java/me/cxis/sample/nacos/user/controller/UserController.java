@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController {
 
-    @Value("${user.name.prefix}")
+    @Value("${user.name.prefix: default_prefix_}")
     private String userNamePrefix;
 
     @RequestMapping("/queryNamePrefix")
