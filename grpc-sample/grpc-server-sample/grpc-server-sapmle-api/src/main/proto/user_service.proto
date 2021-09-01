@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+// option java_package = "me.cxis.sample.grpc.server.api.service";
+package me.cxis.sample.grpc.server.api.service;
+
+service UserService {
+
+  rpc getUserByQuery(UserQuery) returns (User) {}
+
+}
+
+message UserQuery {
+  int32 id = 1;
+}
+
+message User {
+  int32 id = 1;
+  string name = 2;
+  int32 age = 3;
+}
