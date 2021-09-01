@@ -33,6 +33,7 @@
         <module>spring-boot-mybatis</module>
         <module>springmvc</module>
         <module>nacos-sample</module>
+        <module>grpc-sample</module>
     </modules>
 
     <dependencyManagement>
