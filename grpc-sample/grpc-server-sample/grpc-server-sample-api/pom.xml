@@ -10,11 +10,11 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>grpc-server-sapmle-api</artifactId>
+    <artifactId>grpc-server-sample-api</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>grpc-server-sapmle-api</name>
+    <name>grpc-server-sample-api</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

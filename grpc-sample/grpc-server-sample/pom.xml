@@ -12,7 +12,7 @@
     <artifactId>grpc-server-sample</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>grpc-server-sapmle-api</module>
+        <module>grpc-server-sample-api</module>
         <module>grpc-server-sample-core</module>
     </modules>
 

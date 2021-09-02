@@ -25,7 +25,7 @@
     <dependencies>
         <dependency>
             <groupId>me.cxis.sample.grpc</groupId>
-            <artifactId>grpc-server-sapmle-api</artifactId>
+            <artifactId>grpc-server-sample-api</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 
