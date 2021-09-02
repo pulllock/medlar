@@ -29,6 +29,14 @@
                 <artifactId>grpc-spring-boot-starter</artifactId>
                 <version>${grpc-starter.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-bom</artifactId>
+                <version>1.40.1</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>
