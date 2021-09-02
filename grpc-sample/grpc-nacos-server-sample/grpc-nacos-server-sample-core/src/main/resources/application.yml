@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: grpc-nacos-server-sample
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+      discovery:
+        server-addr: 127.0.0.1:8848
+grpc:
+  server:
+    port: 9898
+server:
+  port: 8081
