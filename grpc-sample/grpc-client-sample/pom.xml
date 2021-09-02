@@ -21,6 +21,8 @@
         <maven.compiler.target>8</maven.compiler.target>
         <grpc-server-sample-api.version>1.0.0-SNAPSHOT</grpc-server-sample-api.version>
         <grpc-starter.version>2.12.0.RELEASE</grpc-starter.version>
+        <grpc.version>1.40.1</grpc.version>
+        <spring-boot.version>2.2.6.RELEASE</spring-boot.version>
     </properties>
 
     <dependencyManagement>
@@ -28,7 +30,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.2.6.RELEASE</version>
+                <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -42,13 +44,20 @@
             <dependency>
                 <groupId>io.grpc</groupId>
                 <artifactId>grpc-bom</artifactId>
-                <version>1.40.1</version>
+                <version>${grpc.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
+
             <dependency>
                 <groupId>net.devh</groupId>
-                <artifactId>grpc-spring-boot-starter</artifactId>
+                <artifactId>grpc-client-spring-boot-starter</artifactId>
+                <version>${grpc-starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.devh</groupId>
+                <artifactId>grpc-server-spring-boot-starter</artifactId>
                 <version>${grpc-starter.version}</version>
             </dependency>
         </dependencies>
