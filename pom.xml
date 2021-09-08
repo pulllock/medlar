@@ -34,6 +34,7 @@
         <module>springmvc</module>
         <module>nacos-sample</module>
         <module>grpc-sample</module>
+        <module>spring-cloud-sample</module>
     </modules>
 
     <dependencyManagement>
