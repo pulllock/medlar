@@ -1,0 +1,1 @@
+package me.cxis.sample.cloud.user.api;
