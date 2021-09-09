@@ -18,6 +18,16 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <user-sample.version>1.0.0-SNAPSHOT</user-sample.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>me.cxis.sample.cloud</groupId>
+                <artifactId>spring-cloud-user-sample-api</artifactId>
+                <version>${user-sample.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
