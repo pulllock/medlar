@@ -35,6 +35,7 @@
         <module>nacos-sample</module>
         <module>grpc-sample</module>
         <module>spring-cloud-sample</module>
+        <module>asm-sample</module>
     </modules>
 
     <dependencyManagement>
