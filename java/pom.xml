@@ -59,6 +59,11 @@
             <systemPath>${project.basedir}/lib/jmxtools-1.2.1.jar</systemPath>
         </dependency>
 
+        <dependency>
+            <groupId>org.jctools</groupId>
+            <artifactId>jctools-core</artifactId>
+            <version>3.3.0</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>java.test</finalName>
