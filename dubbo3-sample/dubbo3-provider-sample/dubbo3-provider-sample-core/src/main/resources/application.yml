@@ -11,3 +11,6 @@ dubbo:
     name: grpc
   provider:
     timeout: 5000
+logging:
+  level:
+    root: debug
