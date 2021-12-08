@@ -36,6 +36,7 @@
         <module>grpc-sample</module>
         <module>spring-cloud-sample</module>
         <module>asm-sample</module>
+        <module>dubbo3-sample</module>
     </modules>
 
     <dependencyManagement>

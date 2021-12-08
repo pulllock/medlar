@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: dubbo3-consumer-sample-core
+
+dubbo:
+  application:
+    name: ${spring.application.name}
+  registry:
+    address: zookeeper://127.0.0.1:2181
+  protocol:
+    name: grpc
+  consumer:
+    timeout: 5000
+    retries: 0
