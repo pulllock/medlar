@@ -43,6 +43,12 @@
             </dependency>
 
             <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-common</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.apache.zookeeper</groupId>
                 <artifactId>zookeeper</artifactId>
                 <version>${zookeeper.version}</version>
@@ -50,18 +56,6 @@
                     <exclusion>
                         <artifactId>netty</artifactId>
                         <groupId>io.netty</groupId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.curator</groupId>
-                <artifactId>curator-framework</artifactId>
-                <version>${curator.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>zookeeper</artifactId>
-                        <groupId>org.apache.zookeeper</groupId>
                     </exclusion>
                 </exclusions>
             </dependency>

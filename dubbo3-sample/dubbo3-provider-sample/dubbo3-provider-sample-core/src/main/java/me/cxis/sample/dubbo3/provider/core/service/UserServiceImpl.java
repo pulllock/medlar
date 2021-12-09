@@ -2,7 +2,8 @@ package me.cxis.sample.dubbo3.provider.core.service;
 
 import com.alibaba.fastjson.JSON;
 import io.grpc.stub.StreamObserver;
-import me.cxis.sample.dubbo3.provider.api.service.UserServiceGrpc.IUserService;
+import me.cxis.sample.dubbo3.provider.api.service.DubboUserServiceGrpc.IUserService;
+import me.cxis.sample.dubbo3.provider.api.service.DubboUserServiceGrpc.UserServiceImplBase;
 import me.cxis.sample.dubbo3.provider.api.service.UserServiceOuterClass.User;
 import me.cxis.sample.dubbo3.provider.api.service.UserServiceOuterClass.UserQuery;
 import org.slf4j.Logger;
@@ -10,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service("userService")
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl extends UserServiceImplBase implements IUserService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
