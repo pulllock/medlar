@@ -6,5 +6,5 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class IntegrationBase {
+public abstract class AbstractIntegrationTest {
 }

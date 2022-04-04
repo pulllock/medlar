@@ -1,6 +1,6 @@
 package me.cxis.controller;
 
-import me.cxis.IntegrationBase;
+import me.cxis.AbstractIntegrationTest;
 import me.cxis.model.User;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 
-public class UserControllerTest extends IntegrationBase {
+public class UserControllerTest extends AbstractIntegrationTest {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(UserControllerTest.class);
 
