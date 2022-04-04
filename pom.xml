@@ -37,6 +37,7 @@
         <module>spring-cloud-sample</module>
         <module>asm-sample</module>
         <module>dubbo3-sample</module>
+        <module>spring-boot-maven-plugin</module>
     </modules>
 
     <dependencyManagement>
