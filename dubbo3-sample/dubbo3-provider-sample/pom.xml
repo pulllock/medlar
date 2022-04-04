@@ -20,7 +20,7 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <spring-boot.version>2.6.1</spring-boot.version>
-        <dubbo.version>3.0.4</dubbo.version>
+        <dubbo.version>3.0.5</dubbo.version>
         <grpc.version>1.42.1</grpc.version>
         <zookeeper.version>3.4.13</zookeeper.version>
         <curator.version>4.2.0</curator.version>
