@@ -22,7 +22,7 @@
         <spring-boot.version>2.6.1</spring-boot.version>
         <dubbo.version>3.0.4</dubbo.version>
         <grpc.version>1.42.1</grpc.version>
-        <zookeeper.version>3.4.13</zookeeper.version>
+        <zookeeper.version>3.4.14</zookeeper.version>
         <curator.version>4.2.0</curator.version>
     </properties>
 
