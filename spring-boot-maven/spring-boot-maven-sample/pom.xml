@@ -2,6 +2,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!--
+        parent元素声明父模块，可继承的POM元素有：
+        groupId：               项目的组id
+        version：               项目的版本
+        description：           项目的描述信息
+        organization：          项目的组织信息
+        inceptionYear：         项目的创始年份
+        url：                   项目的地址
+        developers：            项目的开发者信息
+        contributors：          项目的贡献者信息
+        distributionManagement：项目的部署配置
+        issueManagement：       项目的缺陷跟踪系统信息
+        ciManagement：          项目的持续集成系统信息
+        scm：                   项目的版本控制系统信息
+        mailingLists：          项目的邮件列表信息
+        properties：            自定义的maven属性
+        dependencies：          项目的依赖配置
+        dependencyManagement：  项目的依赖管理配置
+        repositories：          项目的仓库配置
+        build：                 包括项目的源码目录配置、输出目录配置、插件配置、插件管理配置等
+        reporting：             包括项目的报告输出目录配置、报告插件配置
+    -->
     <parent>
         <artifactId>spring-boot-maven</artifactId>
         <groupId>me.cxis</groupId>
@@ -24,6 +46,10 @@
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
         <surefire-junit4.version>3.0.0-M5</surefire-junit4.version>
         <maven-site-plugin.version>3.11.0</maven-site-plugin.version>
+        <maven-javadoc-plugin.version>3.3.2</maven-javadoc-plugin.version>
+        <maven-jxr-plugin.version>3.2.0</maven-jxr-plugin.version>
+        <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
+        <maven-pmd-plugin.version>3.16.0</maven-pmd-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -67,21 +93,37 @@
         <pluginManagement>
             <plugins>
                 <!--
-                    maven-surefire-plugin插件
+                    maven-surefire-plugin插件，测试运行器，默认情况下会自动执行测试源码路径（src/test/java）下符合
+                    一组命名模式的测试类：
+                    **/Test*.java：任何子目录下所有命名以Test开头的Java类
+                    **/*Test.java：任何子目录下所有命名以Test结尾的Java类
+                    **/*TestCase.java：任何子目录下所有命名以TestCase结尾的Java类
 
-                    配置testFailureIgnore为true：当maven遇到单元测试失败的时候继续执行，也可以在执行mvn test命令的时候添加参数：
-                    -Dmaven.test.failure.ignore=true。
+                    -Dtest=XxxTest 可以指定要执行的测试用例
+                    -DfailIfNoTests=false 可以在没有任何测试用例时也不报错
 
-                    配置skip为true：跳过单元测试，也可以在执行命令的时候添加参数：-Dmaven.test.skip=true。
+                    默认情况下会在项目的target/surefire-reports目录下生成报告，报告有两种形式：简单文本格式和与Junit兼容的xml格式。
                 -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
-                    <!--<configuration>
+                    <configuration>
+                        <!-- 当maven遇到单元测试失败的时候继续执行，也可以在执行mvn命令的时候添加参数：-Dmaven.test.failure.ignore=true -->
                         <testFailureIgnore>true</testFailureIgnore>
+                        <!-- 跳过单元测试（不执行测试用例，也不编译测试用例类），也可以在执行命令的时候添加参数：-Dmaven.test.skip=true -->
                         <skip>true</skip>
-                    </configuration>-->
+                        <!-- 跳过单元测试（不执行测试用例，但是编译测试用例类），也可以在执行命令的时候添加参数：-DskipTests -->
+                        <skipTests>true</skipTests>
+                        <includes>
+                            <!-- 指定要执行的测试类 -->
+                            <include>**/*Tests.java</include>
+                        </includes>
+                        <excludes>
+                            <!-- 指定要排除执行的测试类 -->
+                            <exclude>**/*ServiceTest.java</exclude>
+                        </excludes>
+                    </configuration>
                     <dependencies>
                         <dependency>
                             <groupId>org.apache.maven.surefire</groupId>
@@ -128,6 +170,7 @@
                     </executions>-->
                 </plugin>
 
+                <!-- 生成站点插件 -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
@@ -153,4 +196,36 @@
             </plugin>
         </plugins>
     </build>
+
+    <!-- 报告相关 -->
+    <reporting>
+        <plugins>
+            <!-- 基于项目源码生成JavaDocs文档 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+            </plugin>
+            <!-- 以web页面的形式将Java源代码展现-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>${maven-jxr-plugin.version}</version>
+            </plugin>
+
+            <!-- 自动检查编码规范 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven-checkstyle-plugin.version}</version>
+            </plugin>
+
+            <!-- Java源码分析工具 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>${maven-pmd-plugin.version}</version>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>
