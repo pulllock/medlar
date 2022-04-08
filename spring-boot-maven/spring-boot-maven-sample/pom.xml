@@ -43,6 +43,8 @@
         <spring-boot.version>2.5.4</spring-boot.version>
         <junit.version>4.13.2</junit.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
+        <maven-surefire-report-plugin.version>3.0.0-M5</maven-surefire-report-plugin.version>
+        <maven-project-info-reports-plugin.version>3.2.2</maven-project-info-reports-plugin.version>
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
         <surefire-junit4.version>3.0.0-M5</surefire-junit4.version>
         <maven-site-plugin.version>3.11.0</maven-site-plugin.version>
@@ -204,14 +206,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>${maven-surefire-report-plugin.version}</version>
             </plugin>
 
             <!-- 生成项目信息插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>3.2.2</version>
+                <version>${maven-project-info-reports-plugin.version}</version>
             </plugin>
 
             <!-- 基于项目源码生成JavaDocs文档 -->
