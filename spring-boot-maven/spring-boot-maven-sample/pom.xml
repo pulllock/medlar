@@ -52,6 +52,7 @@
         <maven-jxr-plugin.version>3.2.0</maven-jxr-plugin.version>
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
         <maven-pmd-plugin.version>3.16.0</maven-pmd-plugin.version>
+        <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -110,22 +111,7 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
-                    <configuration>
-                        <!-- 当maven遇到单元测试失败的时候继续执行，也可以在执行mvn命令的时候添加参数：-Dmaven.test.failure.ignore=true -->
-                        <testFailureIgnore>true</testFailureIgnore>
-                        <!-- 跳过单元测试（不执行测试用例，也不编译测试用例类），也可以在执行命令的时候添加参数：-Dmaven.test.skip=true -->
-                        <skip>true</skip>
-                        <!-- 跳过单元测试（不执行测试用例，但是编译测试用例类），也可以在执行命令的时候添加参数：-DskipTests -->
-                        <skipTests>true</skipTests>
-                        <includes>
-                            <!-- 指定要执行的测试类 -->
-                            <include>**/*Tests.java</include>
-                        </includes>
-                        <excludes>
-                            <!-- 指定要排除执行的测试类 -->
-                            <exclude>**/*ServiceTest.java</exclude>
-                        </excludes>
-                    </configuration>
+
                     <dependencies>
                         <dependency>
                             <groupId>org.apache.maven.surefire</groupId>
@@ -178,6 +164,28 @@
                     <artifactId>maven-site-plugin</artifactId>
                     <version>${maven-site-plugin.version}</version>
                 </plugin>
+
+                <!--覆盖率插件-->
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>default-prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>default-report</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -195,6 +203,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
@@ -245,6 +258,20 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>${maven-pmd-plugin.version}</version>
+            </plugin>
+
+            <!-- 覆盖率报告 -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven-plugin.version}</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
         </plugins>
     </reporting>
