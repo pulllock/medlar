@@ -38,6 +38,7 @@
         <module>asm-sample</module>
         <module>dubbo3-sample</module>
         <module>spring-boot-maven</module>
+        <module>spring-boot-unit-test</module>
     </modules>
 
     <dependencyManagement>
