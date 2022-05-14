@@ -40,6 +40,7 @@
         <module>spring-boot-maven</module>
         <module>spring-boot-unit-test</module>
         <module>spring-boot-docker</module>
+        <module>spring-boot-groovy</module>
     </modules>
 
     <dependencyManagement>
