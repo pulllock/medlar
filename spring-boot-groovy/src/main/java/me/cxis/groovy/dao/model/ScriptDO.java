@@ -16,6 +16,11 @@ public class ScriptDO implements Serializable {
      */
     private int executeMode;
 
+    /**
+     * 脚本内容
+     */
+    private String content;
+
     public String getName() {
         return name;
     }
@@ -32,11 +37,20 @@ public class ScriptDO implements Serializable {
         this.executeMode = executeMode;
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     @Override
     public String toString() {
         return "ScriptDO{" +
                 "name='" + name + '\'' +
                 ", executeMode=" + executeMode +
+                ", content='" + content + '\'' +
                 '}';
     }
 }

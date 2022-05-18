@@ -94,9 +94,66 @@ public class BizManager {
         return result;
     }
 
-    String execute(ScriptContext context, String scriptName) {
+    private String execute(ScriptContext context, String scriptName) {
         LOGGER.info("execute: {} - {}", scriptName, context);
         AbstractResultCalculator calculator = gclEngineManager.getCalculator(scriptName);
+        String scriptResult = calculator.calculate(context);
+        if (scriptResult == null || scriptResult.length() == 0 || scriptResult.equals("null")) {
+            scriptResult = "{}";
+        }
+
+        // 保存
+        bizDao.save(context.getBizResultId(), scriptResult);
+
+        return scriptResult;
+    }
+
+    public SubmitResult submit2(SubmitParam param) {
+        // 处理业务逻辑
+        LOGGER.info("处理业务逻辑：{}", param);
+        // 保存业务数据
+        LOGGER.info("保存业务数据");
+
+        SubmitResult result = new SubmitResult();
+        result.setBizDesc("业务处理完成");
+        Long bizResultId = 1L;
+
+        // 查询是否有绑定动态脚本
+        ScriptDO script = bizDao.queryScript2();
+        if (script == null) {
+            return result;
+        }
+
+        // 过滤需要进行计算的数据
+        String scriptParam = JSON.toJSONString(param);
+
+        // 脚本执行的上下文
+        ScriptContext context = new ScriptContext();
+        context.setBizResultId(bizResultId);
+        context.setParam(scriptParam);
+
+        // 执行脚本
+
+        // 同步执行
+        if (script.getExecuteMode() == 1) {
+            String scriptResult = execute(context, script);
+            result.setScriptResult(scriptResult);
+        }
+        // 异步执行
+        else {
+            result.setScriptResult("{}");
+            CompletableFuture.supplyAsync(() -> execute(context, script), scriptExecuteTaskExecutor);
+        }
+
+        // 保存脚本执行结果
+
+        LOGGER.info("返回结果：{}", result);
+        return result;
+    }
+
+    private String execute(ScriptContext context, ScriptDO script) {
+        LOGGER.info("execute: {} - {}", script.getName(), context);
+        AbstractResultCalculator calculator = gclEngineManager.getCalculator(script);
         String scriptResult = calculator.calculate(context);
         if (scriptResult == null || scriptResult.length() == 0 || scriptResult.equals("null")) {
             scriptResult = "{}";

@@ -1,6 +1,7 @@
 package me.cxis.groovy.engine;
 
 import groovy.lang.GroovyClassLoader;
+import me.cxis.groovy.dao.model.ScriptDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -33,6 +34,28 @@ public class GCLEngineManager {
             calculator = (AbstractResultCalculator) clazz.newInstance();
 
             calculators.put(scriptName, calculator);
+        } catch (Exception e)  {
+            e.printStackTrace();
+            throw new RuntimeException(e.getCause());
+        }
+        return calculator;
+    }
+
+    public AbstractResultCalculator getCalculator(ScriptDO script) {
+        AbstractResultCalculator calculator = calculators.get(script.getName());
+        if (calculator != null) {
+            LOGGER.info("从缓存中获取");
+            return calculator;
+        }
+
+        LOGGER.info("第一次缓存中没有，需要计算后放入缓存");
+
+        try {
+
+            Class<?> clazz = groovyClassLoader.parseClass(script.getContent());
+            calculator = (AbstractResultCalculator) clazz.newInstance();
+
+            calculators.put(script.getName(), calculator);
         } catch (Exception e)  {
             e.printStackTrace();
             throw new RuntimeException(e.getCause());
