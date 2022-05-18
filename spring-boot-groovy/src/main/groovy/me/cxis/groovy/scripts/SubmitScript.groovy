@@ -1,4 +1,4 @@
-package me.cxis.groovy.script
+package me.cxis.groovy.scripts
 
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper

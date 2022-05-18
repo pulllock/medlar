@@ -16,7 +16,7 @@ public class GCLEngineManager {
 
     private final ConcurrentHashMap<String, AbstractResultCalculator> calculators = new ConcurrentHashMap<>();
 
-    private final static String SCRIPT_DIR_PREFIX = "me.cxis.groovy.script.";
+    private final static String SCRIPT_DIR_PREFIX = "me.cxis.groovy.scripts.";
 
     public AbstractResultCalculator getCalculator(String scriptName) {
         AbstractResultCalculator calculator = calculators.get(scriptName);
@@ -35,6 +35,7 @@ public class GCLEngineManager {
             calculators.put(scriptName, calculator);
         } catch (Exception e)  {
             e.printStackTrace();
+            throw new RuntimeException(e.getCause());
         }
         return calculator;
     }
