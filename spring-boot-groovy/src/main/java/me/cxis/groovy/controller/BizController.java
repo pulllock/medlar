@@ -28,4 +28,11 @@ public class BizController {
         param.setAge(new Random().nextInt(40));
         return bizManager.submit(param);
     }
+
+    @GetMapping("/submit2")
+    public SubmitResult submit2() {
+        SubmitParam param = new SubmitParam();
+        param.setAge(new Random().nextInt(40));
+        return bizManager.submit2(param);
+    }
 }
