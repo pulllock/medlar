@@ -27,15 +27,11 @@ public class CvdManager {
         }
 
         if (!diabetes && isMen && !smoker) {
-            int[][] tt = diabetes_men_non_smoker[getAgeIndex(age)];
-            int[] t = tt[getSbpIndex(sbp)];
-            return t[getTchlIndex(tchol)];
+
         }
 
         if (!diabetes && isMen && smoker) {
-            int[][] tt = diabetes_men_smoker[getAgeIndex(age)];
-            int[] t = tt[getSbpIndex(sbp)];
-            return t[getTchlIndex(tchol)];
+
         }
 
         if (!diabetes && !isMen && !smoker) {
