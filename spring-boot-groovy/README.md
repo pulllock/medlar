@@ -66,3 +66,10 @@
 ## 字段和属性
 
 - 调用对象的内置属性`properties`可以获得全部定义的属性
+
+## 读文件
+
+- 一次性读取文本文件：`String textContent = new File("/path/to/file/example.txt").text`
+- 按行读取文本文件：`List<String> textContents = new File("/path/to/file/example.txt").readLines()`
+- 读取xml文件：`def xmlRoot = new XmlSlurper().parse('/path/to/file/example.xml')`
+- 读取json文件：`def jsonRoot = new JsonSlurper().parse(new File('/path/to/file/example.json'))`
