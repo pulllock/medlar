@@ -28,7 +28,7 @@
         <zookeeper.version>3.6.0</zookeeper.version>
         <curator.version>4.3.0</curator.version>
         <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
-        <dubbo.version>2.6.8</dubbo.version>
+        <dubbo.version>2.6.12</dubbo.version>
     </properties>
 
     <dependencyManagement>
