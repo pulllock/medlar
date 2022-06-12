@@ -57,7 +57,7 @@
         <maven-site-plugin.version>3.11.0</maven-site-plugin.version>
         <groovy-all.version>3.0.10</groovy-all.version>
         <es.version>8.2.2</es.version>
-        <jackson.version>2.12.3</jackson.version>
+        <jackson.version>2.12.6.1</jackson.version>
         <jakarta.json-api.version>2.1.0</jakarta.json-api.version>
         <hystrix.version>1.5.12</hystrix.version>
         <tair-client.version>2.3.5</tair-client.version>
