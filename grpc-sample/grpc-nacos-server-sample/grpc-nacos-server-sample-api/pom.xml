@@ -12,20 +12,18 @@
     <artifactId>grpc-nacos-server-sample-api</artifactId>
     <packaging>jar</packaging>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
 
     <dependencies>
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-stub</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-protobuf</artifactId>
         </dependency>
+
         <dependency>
             <!-- Java 9+ compatibility -->
             <groupId>javax.annotation</groupId>
