@@ -71,7 +71,7 @@
         <commons-collections4.version>4.4</commons-collections4.version>
         <asm.version>9.2</asm.version>
         <dubbo.version>3.0.4</dubbo.version>
-        <dubbo2.version>2.6.8</dubbo2.version>
+        <dubbo2.version>2.6.12</dubbo2.version>
         <grpc.version>1.42.1</grpc.version>
         <grpc-starter.version>2.12.0.RELEASE</grpc-starter.version>
         <zookeeper.version>3.6.0</zookeeper.version>
