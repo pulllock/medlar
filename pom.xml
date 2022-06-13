@@ -9,24 +9,17 @@
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
     <modules>
-        <module>mybatis</module>
-        <module>jedis</module>
         <module>java</module>
-        <module>jmeter</module>
         <module>spring-boot</module>
-        <module>netty</module>
         <module>distributedlock</module>
         <module>spring</module>
-        <module>zookeeper</module>
         <module>rocketmq</module>
-        <module>tomcat</module>
         <module>sentinel</module>
         <module>spring-boot-mybatis</module>
         <module>springmvc</module>
         <module>nacos-sample</module>
         <module>grpc-sample</module>
         <module>spring-cloud-sample</module>
-        <module>asm-sample</module>
         <module>dubbo3-sample</module>
         <module>spring-boot-maven</module>
         <module>spring-boot-unit-test</module>
@@ -121,10 +114,11 @@
             </dependency>
 
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit4.version}</version>
-                <scope>test</scope>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-bom</artifactId>
+                <version>${grpc.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
             </dependency>
 
             <dependency>
@@ -141,6 +135,13 @@
                 <version>${spock-bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit4.version}</version>
+                <scope>test</scope>
             </dependency>
 
             <dependency>
@@ -236,12 +237,6 @@
             </dependency>
 
             <dependency>
-                <groupId>org.ow2.asm</groupId>
-                <artifactId>asm</artifactId>
-                <version>${asm.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo</artifactId>
                 <version>${dubbo.version}</version>
@@ -294,14 +289,6 @@
             </dependency>
 
             <dependency>
-                <groupId>io.grpc</groupId>
-                <artifactId>grpc-bom</artifactId>
-                <version>${grpc.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-
-            <dependency>
                 <groupId>net.devh</groupId>
                 <artifactId>grpc-client-spring-boot-starter</artifactId>
                 <version>${grpc-starter.version}</version>
@@ -336,18 +323,6 @@
                 <groupId>org.jctools</groupId>
                 <artifactId>jctools-core</artifactId>
                 <version>${jctools-core.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.jmeter</groupId>
-                <artifactId>ApacheJMeter_java</artifactId>
-                <version>${jmeter.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.mybatis</groupId>
-                <artifactId>mybatis</artifactId>
-                <version>${mybatis.version}</version>
             </dependency>
 
             <dependency>
