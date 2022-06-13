@@ -22,3 +22,4 @@ segments_*
 *.tip
 *.liv
 logs/
+.DS_Store
