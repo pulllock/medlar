@@ -668,3 +668,15 @@ GET /user/_search
   }
 }
 ```
+
+## 聚合
+
+- avg 平均值
+- weighted_avg 带权重的平均值
+- cardinality 计数，基于HyperlogLog++算法
+- extended_stats 统计聚合
+- max 最大值
+- min 最小值
+- sum 求和
+- percentiles 百分位数聚合
+- percentile_ranks 百分比排名聚合
