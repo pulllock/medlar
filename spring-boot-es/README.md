@@ -680,3 +680,41 @@ GET /user/_search
 - sum 求和
 - percentiles 百分位数聚合
 - percentile_ranks 百分比排名聚合
+
+## 映射
+
+映射是对索引字段的定义，包括：数据类型、存储属性、分析器、词向量等。
+
+```
+PUT user 
+{
+  "mappings": {
+    "properties": {
+      "name": {"type": "text"},
+      "age":{"type": "integer"},
+      "create_time":{
+        "type": "date",
+        "format": "strict_date_optional_time_nanos||epoch_millis"
+      }
+    }
+  }
+}
+```
+
+### 数据类型
+
+- 字符串类型：string
+- 数字类型：long、integer、short、byte、double、float、hal_float、scaled_float
+- 布尔类型：boolean
+- 数组类型，es没有专门的数组类型，任何字段都可包含0到多个值，数组中所有值都必须具有相同的数据类型
+- 日期类型
+- keyword，不进行分词，直接作为一个Term索引，搜索时也只能用精确值搜索
+- text，会进行分词
+- geo，地理位置类型
+
+### 映射的属性
+
+- index：true、false，控制是否对字段值进行索引，未索引的字段不可用来搜索、排序、聚合等
+- store：true、false，是否存储原始字段值
+- 分析器属性，一般配置于text类型字段中，表示索引和搜索时使用的分析方法
+- doc_values
