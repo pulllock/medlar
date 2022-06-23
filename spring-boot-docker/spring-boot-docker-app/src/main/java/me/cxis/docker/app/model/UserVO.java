@@ -1,4 +1,4 @@
-package me.cxis.docker.model;
+package me.cxis.docker.app.model;
 
 import java.time.LocalDateTime;
 

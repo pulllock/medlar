@@ -51,20 +51,20 @@ Status: Downloaded newer image for docker/getting-started:latest
 
 ## 创建我们自己的docker应用并运行
 
-1. 创建一个SpringBoot应用：`spring-boot-docker`，并编写示例代码
-2. 在项目根目录下创建`Dockerfile`文件，文件内容如下：
+1. 创建一个SpringBoot应用：`spring-boot-docker-app`，并编写示例代码
+2. 在`spring-boot-docker-app`项目根目录下创建`Dockerfile`文件，文件内容如下：
    ```
    FROM openjdk:8-jre-alpine
 
    RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories && \
    apk update && \
    mkdir -p /app
-   COPY target/spring-boot-docker-1.0.0-SNAPSHOT.jar app/spring-boot-docker.jar
+   COPY target/spring-boot-docker-app-1.0.0-SNAPSHOT.jar app/spring-boot-docker-app.jar
    EXPOSE 8080
-   ENTRYPOINT ["java", "-jar", "app/spring-boot-docker.jar"]
+   ENTRYPOINT ["java", "-jar", "app/spring-boot-docker-app.jar"]
    ```
-3. 将项目进行打包，执行命令：`mvn clean package`
-4. 创建应用的镜像，执行命令：`docker build -t local_test/spring-boot-docker:1.0.0-SNAPSHOT .`，命令执行后打印日志如下：
+3. 将`spring-boot-docker-app`项目进行打包，执行命令：`mvn clean package`
+4. 创建应用的镜像，执行命令：`docker build -t local_test/spring-boot-docker-app:1.0.0-SNAPSHOT .`，命令执行后打印日志如下：
    ```
     [+] Building 10.1s (8/8) FINISHED                                                                                                                                                                                                       
     => [internal] load build definition from Dockerfile                                                                                                                                                                               0.1s
@@ -76,15 +76,15 @@ Status: Downloaded newer image for docker/getting-started:latest
     => [internal] load build context                                                                                                                                                                                                  1.5s
     => => transferring context: 17.57MB                                                                                                                                                                                               1.5s
     => [2/3] RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories &&     apk update &&     mkdir -p /app                                                                                        8.3s
-    => [3/3] COPY target/spring-boot-docker-1.0.0-SNAPSHOT.jar spring-boot-docker.jar                                                                                                                                                 0.1s
+    => [3/3] COPY target/spring-boot-docker-app-1.0.0-SNAPSHOT.jar spring-boot-docker-app.jar                                                                                                                                                 0.1s
     => exporting to image                                                                                                                                                                                                             0.1s
     => => exporting layers                                                                                                                                                                                                            0.1s
     => => writing image sha256:da48202ab43b07c4d355cbc0c4c511c3112964327c776044069c0aa4e00195ff                                                                                                                                       0.0s
-    => => naming to docker.io/local_test/spring-boot-docker:1.0.0-SNAPSHOT                                                                                                                                                            0.0s
+    => => naming to docker.io/local_test/spring-boot-docker-app:1.0.0-SNAPSHOT                                                                                                                                                            0.0s
     
     Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them
    ```
-5. 启动应用的容器，执行命令：`docker run -d -p 8080:8080 --name spring-boot-docker local_test/spring-boot-docker:1.0.0-SNAPSHOT`
+5. 启动应用的容器，执行命令：`docker run -d -p 8080:8080 --name spring-boot-docker-app local_test/spring-boot-docker-app:1.0.0-SNAPSHOT`
 6. 启动成功后，访问：`http://localhost:8080`
 
 ## 停止我们的docker应用并删除
@@ -92,7 +92,7 @@ Status: Downloaded newer image for docker/getting-started:latest
 1. 查看应用的容器id，执行命令：`docker ps -a`，执行命令后可以看到如下输出：
    ```
    CONTAINER ID   IMAGE                                                 COMMAND                  CREATED             STATUS             PORTS                                            NAMES
-   782aa60819ff   local_test/spring-boot-docker:1.0.0-SNAPSHOT          "java -jar spring-bo…"   21 minutes ago      Up 21 minutes      0.0.0.0:8080->8080/tcp                           spring-boot-docker
+   782aa60819ff   local_test/spring-boot-docker-app:1.0.0-SNAPSHOT          "java -jar spring-bo…"   21 minutes ago      Up 21 minutes      0.0.0.0:8080->8080/tcp                           spring-boot-docker-app
    ```
    得到应用的id：782aa60819ff
 2. 停止容器，执行命令：`docker stop 782aa60819ff`
@@ -105,7 +105,7 @@ Status: Downloaded newer image for docker/getting-started:latest
 volume挂载的目录是docker进行管理的，位于：`/var/lib/docker/volumes`下面
 
 - 创建一个volume：`docker volume create app_dir`
-- 启动容器的时候将`app_dir`目录挂载到容器的`/app`目录上：`docker run -d -p 8080:8080 -v app_dir:/app --name spring-boot-docker local_test/spring-boot-docker:1.0.0-SNAPSHOT`
+- 启动容器的时候将`app_dir`目录挂载到容器的`/app`目录上：`docker run -d -p 8080:8080 -v app_dir:/app --name spring-boot-docker-app local_test/spring-boot-docker-app:1.0.0-SNAPSHOT`
 
 可以使用`docker volume inspect app_dir`查看刚才创建的volume：
 ```
@@ -127,7 +127,7 @@ volume挂载的目录是docker进行管理的，位于：`/var/lib/docker/volume
 bind amount可以将主机上的任意目录挂载到容器上，假如当前主机上有个`/tmp/app_data`目录，将`/tmp/app_data`目录挂载到容器上，执行如下命令即可：
 
 ```
-docker run -d -p 8080:8080 -v /tmp/app_data:/app_data --name spring-boot-docker local_test/spring-boot-docker:1.0.0-SNAPSHOT
+docker run -d -p 8080:8080 -v /tmp/app_data:/app_data --name spring-boot-docker-app local_test/spring-boot-docker-app:1.0.0-SNAPSHOT
 ```
 
 ## network
@@ -135,16 +135,39 @@ docker run -d -p 8080:8080 -v /tmp/app_data:/app_data --name spring-boot-docker 
 可以创建一个网络，让多个容器之间进行通信，创建网络：
 
 ```
-docker network create spring_boot_docker_network
+docker network create spring_boot_docker_app_network
 ```
 
 使用该命令创建了一个名字为spring_boot_docker_network的网络，接下来可以在启动容器的时候指定网络：
 
 ```
-docker run -d -p 8080:8080 --network spring_boot_docker_network -v /tmp/app_data:/app_data --name spring-boot-docker local_test/spring-boot-docker:1.0.0-SNAPSHOT
+docker run -d -p 8080:8080 --network spring_boot_docker_app_network -v /tmp/app_data:/app_data --name spring-boot-docker-app local_test/spring-boot-docker-app:1.0.0-SNAPSHOT
 ```
 
 可以使用`--network-alias xxx`给容器指定一个网络别名，其他容器可以通过该名字访问当前容器
+
+## 使用docker-compose
+
+1. 创建应用`spring-boot-docker-compose-server`，并创建镜像：`docker build -t local_test/spring-boot-docker-compose-server:1.0.0-SNAPSHOT .`
+2. 创建应用`spring-boot-docker-compose-client`，并创建镜像：`docker build -t local_test/spring-boot-docker-compose-client:1.0.0-SNAPSHOT .`
+3. 创建文件`docker-compose.yml`，内容如下：
+   ```
+    version: "3.7"
+
+    services:
+      spring-boot-docker-compose-server:
+      image: local_test/spring-boot-docker-compose-server:1.0.0-SNAPSHOT
+      ports:
+       - 8081:8081
+
+      spring-boot-docker-compose-client:
+      image: local_test/spring-boot-docker-compose-client:1.0.0-SNAPSHOT
+      ports:
+        - 8082:8082
+   ```
+4. 启动服务，执行命令：`docker-compose up -d`
+5. 查看日志：`docker-compose logs -f`
+6. 访问`spring-boot-docker-compose-client`的接口http://localhost:8082/user/queryById?id=1，可以正确的调用`spring-boot-docker-compose-server`服务的接口并返回正确的值
 
 # Dockerfile说明
 
