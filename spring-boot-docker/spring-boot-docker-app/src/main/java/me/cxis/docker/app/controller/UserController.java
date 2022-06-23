@@ -1,6 +1,6 @@
-package me.cxis.docker.controller;
+package me.cxis.docker.app.controller;
 
-import me.cxis.docker.model.UserVO;
+import me.cxis.docker.app.model.UserVO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

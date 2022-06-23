@@ -10,28 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>spring-boot-docker</artifactId>
-    <packaging>jar</packaging>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+    <packaging>pom</packaging>
+    <modules>
+        <module>spring-boot-docker-app</module>
+        <module>spring-boot-docker-compose-server</module>
+        <module>spring-boot-docker-compose-client</module>
+    </modules>
 </project>

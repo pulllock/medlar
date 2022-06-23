@@ -1,12 +1,11 @@
-package me.cxis.docker;
+package me.cxis.docker.compose.client;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringBootDockerApplication {
-
+public class DockerComposeClientApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SpringBootDockerApplication.class, args);
+        SpringApplication.run(DockerComposeClientApplication.class, args);
     }
 }

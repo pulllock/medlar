@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  spring-boot-docker-compose-server:
+    image: local_test/spring-boot-docker-compose-server:1.0.0-SNAPSHOT
+    ports:
+      - 8081:8081
+
+  spring-boot-docker-compose-client:
+    image: local_test/spring-boot-docker-compose-client:1.0.0-SNAPSHOT
+    ports:
+      - 8082:8082
