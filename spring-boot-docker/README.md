@@ -168,6 +168,7 @@ docker run -d -p 8080:8080 --network spring_boot_docker_app_network -v /tmp/app_
 4. 启动服务，执行命令：`docker-compose up -d`
 5. 查看日志：`docker-compose logs -f`
 6. 访问`spring-boot-docker-compose-client`的接口http://localhost:8082/user/queryById?id=1，可以正确的调用`spring-boot-docker-compose-server`服务的接口并返回正确的值
+7. 停止并删除容器：`docker-compose down`
 
 # Dockerfile说明
 
@@ -178,4 +179,12 @@ docker run -d -p 8080:8080 --network spring_boot_docker_app_network -v /tmp/app_
 - COPY 复制文件，格式：`COPY <src> <dest>`从src复制到文件到dest
 - EXPOSE 指定容器在运行时监听的端口
 
-# 
+# docker命令
+
+## docker run
+
+`docker run`命令格式如下：
+
+```
+docker run [OPTIONS] IMAGE[:TAG|@DIGEST] [COMMAND] [ARG...]
+```
