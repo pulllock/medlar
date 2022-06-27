@@ -184,8 +184,20 @@ docker run -d -p 8080:8080 --network spring_boot_docker_app_network -v /tmp/app_
   - shell：`ENTRYPOINT command param1 param2`
   - exec：`ENTRYPOINT ["executable", "param1", "param2"]`
 - `LABEL`：给镜像添加一些元数据，键值对形式：`LABEL <key>=<value> <key>=<value> <key>=<value> ...`
-- `COPY`：复制文件，格式：`COPY <src> <dest>`从src复制到文件到dest
-- `EXPOSE`：声明容器在运行时监听的端口，仅仅是声明
+- `EXPOSE`：声明容器在运行时监听的端口，仅仅是声明，使用：`EXPOSE <port> [<port>/<protocol>...]`
+- `ENV`：设置容器内的环境变量，使用：`ENV <key>=<value>`
+- `COPY`：复制文件，将构建上下文的文件复制到镜像中去，格式：`COPY <src> <dest>`从src复制到文件到dest，有两种形式：
+  - `COPY [--chown=<user>:<group>] <src>... <dest>`
+  - `COPY [--chown=<user>:<group>] ["<src>",... "<dest>"]`
+- `ADD`：复制文件，比`COPY`更高级，可以支持从网络地址上下载文件、可以支持自动解压文件，有两种形式：
+  - `ADD [--chown=<user>:<group>] <src>... <dest>`
+  - `ADD [--chown=<user>:<group>] ["<src>",... "<dest>"]`
+- `VOLUME`：在镜像中创建挂载点，使用：`VOLUME ["/data"]`
+- `WORKDIR`：设置工作目录，使用：`WORKDIR /path/to/workdir`
+- `ARG`：构建参数，和`ENV`类似，但是`ARG`设置的普通变量不会保存到构建的镜像中
+- `HEALTHCHECK`：健康检查
+- `SHELL`：可以指定`RUN`、`ENTRYPOINT`、`CMD`等指令执行时候使用的shell，默认是：`["/bin/sh", "-c"]`
+
 
 # docker命令
 
@@ -519,4 +531,290 @@ docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE [:TAG]
 
 ```
 docker top CONTAINER[ps OPTIONS]
+```
+
+# docker-compose/docker compose
+
+`docker-compose`是旧版本的命令，`docker compose`是新版本的命令，使用方式如下：
+
+```
+ docker compose [OPTIONS] COMMAND
+```
+
+
+`OPTIONS`有如下：
+
+- `--file`或者`-f`：指定compose file，默认是`docker-compose.yml`
+- `--project-name`或者`-p`：指定项目名字，默认是目录的名字
+- `--profile`：指定启用的profile
+
+`COMMAND`有如下：
+
+- `docker compose build`：构建或者重新构建服务
+- `docker compose config`：校验并显示配置文件
+- `docker compose create`：创建服务
+- `docker compose down`：停止并移除容器、网络、镜像、卷
+- `docker compose images`：列出镜像
+- `docker compose kill`：kill掉容器
+- `docker compose pause`：暂停服务
+- `docker compose ps`：列出容器
+- `docker compose pull`：拉取服务镜像
+- `docker compose push`：推送服务镜像
+- `docker compose restart`：重启服务
+- `docker compose rm`：移除已经停止的容器
+- `docker compose start`：启动服务
+- `docker compose stop`：停止服务
+- `docker compose top`：显示运行中的进行
+- `docker compose unpause`：恢复暂停中的服务
+- `docker compose up`：创建并启动容器
+
+# docker-compose.yml文件
+
+## 示例
+
+```yaml
+# 指定版本
+version: "3.8"
+# services定义服务，定义了该服务启动的每个容器的配置
+services:
+
+  # 服务名称
+  redis:
+    # 启动容器的镜像
+    image: redis:alpine
+    ports:
+      - "6379"
+    networks:
+      - frontend
+    # 指定部署和运行服务的配置，仅在swam mode下生效，并且只能通过docker stack deploy命令部署，
+    # docker-compose up和docker-compose run命令将被忽略
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+  db:
+    image: postgres:9.4
+    # volumes定义卷
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    deploy:
+      placement:
+        constraints:
+          - "node.role==manager"
+
+  vote:
+    image: dockersamples/examplevotingapp_vote:before
+    ports:
+      - "5000:80"
+    networks:
+      - frontend
+    # 指定服务间的依赖关系，解决服务启动的先后顺序问题
+    # 这里是当前服务依赖redis服务，需要先启动redis服务，停止当前服务前也会先停止redis服务
+    # 服务不会等待该服务所依赖的服务完全启动之后才启动
+    depends_on:
+      - redis
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+      restart_policy:
+        condition: on-failure
+
+  result:
+    image: dockersamples/examplevotingapp_result:before
+    ports:
+      - "5001:80"
+    networks:
+      - backend
+    depends_on:
+      - db
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+  worker:
+    image: dockersamples/examplevotingapp_worker
+    networks:
+      - frontend
+      - backend
+    deploy:
+      mode: replicated
+      replicas: 1
+      # 指定服务的标签，仅在服务上设置，不在服务的任何容器上设置
+      labels: [APP=VOTING]
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      placement:
+        constraints:
+          - "node.role==manager"
+
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:8080"
+    stop_grace_period: 1m30s
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints:
+          - "node.role==manager"
+# networks定义网络
+networks:
+  frontend:
+  backend:
+
+# volumes定义卷
+volumes:
+  db-data:
+```
+
+## 详解
+
+```yaml
+# 指定版本
+version: "3.8"
+# services定义服务，定义了该服务启动的每个容器的配置
+services:
+
+  # 服务名称
+  service1:
+    # 启动容器的镜像
+    image: service1:alpine
+    # 指定容器名称
+    # Docker容器的名称必须唯一，所以为一个服务指定了自定义容器名称后，该服务不能进行扩展，如果尝试为该服务扩容将会导致错误
+    container_name: service-one
+    # 暴露端口，可以使用HOST:CONTAINER的格式指定端口映射，也可以指定容器端口，宿主机会随机选择临时端口进行映射
+    ports:
+      - "8080:8080
+    # 指定所加入的网络，需要在顶层networks配置项中引入具体的网络信息
+    networks:
+      - frontend
+    # 覆盖容器启动后默认执行的命令
+    command:
+      - echo "hello world"
+    # 覆盖默认的入口命令
+    entrypoint: /code/entrypoint.sh
+    # 暴露指定端口，但不映射到宿主机，只被连接的服务访问。只能指定内部端口。
+    expose:
+      - "3000"
+    # 配置运行检查以确定服务容器是否健康
+    healthcheck:
+      # 指定健康检测的方法
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      # 启动容器到进行健康检查的间隔时间以及两次健康检查的间隔时间
+      interval: 1m30s
+      # 单次健康检查的超时时间，超过该时间该次健康检查失败
+      timeout: 3s
+      # 健康检查失败后的最大重试次数，重试了最大次数依然失败，容器将被视为unhealthy
+      retries: 3
+      # 为需要时间引导的容器提供的初始化时间，在此期间检查失败将不计入最大重试次数，但是如果在启动期间健康检查成功，则会将容器视为已启动，并且所有连续失败将计入最大重试次数。
+      start_period: 40s
+    # 将元数据以标签的形式添加到容器中。可以使用数组或字典两种格式
+    # com.example.description: "Accounting webapp"
+    # - "com.example.description=Accounting webapp"
+    labels:
+      com.example.description: "Accounting webapp"
+    # 为每个服务授权对configs的访问权限
+    configs:
+      # 指定config名称
+      - source: my_config
+        # 挂载到service1服务的容器的路径以及名称
+        target: /service1_config
+        # 指定uid
+        uid: '103'
+        # 指定gid
+        gid: '103'
+        # 挂载到容器的文件权限
+        mode: 0440
+      # 指定config名称
+      - my_other_config
+    # 指定服务间的依赖关系，解决服务启动的先后顺序问题
+    # 这里是当前服务依赖some_other_service服务，需要先启动some_other_service服务，停止当前服务前也会先停止some_other_service服务
+    # 服务不会等待该服务所依赖的服务完全启动之后才启动
+    depends_on:
+      - some_other_service
+    # 指定部署和运行服务的配置，仅在swam mode下生效，并且只能通过docker stack deploy命令部署，
+    # docker-compose up和docker-compose run命令将被忽略
+    deploy:
+      # 指定服务的标签，仅在服务上设置，不在服务的任何容器上设置
+      labels: [app=123]
+      # 指定服务的容器副本模式
+      # global：每个swarm节点只有一个该服务容器
+      # replicated：整个集群中存在指定份数的服务容器副本，为默认值
+      mode: replicated
+      # 如果服务的容器副本模式为replicated（默认），指定运行的容器副本数量
+      replicas: 2
+      # 配置资源限制
+      # 如下指定：服务使用的cpu份额为25%到50%，内存为20M到50M
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+      # 配置如何更新服务。该配置对滚动更新很有用。
+      update_config:
+        # 一次更新的容器数量
+        parallelism: 2
+        # 更新一组容器之间的等待时间
+        delay: 10s
+      # 指定容器的重启策略
+      restart_policy:
+        # 重启策略。值可以为none、on-failure或any，默认为any
+        condition: on-failure
+        # 尝试重启的等待时间
+        delay: 5s
+        # 重启最多尝试的次数，超过该次数将放弃。默认为永不放弃。
+        max_attempts: 10
+        # 在决定重启是否成功之前的等待时间，默认立即
+        window: 120s
+      
+
+  service2:
+    image: dockersamples/examplevotingapp_vote:before
+    ports:
+      - "5000:80"
+    networks:
+      - frontend
+    # 指定服务间的依赖关系，解决服务启动的先后顺序问题
+    # 这里是当前服务依赖service1服务，需要先启动service1服务，停止当前服务前也会先停止service1服务
+    # 服务不会等待该服务所依赖的服务完全启动之后才启动
+    depends_on:
+      - service1
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+      restart_policy:
+        condition: on-failure
+# networks定义网络
+networks:
+  frontend:
+  backend:
+
+# volumes定义卷
+volumes:
+  db-data:
+
+# 定义配置
+configs:
+  my_config: 
+    file: ./my_config.json
+  my_other_config:
+    external: true
 ```
