@@ -172,14 +172,296 @@ docker run -d -p 8080:8080 --network spring_boot_docker_app_network -v /tmp/app_
 
 # Dockerfile说明
 
-- FROM 指定基础镜像
-- RUN 执行命令，可以执行shell命令和可执行文件：
-  - shell命令格式：`RUN <命令>`
-  - 可执行文件：`RUN ["executable","param1","param2"]`
-- COPY 复制文件，格式：`COPY <src> <dest>`从src复制到文件到dest
-- EXPOSE 指定容器在运行时监听的端口
+- `FROM`：指定基础镜像
+- `RUN`：执行命令，在`docker build`时运行，常用来在构建镜像时安装应用和软件包，有两种形式：
+  - shell：`RUN command param1`，执行的时候使用sh程序的子程序执行：`/bin/sh -c 'command param1'`
+  - exec：`RUN ["executable","param1","param2"]`，推荐使用这种
+- `CMD`：设置容器启动后默认执行的命令和参数，这些命令能够被`docker run`命令后面的命令行参数替换，也就是如果`docker run`后面有指定命令参数，则`CMD`中的命令不会被执行。一个Dockerfile中只能有一个`CMD`，如果有多个则只有最后一个生效。有三种形式：
+  - shell：`CMD command param1 param2`
+  - exec：`CMD ["executable","param1","param2]`，推荐使用这种
+  - `CMD ["param1","param2"]`，这种形式和`ENTRYPOINT`一起使用，为`ENTRYPOINT`提供额外参数
+- `ENTRYPOINT`：设置容器启动时要执行的命令和参数，可使用`docker run --entrypoint`选项覆盖`ENTRYPOINT`中执行的命令.一般变参使用`CMD`，不变的使用`ENTRYPIONT`，两者配合使用。有两种形式：
+  - shell：`ENTRYPOINT command param1 param2`
+  - exec：`ENTRYPOINT ["executable", "param1", "param2"]`
+- `LABEL`：给镜像添加一些元数据，键值对形式：`LABEL <key>=<value> <key>=<value> <key>=<value> ...`
+- `COPY`：复制文件，格式：`COPY <src> <dest>`从src复制到文件到dest
+- `EXPOSE`：声明容器在运行时监听的端口，仅仅是声明
 
 # docker命令
+
+- `docker build`：用Dockerfile来构建一个镜像
+- `docker container`：管理容器
+- `docker cp`：在容器和本机之间进行相互拷贝
+- `docker exec`：在正在运行的容器中执行命令
+- `docker history`：显示镜像的历史
+- `docker image`：管理镜像
+- `docker images`：列出镜像
+- `docker info`：显示系统信息
+- `docker logs`：获取容器的日志
+- `docker network`：管理网络
+- `docker port`：列出容器的端口映射或者设置容器的端口映射
+- `docker ps`：列出容器
+- `docker pull`：从仓库拉取镜像
+- `docker push`：向仓库推送镜像
+- `docker rename`：重命名容器
+- `docker restart`：重启一个或多个容器
+- `docker rm`：移除一个或者多个容器
+- `docker rmi`：移除一个或多个镜像
+- `docker run`：运行容器
+- `docker start`：启动一个或多个容器
+- `docker stop`：停止一个或多个容器
+- `docker tag`：给镜像创建一个标签
+- `docker top`：查看一个容器中正在运行的进程
+- `docker version`：显示Docker版本信息
+- `docker volume`：管理卷
+
+## docker build
+
+`docker build`命令格式如下：
+
+```
+docker build [OPTIONS] PATH | URL | -
+```
+
+`OPTIONS`有如下：
+
+- `--file`或`-f`：可指定Dockerfile
+- `--tag`或`-t`：加标签
+
+## docker cp
+
+`docker cp`命令格式如下：
+
+```
+docker cp [OPTIONS] CONTAINER:SRC_PATH DEST_PATH|-
+
+docker cp [OPTIONS] SRC_PATH|- CONTAINER:DEST_PATH
+```
+
+## docker exec
+
+`docker exec`命令格式如下：
+
+```
+docker exec [OPTIONS] CONTAINER COMMAND [ARG...]
+```
+
+`OPTIONS`有如下：
+
+- `--detach`或者`-d`：后台运行命令
+- `--interactive`或者`-i`：让命令执行结果返回
+- `--tty`或者`-t`：分配一个伪终端
+
+使用示例，对容器执行bash：`docker exec -it 容器 /bin/bash`
+
+## docker image
+
+### docker image build
+
+镜像构建
+
+`docker image build`命令格式如下：
+
+```
+docker image build [OPTIONS] PATH | URL | -
+```
+
+`OPTIONS`有如下：
+
+- `--file`或者`-f`：指定Dockerfile
+- `--tag`或者`-t`：加标签
+
+### docker image history
+
+查看镜像历史
+
+`docker image history`命令格式如下：
+
+```
+docker image history [OPTIONS] IMAGE
+```
+
+### docker image ls
+
+列出镜像
+
+`docker image ls`命令格式如下：
+
+```
+docker image ls [OPTIONS] [REPOSITORY[:TAG]]
+```
+
+`OPTIONS`有如下：
+
+- `--all`或者`-a`：显示全部镜像，默认不显示中间状态的镜像
+
+### docker image rm
+
+移除镜像
+
+`docker image rm`命令格式如下：
+
+```
+docker image rm [OPTIONS] IMAGE [IMAGE...]
+```
+
+`OPTIONS`有如下：
+
+- `--force`或者`-f`：强制移除镜像
+
+## docker logs
+
+查看日志
+
+`docker logs`命令格式如下：
+
+```
+docker logs [OPTIONS] CONTAINER
+```
+
+`OPTIONS`有如下：
+
+- `--follow`或者`-f`：显示最新的日志
+- `--tail`或者`-t`：指定显示的日志的行数
+
+## docker network
+
+### docker network connect
+
+将容器连接到指定的网络上
+
+`docker network connect`命令格式如下：
+
+```
+docker network connect [OPTIONS] NETWORK CONTAINER
+```
+
+### docker network create
+
+`docker network create [OPTIONS] NETWORK`
+
+### docker network disconnect
+
+将容器从指定的网络上断开
+
+`docker network disconnect`命令格式如下：
+
+```
+docker network disconnect [OPTIONS] NETWORK CONTAINER
+```
+
+### docker network ls
+
+列出网络
+
+`docker network ls`命令格式如下：
+
+```
+docker network ls [OPTIONS]
+```
+
+### docker network rm
+
+移除网络
+
+`docker network rm`命令格式如下：
+
+```
+docker network rm NETWORK [NETWORK...]
+```
+
+## docker port
+
+列出容器的软口映射或者给容器指定端口映射
+
+`docker port`命令格式如下：
+
+```
+docker port CONTAINER [PRIVATE_PORT[/PROTO]]
+```
+
+## docker ps
+
+列出容器
+
+`docker ps`命令格式如下：
+
+```
+docker ps [OPTIONS]
+```
+
+`OPTIONS`有如下：
+
+- `--all`或者`-a`：显示所有容器，默认只显示运行中的
+
+## docker pull
+
+拉取镜像
+
+`docker pull`命令格式如下：
+
+```
+docker pull [OPTIONS] NAME[:TAG|@DIGEST]
+```
+
+## docker push
+
+推送镜像
+
+`docker push`命令格式如下：
+
+```
+docker push [OPTIONS] NAME[:TAG]
+```
+
+## docker rename
+
+重命名容器
+
+`docker rename`命令格式如下：
+
+```
+docker rename CONTAINER NEW_NAME
+```
+
+## docker restart
+
+重启一个或者多个容器
+
+`docker restart`命令格式如下：
+
+```
+docker restart [OPTIONS] CONTAINER [CONTAINER...]
+```
+
+## docker rm
+
+删除一个或者多个容器
+
+`docker rm`命令格式如下：
+
+```
+docker rm [OPTIONS] CONTAINER [CONTAINER...]
+```
+
+`OPTIONS`有如下：
+
+- `--force`或者`-f`：强制删除一个正在运行的容器
+- `--volumes`或者`-v`：移除容器关联的卷
+
+## docker rmi
+
+删除一个或者多个镜像
+
+`docker rmi`命令格式如下：
+
+```
+docker rmi [OPTIONS] IMAGE [IMAGE...]
+```
+
+`OPTIONS`有如下：
+
+- `--force`或者`-f`：强制删除镜像
 
 ## docker run
 
@@ -187,4 +469,54 @@ docker run -d -p 8080:8080 --network spring_boot_docker_app_network -v /tmp/app_
 
 ```
 docker run [OPTIONS] IMAGE[:TAG|@DIGEST] [COMMAND] [ARG...]
+```
+
+`OPTIONS`有如下：
+
+- `-d` 或者`-d=true`：detached模式，让容器在后台运行，比如：`docker run -d -p 8080:8080 local_test/spring-boot-docker-app:1.0.0-SNAPSHOT`
+- `--name`：为容器指定一个名字，如果不指定名字，docker会默认生成一个UUID给容器作为名字，比如：`docker run -d -p 8080:8080 --name spring-boot-docker-app local_test/spring-boot-docker-app:1.0.0-SNAPSHOT`
+- `--network`或者`--net`：为容器指定网络，比如：`docker run -d -p 8080:8080 --network spring_boot_docker_app_network local_test/spring-boot-docker-app:1.0.0-SNAPSHOT`
+- `--volume`或者`-v`：绑定挂载卷
+- `--workdir`或者`-w`：指定容器内的工作目录
+
+`IMAGE[:TAG]`中的`TAG`可以为要启动的容器指定一个标签，标签可以是版本号，比如：`docker run -d -p 8080:8080 local_test/spring-boot-docker-app:1.0.0-SNAPSHOT`
+
+## docker start
+
+启动一个或者多个容器
+
+`docker start`命令格式如下：
+
+```
+docker start [OPTIONS] CONTAINER [CONTAINER...]
+```
+
+## docker stop
+
+停止一个或者多个容器
+
+`docker stop`命令格式如下：
+
+```
+docker stop [OPTIONS] CONTAINER [CONTAINER...]
+```
+
+## docker tag
+
+创建一个tag
+
+`docker tag`命令格式如下：
+
+```
+docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE [:TAG]
+```
+
+## docker top
+
+查看一个容器中正在运行的进程
+
+`docker top`命令格式如下：
+
+```
+docker top CONTAINER[ps OPTIONS]
 ```
