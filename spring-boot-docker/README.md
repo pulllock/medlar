@@ -490,6 +490,8 @@ docker run [OPTIONS] IMAGE[:TAG|@DIGEST] [COMMAND] [ARG...]
 - `--network`或者`--net`：为容器指定网络，比如：`docker run -d -p 8080:8080 --network spring_boot_docker_app_network local_test/spring-boot-docker-app:1.0.0-SNAPSHOT`
 - `--volume`或者`-v`：绑定挂载卷
 - `--workdir`或者`-w`：指定容器内的工作目录
+- `--rm`：容器退出时自动清理内部文件系统
+- `--link`：连接到指定的容器
 
 `IMAGE[:TAG]`中的`TAG`可以为要启动的容器指定一个标签，标签可以是版本号，比如：`docker run -d -p 8080:8080 local_test/spring-boot-docker-app:1.0.0-SNAPSHOT`
 
