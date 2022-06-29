@@ -2,28 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <!--
-        parent元素声明父模块，可继承的POM元素有：
-        groupId：               项目的组id
-        version：               项目的版本
-        description：           项目的描述信息
-        organization：          项目的组织信息
-        inceptionYear：         项目的创始年份
-        url：                   项目的地址
-        developers：            项目的开发者信息
-        contributors：          项目的贡献者信息
-        distributionManagement：项目的部署配置
-        issueManagement：       项目的缺陷跟踪系统信息
-        ciManagement：          项目的持续集成系统信息
-        scm：                   项目的版本控制系统信息
-        mailingLists：          项目的邮件列表信息
-        properties：            自定义的maven属性
-        dependencies：          项目的依赖配置
-        dependencyManagement：  项目的依赖管理配置
-        repositories：          项目的仓库配置
-        build：                 包括项目的源码目录配置、输出目录配置、插件配置、插件管理配置等
-        reporting：             包括项目的报告输出目录配置、报告插件配置
-    -->
     <parent>
         <artifactId>spring-boot-maven</artifactId>
         <groupId>me.cxis</groupId>
@@ -34,16 +12,6 @@
     <artifactId>spring-boot-maven-sample</artifactId>
     <packaging>jar</packaging>
 
-    <properties>
-        <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
-        <surefire-junit4.version>3.0.0-M5</surefire-junit4.version>
-        <maven-javadoc-plugin.version>3.3.2</maven-javadoc-plugin.version>
-        <maven-jxr-plugin.version>3.2.0</maven-jxr-plugin.version>
-        <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
-        <maven-pmd-plugin.version>3.16.0</maven-pmd-plugin.version>
-        <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -53,6 +21,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -63,106 +32,17 @@
     </dependencies>
 
     <build>
-        <pluginManagement>
-            <plugins>
-                <!--
-                    maven-surefire-plugin插件，测试运行器，默认情况下会自动执行测试源码路径（src/test/java）下符合
-                    一组命名模式的测试类：
-                    **/Test*.java：任何子目录下所有命名以Test开头的Java类
-                    **/*Test.java：任何子目录下所有命名以Test结尾的Java类
-                    **/*TestCase.java：任何子目录下所有命名以TestCase结尾的Java类
-
-                    -Dtest=XxxTest 可以指定要执行的测试用例
-                    -DfailIfNoTests=false 可以在没有任何测试用例时也不报错
-
-                    默认情况下会在项目的target/surefire-reports目录下生成报告，报告有两种形式：简单文本格式和与Junit兼容的xml格式。
-                -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven-surefire-plugin.version}</version>
-
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.apache.maven.surefire</groupId>
-                            <artifactId>surefire-junit4</artifactId>
-                            <version>${surefire-junit4.version}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-
-                <!--
-                    maven-assembly-plugin插件
-
-                    配置jar-with-dependencies，会创建一个包含有项目的二进制代码以及所有依赖解压出来的二进制的jar文件
-                -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>${maven-assembly-plugin.version}</version>
-                    <!--<configuration>
-                        <descriptorRefs>
-                            <descriptorRef>jar-with-dependencies</descriptorRef>
-                        </descriptorRefs>
-                    </configuration>-->
-
-                    <!-- 以下的executions中配置可以创建一个运行的jar -->
-                    <!--<executions>
-                        <execution>
-                            <id>create-executable-jar</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>single</goal>
-                            </goals>
-                            <configuration>
-                                <descriptorRefs>
-                                    <descriptorRef>jar-with-dependencies</descriptorRef>
-                                </descriptorRefs>
-                                <archive>
-                                    <manifest>
-                                        <mainClass>me.cxis.maven.sample.SpringBootMavenSampleApplication</mainClass>
-                                    </manifest>
-                                </archive>
-                            </configuration>
-                        </execution>
-                    </executions>-->
-                </plugin>
-
-                <!-- 生成站点插件 -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>${maven-site-plugin.version}</version>
-                </plugin>
-
-                <!--覆盖率插件-->
-                <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>${jacoco-maven-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>default-prepare-agent</id>
-                            <goals>
-                                <goal>prepare-agent</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>default-report</id>
-                            <phase>test</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit4</artifactId>
+                        <version>${surefire-junit4.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <plugin>
