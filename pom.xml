@@ -78,7 +78,6 @@
         <rocketmq.version>4.9.1</rocketmq.version>
         <sentinel.version>1.7.2</sentinel.version>
         <mysql-connector-java.version>8.0.29</mysql-connector-java.version>
-        <spring-kafka.version>2.8.7</spring-kafka.version>
     </properties>
 
     <dependencyManagement>
@@ -124,57 +123,10 @@
             </dependency>
 
             <dependency>
-                <groupId>org.codehaus.groovy</groupId>
-                <artifactId>groovy-all</artifactId>
-                <version>${groovy-all.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.spockframework</groupId>
-                <artifactId>spock-bom</artifactId>
-                <version>${spock-bom.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit4.version}</version>
                 <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>com.athaydes</groupId>
-                <artifactId>spock-reports</artifactId>
-                <version>${spock-reports.version}</version>
-                <scope>test</scope>
-                <exclusions>
-                    <exclusion>
-                        <groupId>*</groupId>
-                        <artifactId>*</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <dependency>
-                <groupId>co.elastic.clients</groupId>
-                <artifactId>elasticsearch-java</artifactId>
-                <version>${es.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>jakarta.json</groupId>
-                <artifactId>jakarta.json-api</artifactId>
-                <version>${jakarta.json-api.version}</version>
             </dependency>
 
             <dependency>
@@ -368,12 +320,6 @@
                 <artifactId>sentinel-annotation-aspectj</artifactId>
                 <version>${sentinel.version}</version>
             </dependency>
-
-            <dependency>
-                <groupId>org.springframework.kafka</groupId>
-                <artifactId>spring-kafka</artifactId>
-                <version>${spring-kafka.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -385,99 +331,9 @@
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring-boot.version}</version>
                 </plugin>
-
-                <!-- 在Maven中使用Groovy的插件 -->
-                <plugin>
-                    <groupId>org.codehaus.gmavenplus</groupId>
-                    <artifactId>gmavenplus-plugin</artifactId>
-                    <version>${gmavenplus-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>add-groovy-scripts</id>
-                            <goals>
-                                <goal>addSources</goal>
-                                <goal>addTestSources</goal>
-                                <goal>compile</goal>
-                                <goal>compileTests</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <!-- 打包源码插件 -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>${maven-source-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>attach-sources</id>
-                            <goals>
-                                <goal>jar-no-fork</goal>
-                                <goal>test-jar-no-fork</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <!-- 单测插件 -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven-surefire-plugin.version}</version>
-                    <configuration>
-                        <includes>
-                            <include>**/*Spec</include>
-                        </includes>
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>${maven-site-plugin.version}</version>
-                </plugin>
             </plugins>
         </pluginManagement>
-
-        <plugins>
-            <!-- 打包源码插件 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-            </plugin>
-
-            <!-- 单测插件 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-            </plugin>
-        </plugins>
     </build>
-
-    <!-- 报告相关 -->
-    <reporting>
-        <plugins>
-            <!-- 生成单测报告 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>${maven-surefire-report-plugin.version}</version>
-            </plugin>
-
-            <!-- 生成项目信息插件 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>${maven-project-info-reports-plugin.version}</version>
-            </plugin>
-        </plugins>
-    </reporting>
 
     <repositories>
         <repository>
