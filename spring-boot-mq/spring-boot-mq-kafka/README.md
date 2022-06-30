@@ -84,3 +84,16 @@ services:
 3. 到kafka的bin目录下启动zookeeper：`sh ./zookeeper-server-start.sh ../config/zookeeper.properties`
 4. 使用其他工具连接到zookeeper进行验证，地址：`127.0.0.1：21:81`或者`localhost:2181`
 5. 到kafka的bin目录下启动kafka：`sh ./kafka-server-start.sh ../config/server.properties`
+
+# 基础概念
+
+- Producer：生产者
+- Consumer：消费者
+- Broker：服务代理节点
+- Topic：主题，消息以Topic为单位进行归类
+- Partition：分区，一个Topic可分为多个Partition，一个Partition只属于单个Topic
+- AR（Assigned Replicas）：分区中所有副本统称AR
+- ISR（In-Sync Replicas）：所有与Leader副本保持一定程度同步的副本组成ISR
+- OSR（Out-of-Sync Replicas）：与leader副本同步滞后过多的副本组成OSR
+- LEO（Log End Offset）：标识当前日志文件中下一条待写入消息的offset
+- HW（High Watermark）：高水位，标识一个特定的消息偏移量，消费者只能拉取到这个偏移量之前的消息。ISR集合中最小的LEO即为分区的HW。
