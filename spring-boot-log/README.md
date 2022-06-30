@@ -1,5 +1,10 @@
 # log
 
+- HandlerInterceptor
+- HandlerInterceptorAdapter
+- AbstractRequestLoggingFilter
+- CommonsRequestLoggingFilter
+- ServletContextRequestLoggingFilter
 - OncePerRequestFilter
 - ContentCachingResponseWrapper
 - ContentCachingRequestWrapper
