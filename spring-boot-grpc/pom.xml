@@ -9,13 +9,16 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>spring-boot-docker</artifactId>
-    <packaging>pom</packaging>
+    <groupId>me.cxis.sample.grpc</groupId>
+    <artifactId>spring-boot-grpc</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <modules>
-        <module>spring-boot-docker-app</module>
-        <module>spring-boot-docker-compose-server</module>
-        <module>spring-boot-docker-compose-client</module>
+        <module>grpc-client-sample</module>
+        <module>grpc-server-sample</module>
+        <module>grpc-nacos-server-sample</module>
+        <module>grpc-nacos-client-sample</module>
     </modules>
+    <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,6 +27,9 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <spring-boot.version>2.7.0-M3</spring-boot.version>
+        <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
+        <grpc.version>1.42.1</grpc.version>
+        <grpc-starter.version>2.12.0.RELEASE</grpc-starter.version>
     </properties>
 
     <dependencyManagement>
@@ -35,6 +41,34 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-bom</artifactId>
+                <version>${grpc.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>net.devh</groupId>
+                <artifactId>grpc-client-spring-boot-starter</artifactId>
+                <version>${grpc-starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.devh</groupId>
+                <artifactId>grpc-server-spring-boot-starter</artifactId>
+                <version>${grpc-starter.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -45,13 +79,6 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring-boot.version}</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>repackage</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
