@@ -14,4 +14,8 @@
 - HttpServletRequestWrapper
 - RequestInterceptor
 - ClientHttpRequestInterceptor
+- RequestBodyInterceptor
+- ResponseBodyInterceptor
+- RequestBodyAdviceAdapter
+- ResponseBodyAdvice
 - 记录日志的方式
