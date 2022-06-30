@@ -9,15 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>me.cxis.sample.cloud</groupId>
-    <artifactId>spring-cloud-sample</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <modules>
-        <module>spring-cloud-user-sample</module>
-        <module>spring-cloud-client-sample</module>
-        <module>spring-cloud-eureka-server-sample</module>
-    </modules>
+    <artifactId>spring-boot-sentinel</artifactId>
     <packaging>pom</packaging>
+    <modules>
+        <module>sentinel-consumer</module>
+        <module>sentinel-provider</module>
+        <module>sentinel-client</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -26,48 +24,11 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <spring-boot.version>2.7.0-M3</spring-boot.version>
-        <spring-cloud.version>2021.0.3</spring-cloud.version>
-        <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
-        <gmavenplus-plugin.version>1.13.1</gmavenplus-plugin.version>
-        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <spock-bom.version>2.2-M1-groovy-3.0</spock-bom.version>
-        <spock-reports.version>2.3.0-groovy-3.0</spock-reports.version>
-        <junit5-bom.version>5.8.2</junit5-bom.version>
-        <junit4.version>4.13.2</junit4.version>
-        <junit.version>3.8.1</junit.version>
-        <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
-        <maven-surefire-report-plugin.version>3.0.0-M6</maven-surefire-report-plugin.version>
-        <maven-project-info-reports-plugin.version>3.2.2</maven-project-info-reports-plugin.version>
-        <maven-site-plugin.version>3.11.0</maven-site-plugin.version>
-        <groovy-all.version>3.0.10</groovy-all.version>
-        <es.version>8.2.2</es.version>
-        <jackson.version>2.12.6.1</jackson.version>
-        <jakarta.json-api.version>2.1.0</jakarta.json-api.version>
-        <hystrix.version>1.5.12</hystrix.version>
-        <tair-client.version>2.3.5</tair-client.version>
-        <testng.version>6.14.3</testng.version>
-        <commons-chain.version>1.2</commons-chain.version>
-        <fastjson.version>2.0.1</fastjson.version>
-        <jedis.version>2.9.0</jedis.version>
-        <mybatis.starter.version>2.2.2</mybatis.starter.version>
-        <mybatis.version>3.5.6</mybatis.version>
-        <druid.version>1.1.22</druid.version>
-        <commons-collections4.version>4.4</commons-collections4.version>
-        <asm.version>9.2</asm.version>
-        <dubbo.version>3.0.5</dubbo.version>
         <dubbo2.version>2.6.12</dubbo2.version>
-        <grpc.version>1.42.1</grpc.version>
-        <grpc-starter.version>2.12.0.RELEASE</grpc-starter.version>
         <zookeeper.version>3.6.0</zookeeper.version>
         <curator.version>4.3.0</curator.version>
-        <jmh.version>1.19</jmh.version>
-        <cglib.version>3.1</cglib.version>
-        <jctools-core.version>3.3.0</jctools-core.version>
-        <jmeter.version>3.3</jmeter.version>
         <netty-all.version>4.1.69.Final</netty-all.version>
-        <rocketmq.version>4.9.1</rocketmq.version>
         <sentinel.version>1.7.2</sentinel.version>
-        <mysql-connector-java.version>8.0.29</mysql-connector-java.version>
     </properties>
 
     <dependencyManagement>
@@ -81,26 +42,76 @@
             </dependency>
 
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>com.alibaba</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo2.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-context</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.jboss.netty</groupId>
+                        <artifactId>netty</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>${zookeeper.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>netty</artifactId>
+                        <groupId>io.netty</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty-all.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-client</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-dubbo-adapter</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-transport-simple-http</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-annotation-aspectj</artifactId>
+                <version>${sentinel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>me.cxis</groupId>
+                <artifactId>sentinel-client</artifactId>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring-boot.version}</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
 
     <repositories>
         <repository>
