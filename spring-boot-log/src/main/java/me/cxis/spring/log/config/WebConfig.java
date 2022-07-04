@@ -1,7 +1,7 @@
 package me.cxis.spring.log.config;
 
-import me.cxis.spring.filter.LogAbstractRequestLoggingFilter;
-import me.cxis.spring.filter.LogOncePerRequestFilter;
+import me.cxis.spring.log.filter.LogAbstractRequestLoggingFilter;
+import me.cxis.spring.log.filter.LogOncePerRequestFilter;
 import me.cxis.spring.log.interceptor.LogHandlerInterceptor;
 import me.cxis.spring.log.interceptor.LogHandlerInterceptorAdapter;
 import org.springframework.context.annotation.Bean;

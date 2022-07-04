@@ -1,4 +1,4 @@
-package me.cxis.spring.filter;
+package me.cxis.spring.log.filter;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
