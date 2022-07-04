@@ -3,7 +3,6 @@ package me.cxis.spring.log.filter;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
@@ -17,7 +16,6 @@ import java.util.Enumeration;
 
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
-@Component
 public class LogOncePerRequestFilter extends OncePerRequestFilter {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(LogOncePerRequestFilter.class);
