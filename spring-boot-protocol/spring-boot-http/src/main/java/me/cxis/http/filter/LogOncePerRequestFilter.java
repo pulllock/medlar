@@ -1,20 +1,14 @@
 package me.cxis.http.filter;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.util.ContentCachingRequestWrapper;
-import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Enumeration;
-
-import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 public class LogOncePerRequestFilter extends OncePerRequestFilter {
 
@@ -22,57 +16,35 @@ public class LogOncePerRequestFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        ContentCachingRequestWrapper wrappedRequest = new ContentCachingRequestWrapper(request);
-        ContentCachingResponseWrapper wrappedResponse = new ContentCachingResponseWrapper(response);
+        // remote addr
+        String clientIp = request.getRemoteAddr();
+        LOGGER.info("Request, client ip: {}", clientIp);
 
-        filterChain.doFilter(wrappedRequest, wrappedResponse);
+        // x-forwarded-for
+        String xff = request.getHeader("x-forwarded-for");
+        LOGGER.info("Request, x-forwarded-for: {}", xff);
 
-        String method = request.getMethod();
-        String uri = request.getRequestURI();
-        String parameters = getRequestParameters(request);
-        String ip = getIp(request);
-        String contentType = request.getHeader("Content-Type");
-
-        String requestBody;
-        if (contentType != null && contentType.equals(MULTIPART_FORM_DATA_VALUE)) {
-            requestBody = "MULTIPART_FORM_DATA";
-        } else {
-            requestBody = IOUtils.toString(wrappedRequest.getContentAsByteArray(), wrappedRequest.getCharacterEncoding());
+        if (xff != null && xff.length() > 0) {
+            clientIp = xff.split(",")[0];
         }
+        LOGGER.info("Request, real client ip: {}", clientIp);
 
-        LOGGER.info("Request, ip: {}, content type: {}, method: {}, URI: {}, parameters: {}, request body: {}", ip, contentType, method, uri, parameters, requestBody);
+        // content-type
+        String contentTypeRequest = request.getHeader("content-type");
+        LOGGER.info("Request, content-type: {}", contentTypeRequest);
 
-        String responseBody = IOUtils.toString(wrappedResponse.getContentAsByteArray(), wrappedResponse.getCharacterEncoding());
-        LOGGER.info("Response, ip: {}, content type: {}, method: {}, URI: {}, parameters: {}, response body: {}", ip, contentType, method, uri, parameters, responseBody);
+        // content-length
+        String contentLengthRequest = request.getHeader("content-length");
+        LOGGER.info("Request, content-length: {}", contentLengthRequest);
 
-        wrappedResponse.copyBodyToResponse();
-    }
+        filterChain.doFilter(request, response);
 
-    private String getIp(HttpServletRequest request) {
-        String ipFromHeader = request.getHeader("X-FORWARDED-FOR");
-        if (ipFromHeader != null && ipFromHeader.length() > 0) {
-            return ipFromHeader;
-        }
+        // content-type
+        String contentTypeResponse = response.getHeader("content-type");
+        LOGGER.info("Response, content-type: {}", contentTypeResponse);
 
-        return request.getRemoteAddr();
-    }
-
-    private String getRequestParameters(HttpServletRequest request) {
-        StringBuffer result = new StringBuffer();
-        Enumeration<String> names = request.getParameterNames();
-        if (names != null) {
-            result.append("?");
-        }
-
-        while (names.hasMoreElements()) {
-            if (result.length() > 1) {
-                result.append("&");
-            }
-
-            String current = names.nextElement();
-            result.append(current + "=");
-            result.append(request.getParameter(current));
-        }
-        return result.toString();
+        // content-length
+        String contentLengthResponse = response.getHeader("content-length");
+        LOGGER.info("Response, content-length: {}", contentLengthResponse);
     }
 }
