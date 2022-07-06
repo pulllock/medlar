@@ -6,6 +6,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -71,6 +72,13 @@ public class LogOncePerRequestFilter extends OncePerRequestFilter {
         response.setHeader("access-control-allow-origin", "*");
         response.setHeader("access-control-max-age", "3600");
 
+        // set-cookie
+        Cookie setCookie = new Cookie("my-key", "my-value");
+        response.addCookie(setCookie);
+
+        // cookie
+        String cookie = request.getHeader("cookie");
+        LOGGER.info("Request, cookie: {}", cookie);
 
         // dofFilter
         filterChain.doFilter(request, response);

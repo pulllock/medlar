@@ -140,3 +140,26 @@ Range: <unit>=<range-start>-<range-end>, <range-start>-<range-end>, <range-start
 ## access-control-max-age
 
 `access-control-max-age`响应头，指定客户端程序对特定资源的于请求返回结果的缓存时间，单位为秒
+
+## cookie
+
+`cookie`请求头，设置的cookie
+
+## set-cookie
+
+`set-cookie`响应头，服务端向客户端发送cookie，格式如下：
+
+```
+Set-Cookie: <cookie-name>=<cookie-value>
+Set-Cookie: <cookie-name>=<cookie-value>; Expires=<date>
+Set-Cookie: <cookie-name>=<cookie-value>; Max-Age=<non-zero-digit>
+Set-Cookie: <cookie-name>=<cookie-value>; Domain=<domain-value>
+Set-Cookie: <cookie-name>=<cookie-value>; Path=<path-value>
+Set-Cookie: <cookie-name>=<cookie-value>; Secure
+Set-Cookie: <cookie-name>=<cookie-value>; HttpOnly
+
+Set-Cookie: <cookie-name>=<cookie-value>; SameSite=Strict
+Set-Cookie: <cookie-name>=<cookie-value>; SameSite=Lax
+
+Set-Cookie: <cookie-name>=<cookie-value>; Domain=<domain-value>; Secure; HttpOnly
+```
