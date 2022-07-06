@@ -37,6 +37,42 @@ public class LogOncePerRequestFilter extends OncePerRequestFilter {
         String contentLengthRequest = request.getHeader("content-length");
         LOGGER.info("Request, content-length: {}", contentLengthRequest);
 
+        // user-agent
+        String userAgent = request.getHeader("user-agent");
+        LOGGER.info("Request: user-agent: {}", userAgent);
+
+        // referer
+        String referer = request.getHeader("referer");
+        LOGGER.info("Request, referer: {}", referer);
+
+        // accept
+        String accept = request.getHeader("accept");
+        LOGGER.info("Request, accept: {}", accept);
+
+        // accept-charset
+        String acceptCharset = request.getHeader("accept-charset");
+        LOGGER.info("Request, accept-charset: {}", acceptCharset);
+
+        // accept-encoding
+        String acceptEncoding = request.getHeader("accept-encoding");
+        LOGGER.info("Request, accept-encoding: {}", acceptEncoding);
+
+        // accept-language
+        String acceptLanguage = request.getHeader("accept-language");
+        LOGGER.info("Request, accept-language: {}", acceptLanguage);
+
+        // range
+        String range = request.getHeader("range");
+        LOGGER.info("Request, range: {}", range);
+
+        response.setHeader("access-control-allow-credentials", "true");
+        response.setHeader("access-control-allow-headers", "*");
+        response.setHeader("access-control-allow-methods", "*");
+        response.setHeader("access-control-allow-origin", "*");
+        response.setHeader("access-control-max-age", "3600");
+
+
+        // dofFilter
         filterChain.doFilter(request, response);
 
         // content-type
@@ -46,5 +82,29 @@ public class LogOncePerRequestFilter extends OncePerRequestFilter {
         // content-length
         String contentLengthResponse = response.getHeader("content-length");
         LOGGER.info("Response, content-length: {}", contentLengthResponse);
+
+        // accept-ranges
+        String acceptRanges = response.getHeader("accept-ranges");
+        LOGGER.info("Response, accept-ranges: {}", acceptRanges);
+
+        // access-control-allow-credentials
+        String accessCredentials = response.getHeader("access-control-allow-credentials");
+        LOGGER.info("Response, access-control-allow-credentials: {}", accessCredentials);
+
+        // access-control-allow-headers
+        String accessHeaders = response.getHeader("access-control-allow-headers");
+        LOGGER.info("Response, access-control-allow-headers: {}", accessHeaders);
+
+        // access-control-allow-methods
+        String accessMethods = response.getHeader("access-control-allow-methods");
+        LOGGER.info("Response, access-control-allow-methods: {}", accessMethods);
+
+        // access-control-allow-origin
+        String accessOrigin = response.getHeader("access-control-allow-origin");
+        LOGGER.info("Response, access-control-allow-origin: {}", accessOrigin);
+
+        // access-control-max-age
+        String accessAge = response.getHeader("access-control-max-age");
+        LOGGER.info("Response, access-control-max-age: {}", accessAge);
     }
 }
