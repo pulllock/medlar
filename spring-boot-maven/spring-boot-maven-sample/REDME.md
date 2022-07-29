@@ -565,3 +565,54 @@ repositories：          项目的仓库配置
 build：                 包括项目的源码目录配置、输出目录配置、插件配置、插件管理配置等
 reporting：             包括项目的报告输出目录配置、报告插件配置
 ```
+
+# Maven生命周期
+
+maven有三套相互独立的生命周期：
+
+- clean：清理
+- default：构建项目
+- site：建立项目站点
+
+具体的生命周期列表可以参考官方文档：https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference
+
+## clean生命周期
+
+clean包含三个阶段：
+
+- pre-clean：执行清理前需要完成的工作
+- clean：清理
+- post-clean：执行清理后要完成的工作
+
+## default生命周期
+
+- validate：验证项目是否正确，并且所有必要信息都可用
+- initialize：初始化构建状态，比如设置属性或者创建目录
+- generate-sources：生成源码
+- process-sources：处理源码
+- generate-resources：生成资源
+- process-resources：处理资源，将资源复制到目标目录下，准备打包
+- compile：编译项目的源码，编译`src/main/java`目录下的Java文件到项目输出的classpath目录中
+- precess-classes：对编译生成的class文件进行处理，比如对字节码进行增强
+- generate-test-sources：生成测试源码
+- process-test-sources：处理测试源码
+- generate-test-resources：生成测试资源
+- process-test-resources：处理测试资源，将资源复制到目标目录中
+- test-compile：编译项目的测试源码，编译`src/test/java`目录下的Java文件到项目输出的测试classpath目录中
+- process-test-classes：对编译生成的测试class文件进行处理，比如对字节码进行增强
+- test：使用单元测试框架运行测试
+- prepare-package：实际打包前执行操作
+- package：将编译好的代码打包
+- pre-integration-test：执行集成测试前需要的操作
+- integration-test：集成测试
+- post-integration-test：集成测试后需要的操作
+- verify：运行检查
+- install：将打好的包安装到Maven本地仓库
+- deploy：将打好的包发布到远程仓库
+
+## site生命周期
+
+- pre-site：生成项目站点前的操作
+- site：生成项目站点
+- post-site：生成项目站点后的操作
+- site-deploy：生成的站点文档部署到服务器
