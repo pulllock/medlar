@@ -3,6 +3,6 @@ spring:
     mongodb:
       host: localhost
       port: 27017
-      database: admin
-      username: admin
+      database: spring_boot_mongo
+      username: spring_boot_mongo_user
       password: '12345678'
