@@ -29,6 +29,7 @@
         <module>spring-boot-log</module>
         <module>spring-boot-protocol</module>
         <module>spring-boot-mongo</module>
+        <module>spring-boot-redis</module>
     </modules>
 
     <properties>
