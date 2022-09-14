@@ -30,6 +30,7 @@
         <module>spring-boot-protocol</module>
         <module>spring-boot-mongo</module>
         <module>spring-boot-redis</module>
+        <module>spring-boot-i18n</module>
     </modules>
 
     <properties>
