@@ -61,6 +61,174 @@ bin/kibana-verification-code
 
 - 浏览器：http://localhost:5601/
 
+# 索引设置（Index Settings）
+
+索引级别的设置分为两种：
+
+- 静态的设置：只能在索引创建的时候设置或者索引是closed的时候设置
+- 动态的设置：可通过更新接口动态设置
+
+## 静态的设置
+
+- `index.number_of_shards`：只能在索引创建的时候设置，默认1
+- `index.number_of_routing_shards`：
+- `index.codec`：
+- `index.routing_partition_size`：只能在索引创建的时候设置，默认1
+- `index.soft_deletes.enabled`：只能在索引创建的时候设置，默认true
+- `index.soft_deletes.retention_lease.period`：默认12小时
+- `index.load_fixed_bitset_filters_eagerly`：默认true
+- `index.shard.check_on_startup`：默认false
+
+## 动态的设置
+
+- `index.number_of_replicas`：默认1
+- `index.auto_expand_replicas`：
+- `index.search.idle.after`：默认30秒
+- `index.refresh_interval`：默认1秒
+- `index.max_result_window`：默认10000
+- `index.max_inner_result_window`：默认100
+- `index.max_rescore_window`：
+- `index.max_docvalue_fields_search`：默认100
+- `index.max_script_fields`：默认32
+- `index.max_ngram_diff`：默认1
+- `index.max_shingle_diff`：默认3
+- `index.max_refresh_listeners`：
+- `index.analyze.max_token_count`：默认10000
+- `index.highlight.max_analyzed_offset`：1000000
+- `index.max_terms_count`：默认65536
+- `index.max_regex_length`：1000
+- `index.query.default_field`：默认*
+- `index.routing.allocation.enable`：默认all
+- `index.routing.rebalance.enable`：默认all
+- `index.gc_deletes`：默认60秒
+- `index.default_pipeline`：
+- `index.final_pipeline`：
+- `index.hidden`：默认false
+
+## Analysis
+
+定义分析器（analyzers）、分词器（tokenizers）、过滤器（token filters、character filters），顺序如下：character filters（0个或多个）--> tokenizers（一个）--> token filters（0个或多个）。
+
+- `analysis.analyzer.default`：
+- `analysis.analyzer.default_search`：
+
+示例1：
+
+```
+PUT /index_name
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "std_english": {
+          "type": "standard",
+          "stopwords": "_english_"
+        }
+      }
+    }
+  },
+  "mapings": {
+    "properties": {
+      "text_field": {
+        "type": "text",
+        "analyzer": "standard",
+        "fields": {
+          "english": {
+            "type": "text",
+            "analyzer": "std_english"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+示例2：
+
+```
+PUT /index_name
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "my_custom_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "char_filter": [
+            "html_strip"
+          ],
+          "filter": [
+            "lowercase",
+            "asciifolding"
+          ]
+        }
+      }
+    }
+  }
+}
+```
+
+示例3：
+
+```
+PUT /index_name
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "my_custom_analyzer": {
+          "char_filter": ["emoticons"],
+          "tokenizer": "punctuation",
+          "filter": [
+            "lowercase",
+            "endlish_stop"
+          ]
+        }
+      },
+      "tokenizer": {
+        "punctuation": {
+          "type": "pattern",
+          "pattern": "[ .,!?]"
+        }
+      },
+      "char_filter": {
+        "emoticons": {
+          "type": "mapping",
+          "mappings": [
+            ":) => _happy_",
+            ":( => _sad_"
+          ]
+        }
+      },
+      "filter": {
+        "endlish_stop": {
+          "type": "stop",
+          "stopwords": "_english_"
+        }
+      }
+    }
+  }
+}
+```
+
+示例4：
+
+```
+PUT /index_name
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "default": {
+          "type": "simple"
+        }
+      }
+    }
+  }
+}
+```
+
 # 使用
 
 ## _cat查看集群运行状况
