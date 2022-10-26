@@ -24,13 +24,13 @@
         <module>spring-boot-unit-test</module>
         <module>spring-boot-docker</module>
         <module>spring-boot-groovy</module>
-        <module>spring-boot-es</module>
         <module>spring-boot-mq</module>
         <module>spring-boot-log</module>
         <module>spring-boot-protocol</module>
         <module>spring-boot-mongo</module>
         <module>spring-boot-redis</module>
         <module>spring-boot-i18n</module>
+        <module>spring-boot-search</module>
     </modules>
 
     <properties>
