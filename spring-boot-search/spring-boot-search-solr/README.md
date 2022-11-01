@@ -294,3 +294,54 @@ docker run -d --name solr --net solr -p 8983:8983 solr:9.0.0
 - Field Grouping: `title:(+return +"pink panther")`
 - Escaping Special Characters: `\`
 - Comments in Queries: `jakarta apache" /* this is a comment in the middle of a normal query string */ OR jakarta`
+
+## DisMax Query Parser
+
+DisMax(Maximum Disjunction)
+
+### Parameters
+
+| patameter | name                 | values |
+| --------- | -------------------- | ------ |
+| q         | query                |        |
+| q.alt     |                      |        |
+| qf        | Query Fields         |        |
+| mm        | Minimum Should Match |        |
+| pf        | Phrase Fields        |        |
+| ps        | Phrase Slop          |        |
+| qs        | Query Phrase Slop    |        |
+| tie       | Tie Breaker          |        |
+| bq        | Boost Query          |        |
+| bf        | Boost Functions      |        |
+
+## Extended DisMax (eDisMax) Query Parser
+
+### Parameters
+
+| patameter          | name                 | values |
+| ------------------ | -------------------- | ------ |
+| q                  | query                |        |
+| q.alt              |                      |        |
+| qf                 | Query Fields         |        |
+| mm                 | Minimum Should Match |        |
+| mm.autoRelax       |                      |        |
+| pf                 | Phrase Fields        |        |
+| pf2                |                      |        |
+| pf3                |                      |        |
+| ps                 | Phrase Slop          |        |
+| ps2                |                      |        |
+| ps3                |                      |        |
+| qs                 | Query Phrase Slop    |        |
+| tie                | Tie Breaker          |        |
+| bq                 | Boost Query          |        |
+| bf                 | Boost Functions      |        |
+| sow                | Split on whitespace  |        |
+| boost              |                      |        |
+| lowercaseOperators |                      |        |
+| stopwords          |                      |        |
+| uf                 |                      |        |
+|                    |                      |        |
+|                    |                      |        |
+|                    |                      |        |
+|                    |                      |        |
+|                    |                      |        |
