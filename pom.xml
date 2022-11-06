@@ -31,6 +31,7 @@
         <module>spring-boot-redis</module>
         <module>spring-boot-i18n</module>
         <module>spring-boot-search</module>
+        <module>spring-boot-externalized-configuration</module>
     </modules>
 
     <properties>
