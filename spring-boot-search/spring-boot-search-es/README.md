@@ -61,6 +61,144 @@ bin/kibana-verification-code
 
 - 浏览器：http://localhost:5601/
 
+# 示例数据
+
+## Kibana提供的示例数据
+
+## 新的数据集
+
+新版本Kibana有提供示例数据，在Kibana首页的Try sample data中就可以直接导入示例数据。
+
+## 旧的数据集
+
+可以在这个页面下载：https://www.elastic.co/guide/cn/kibana/current/tutorial-load-dataset.html，有三个文件：shakespeare_6.0.json、accounts.zip、logs.jsonl.gz，后面两个需要解压一下使用。
+
+### 导入shakespeare_6.0.json示例数据
+
+首先创建mapping：
+
+```
+PUT /shakespeare
+{
+  "mappings": {
+    "properties": {
+      "speaker": {
+        "type": "keyword"
+      },
+      "play_name": {
+        "type": "keyword"
+      },
+      "line_id": {
+        "type": "integer"
+      },
+      "speech_number": {
+        "type": "integer"
+      }
+    }
+  }
+}
+```
+
+导入数据：
+
+由于elasticsearch8启用了https连接，需要使用证书来访问，也就是上面说的http_ca.crt，所以使用的命令如下：
+
+```
+curl --cacert ./http_ca.crt -u elastic:12345678 -H 'Content-Type: application/x-ndjson' -XPOST 'https://localhost:9200/_bulk?pretty' --data-binary @shakespeare_6.0.json
+```
+
+不启用https的使用如下命令：
+
+```
+curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/_bulk?pretty' --data-binary @shakespeare_6.0.json
+```
+
+### 导入logs.jsonl.gz示例数据
+
+首先创建mapping：
+
+```
+PUT /logstash-2015.05.18
+{
+  "mappings": {
+    "properties": {
+      "geo": {
+        "properties": {
+          "coordinates": {
+            "type": "geo_point"
+          }
+        }
+      }
+    }
+  }
+}
+
+PUT /logstash-2015.05.19
+{
+  "mappings": {
+    "properties": {
+      "geo": {
+        "properties": {
+          "coordinates": {
+            "type": "geo_point"
+          }
+        }
+      }
+    }
+  }
+}
+
+PUT /logstash-2015.05.20
+{
+  "mappings": {
+    "properties": {
+      "geo": {
+        "properties": {
+          "coordinates": {
+            "type": "geo_point"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+导入数据：
+
+由于elasticsearch8启用了https连接，需要使用证书来访问，也就是上面说的http_ca.crt，所以使用的命令如下，另外还需要将数据文件中的`"_type":"log"`这部分全部去除才行：
+
+```
+curl --cacert ./http_ca.crt -u elastic:12345678 -H 'Content-Type: application/x-ndjson' -XPOST 'https://localhost:9200/_bulk?pretty' --data-binary @logs.jsonl
+```
+
+不启用https的使用如下命令：
+
+```
+curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/_bulk?pretty' --data-binary @logs.jsonl
+```
+
+### 导入accounts.json示例数据
+
+不需要创建mapping， 直接导入数据：
+
+由于elasticsearch8启用了https连接，需要使用证书来访问，也就是上面说的http_ca.crt，所以使用的命令如下：
+
+```
+curl --cacert ./http_ca.crt -u elastic:12345678 -H 'Content-Type: application/x-ndjson' -XPOST 'https://localhost:9200/accounts/_bulk?pretty' --data-binary @accounts.json
+```
+
+不启用https的使用如下命令：
+
+```
+curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/accounts/_bulk?pretty' --data-binary @accounts.json
+```
+
+## ElasticSearch提供的示例数据
+
+可以ElasticSearch提供的数据集：https://github.com/elastic/examples下的Exploring Public Datasets目录下，需要按照各个目录下文档来进行数据的导入。
+
+
 # 索引设置（Index Settings）
 
 索引级别的设置分为两种：
