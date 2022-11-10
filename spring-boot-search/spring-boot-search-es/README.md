@@ -65,15 +65,15 @@ bin/kibana-verification-code
 
 ## Kibana提供的示例数据
 
-## 新的数据集
+### 新的数据集
 
 新版本Kibana有提供示例数据，在Kibana首页的Try sample data中就可以直接导入示例数据。
 
-## 旧的数据集
+### 旧的数据集
 
 可以在这个页面下载：https://www.elastic.co/guide/cn/kibana/current/tutorial-load-dataset.html，有三个文件：shakespeare_6.0.json、accounts.zip、logs.jsonl.gz，后面两个需要解压一下使用。
 
-### 导入shakespeare_6.0.json示例数据
+#### 导入shakespeare_6.0.json示例数据
 
 首先创建mapping：
 
@@ -113,7 +113,7 @@ curl --cacert ./http_ca.crt -u elastic:12345678 -H 'Content-Type: application/x-
 curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/_bulk?pretty' --data-binary @shakespeare_6.0.json
 ```
 
-### 导入logs.jsonl.gz示例数据
+#### 导入logs.jsonl.gz示例数据
 
 首先创建mapping：
 
@@ -178,7 +178,7 @@ curl --cacert ./http_ca.crt -u elastic:12345678 -H 'Content-Type: application/x-
 curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/_bulk?pretty' --data-binary @logs.jsonl
 ```
 
-### 导入accounts.json示例数据
+#### 导入accounts.json示例数据
 
 不需要创建mapping， 直接导入数据：
 
@@ -368,6 +368,53 @@ PUT /index_name
 ```
 
 # 使用
+
+## 创建文档
+
+```
+POST /customer/_doc/1
+{
+  "firstname": "Jennifer",
+  "lastname": "Walters"
+}
+```
+
+如果索引customer不存在，会自动创建一个索引，并创建文档。
+
+## 使用文档ID查询文档
+
+```
+GET /customer/_doc/1
+```
+
+## 批量创建文档
+
+```
+PUT customer/_bulk
+{ "create": { } }
+{ "firstname": "Monica","lastname":"Rambeau"}
+{ "create": { } }
+{ "firstname": "Carol","lastname":"Danvers"}
+{ "create": { } }
+{ "firstname": "Wanda","lastname":"Maximoff"}
+{ "create": { } }
+{ "firstname": "Jennifer","lastname":"Takeda"}
+```
+
+每一行必须以换行符结束，最后一行也必须以换行符结束
+
+## 搜索文档
+
+```
+GET customer/_search
+{
+  "query" : {
+    "match" : { "firstname": "Jennifer" }
+  }
+}
+```
+
+
 
 ## _cat查看集群运行状况
 
