@@ -2059,3 +2059,59 @@ GET /forms_sub_health/_search
   }
 }
 ```
+
+# ElasticSearch配置
+
+## 配置文件位置
+
+ElasticSearch有三个配置文件：
+
+- `elasticsearch.yml` ElasticSearch的配置
+- `jvm.options` ElasticSearch JVM设置
+- `log4j2.properties` ElasticSearch日志配置
+
+如果是通过压缩包进行安装的，则配置文件在`$ES_HOME/config`目录下，配置文件目录可以通过环境变量`ES_PATH_CONF`来设置。如果是通过操作系统的包管理软件进行安装的，则配置文件在`/etc/elasticsearch`目录下。
+
+## Path设置
+
+- `data`目录存放索引的数据
+- `logs`目录存放ElasticSearch的日志
+
+可以通过修改elasticsearch.yml配置修改data和logs的目录：
+
+- `path.data`
+- `path.logs`
+
+示例：
+
+```yaml
+path:
+  data: /var/data/elasticsearch
+  logs: /var/log/elasticsearch
+```
+
+## 多个data目录
+
+可以配置多个data目录：
+
+```yaml
+path:
+  data:
+    - /mnt/elasticsearch_1
+    - /mnt/elasticsearch_2
+    - /mnt/elasticsearch_3
+```
+
+多data目录配置在7.13.0被废弃了
+
+## Cluster name设置
+
+`cluster.name`默认是elasticsearch，可以在配置文件中设置自己的cluster名字：`cluster.name: logging-prod`
+
+## Node name设置
+
+设置node.name：`node.name: prod-data-2`
+
+## 网络host设置
+
+默认情况下ElasticSearch只绑定了回环地址：`127.0.0.1`和`[::1]`，可以通过`network.host`来配置实际的IP地址：`network.host: 192.169.1.10`
