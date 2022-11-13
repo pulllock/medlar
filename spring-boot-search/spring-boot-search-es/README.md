@@ -198,17 +198,18 @@ curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/accounts/_bu
 
 可以ElasticSearch提供的数据集：https://github.com/elastic/examples下的Exploring Public Datasets目录下，需要按照各个目录下文档来进行数据的导入。
 
+# 索引模块
 
-# 索引设置（Index Settings）
+## 索引设置（Index Settings）
 
 索引级别的设置分为两种：
 
 - 静态的设置：只能在索引创建的时候设置或者索引是closed的时候设置
 - 动态的设置：可通过更新接口动态设置
 
-## 静态的设置
+### 静态的设置
 
-- `index.number_of_shards`：只能在索引创建的时候设置，默认1
+- `index.number_of_shards`：索引的主分片数，只能在索引创建的时候设置，默认1，最大1024
 - `index.number_of_routing_shards`：
 - `index.codec`：
 - `index.routing_partition_size`：只能在索引创建的时候设置，默认1
@@ -216,15 +217,19 @@ curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/accounts/_bu
 - `index.soft_deletes.retention_lease.period`：默认12小时
 - `index.load_fixed_bitset_filters_eagerly`：默认true
 - `index.shard.check_on_startup`：默认false
+  - false
+  - checksum
+  - true
 
-## 动态的设置
 
-- `index.number_of_replicas`：默认1
-- `index.auto_expand_replicas`：
+### 动态的设置
+
+- `index.number_of_replicas`：主分片的副数量，默认1
+- `index.auto_expand_replicas`：自动扩充的副本数量
 - `index.search.idle.after`：默认30秒
-- `index.refresh_interval`：默认1秒
-- `index.max_result_window`：默认10000
-- `index.max_inner_result_window`：默认100
+- `index.refresh_interval`：刷新的时间，默认1秒
+- `index.max_result_window`：from+size可以搜索的最大值，默认10000
+- `index.max_inner_result_window`：from+size inner hit的最大值，默认100
 - `index.max_rescore_window`：
 - `index.max_docvalue_fields_search`：默认100
 - `index.max_script_fields`：默认32
@@ -243,7 +248,7 @@ curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/accounts/_bu
 - `index.final_pipeline`：
 - `index.hidden`：默认false
 
-## Analysis
+## Analysis模块
 
 定义分析器（analyzers）、分词器（tokenizers）、过滤器（token filters、character filters），顺序如下：character filters（0个或多个）--> tokenizers（一个）--> token filters（0个或多个）。
 
@@ -366,6 +371,412 @@ PUT /index_name
   }
 }
 ```
+
+
+
+## 索引分片分配模块
+
+
+
+- Shard allocation filtering
+- Delayed allocation
+- Total shads per node
+- Data tier allocation
+
+## Index blocks
+
+
+
+## Mapper模块
+
+### Mapping
+
+- Mapping分为动态mapping和显式的mapping
+- 7.0.0之前mapping定义需要包含一个type名字，7.0.0以及之后的版本不再需要type
+
+### Dynamic mapping
+
+#### Dynamic field mapping
+
+默认的动态数据类型
+
+| JSON数据类型                                         | `"dynamic":"true"`             | `"dynamic":"runtime"`          | 备注                                                         |
+| ---------------------------------------------------- | ------------------------------ | ------------------------------ | ------------------------------------------------------------ |
+| `null`                                               | 不添加字段                     | 不添加字段                     |                                                              |
+| `true` or `false`                                    | `boolean`                      | `boolean`                      |                                                              |
+| `double`                                             | `float`                        | `double`                       |                                                              |
+| `long`                                               | `long`                         | `long`                         |                                                              |
+| `object`                                             | `object`                       | 不添加字段                     |                                                              |
+| `array`                                              | 依赖于数组中第一个不为null的值 | 依赖于数组中第一个不为null的值 |                                                              |
+| `string`如果匹配到`dynamic_date_formats`中配置的格式 | `date`                         | `date`                         | `dynamic_date_formats`默认值：`["strict_date_optional_time","yyyy/MM/dd HH:mm:ss Z||yyyy/MM/dd Z"]` |
+| `string`匹配到是数字                                 | `float` or `long`              | `double` or `long`             |                                                              |
+| `string`如果不是日期也不是数组                       | `text`类型， `.keyword`子类型  | `keyword`                      |                                                              |
+
+##### 禁用date检测
+
+```json
+PUT my-index-000001
+{
+  "mappings": {
+    "date_detection": false
+  }
+}
+```
+
+##### 自定义date检测格式
+
+```json
+PUT my-index-000001
+{
+  "mappings": {
+    "dynamic_date_formats": ["MM/dd/yyyy"]
+  }
+}
+```
+
+#### Dynamic templates
+
+### 显式mapping
+
+#### 使用显式mapping创建索引
+
+```json
+PUT /my-index-000001
+{
+  "mappings": {
+    "properties": {
+      "age":    { "type": "integer" },  
+      "email":  { "type": "keyword"  }, 
+      "name":   { "type": "text"  }     
+    }
+  }
+}
+```
+
+#### 添加字段到已经存在的mapping
+
+```json
+PUT /my-index-000001/_mapping
+{
+  "properties": {
+    "employee-id": {
+      "type": "keyword",
+      "index": false
+    }
+  }
+}
+```
+
+#### 更新已存在的mapping的字段
+
+不能更新已经存在的字段。
+
+#### 查看索引的mapping
+
+```json
+GET /my-index-000001/_mapping
+```
+
+#### 查看mapping的指定的字段
+
+```json
+GET /my-index-000001/_mapping/field/employee-id
+```
+
+### 运行时字段
+
+运行时字段允许在查询的时候才进行评估，使用运行时字段可以有如下的好处：
+
+- 往已经存在的文档中添加字段，不需要重新索引数据
+- 不需要理解索引是什么结构的
+- 查询的时候可以直接覆盖掉返回的值
+- 不需要修改已经有的schema，就可以定义一些特殊用途的字段
+
+#### 定义运行时字段
+
+```json
+PUT my-index-000001/
+{
+  "mappings": {
+    "runtime": {
+      "day_of_week": {
+        "type": "keyword",
+        "script": {
+          "source": "emit(doc['@timestamp'].value.dayOfWeekEnum.getDisplayName(TextStyle.FULL, Locale.ROOT))"
+        }
+      }
+    },
+    "properties": {
+      "@timestamp": {"type": "date"}
+    }
+  }
+}
+```
+
+运行时字段类型可以是如下的数据类型：
+
+- `boolean`
+- `composite`
+- `date`
+- `double`
+- `geo_point`
+- `ip`
+- `keyword`
+- `long`
+- `lookup`
+
+启用运行时字段需要设置dynamic为runtime：
+
+```json
+PUT my-index-000001
+{
+  "mappings": {
+    "dynamic": "runtime",
+    "properties": {
+      "@timestamp": {
+        "type": "date"
+      }
+    }
+  }
+}
+```
+
+#### 不使用脚本来定义运行时字段
+
+```json
+PUT my-index-000001/
+{
+  "mappings": {
+    "runtime": {
+      "day_of_week": {
+        "type": "keyword"
+      }
+    }
+  }
+}
+```
+
+#### 更新和删除运行时字段
+
+更新运行时字段直接使用同名字段覆盖即可，删除直接设置为null就行：
+
+```json
+PUT my-index-000001/_mapping
+{
+ "runtime": {
+   "day_of_week": null
+ }
+}
+```
+
+#### 在搜索请求中定义运行时字段
+
+```json
+GET my-index-000001/_search
+{
+  "runtime_mappings": {
+    "day_of_week": {
+      "type": "keyword",
+      "script": {
+        "source": "emit(doc['@timestamp'].value.dayOfWeekEnum.getDisplayName(TextStyle.FULL, Locale.ROOT))"
+      }
+    }
+  },
+  "aggs": {
+    "day_of_week": {
+      "terms": {
+        "field": "day_of_week"
+      }
+    }
+  }
+}
+```
+
+#### 使用其他的运行时字段来创建运行时字段
+
+使用其他的字段创建运行时字段：
+
+```json
+PUT my-index-000001/_mapping
+{
+  "runtime": {
+    "measures.start": {
+      "type": "long"
+    },
+    "measures.end": {
+      "type": "long"
+    }
+  }
+}
+```
+
+使用运行时字段：
+
+```json
+GET my-index-000001/_search
+{
+  "aggs": {
+    "avg_start": {
+      "avg": {
+        "field": "measures.start"
+      }
+    },
+    "avg_end": {
+      "avg": {
+        "field": "measures.end"
+      }
+    }
+  }
+}
+```
+
+#### 查询的时候覆盖字段的值
+
+如果运行时字段名字和已经存在的字段名字一样，则查询时运行时字段会覆盖已有的字段
+
+```json
+POST my-index-000001/_search
+{
+  "runtime_mappings": {
+    "measures.voltage": {
+      "type": "double",
+      "script": {
+        "source":
+        """if (doc['model_number.keyword'].value.equals('HG537PU'))
+        {emit(1.7 * params._source['measures']['voltage']);}
+        else{emit(params._source['measures']['voltage']);}"""
+      }
+    }
+  },
+  "query": {
+    "match": {
+      "model_number": "HG537PU"
+    }
+  },
+  "fields": ["measures.voltage"]
+}
+```
+
+#### 获取运行时字段
+
+使用`_search`接口的fields参数可以获取运行时字段的值，运行时字段不会在`_source`中展示。
+
+#### 索引运行时字段
+
+```json
+PUT my-index-000001/
+{
+  "mappings": {
+    "properties": {
+      "timestamp": {
+        "type": "date"
+      },
+      "temperature": {
+        "type": "long"
+      },
+      "voltage": {
+        "type": "double"
+      },
+      "node": {
+        "type": "keyword"
+      },
+      "voltage_corrected": {
+        "type": "double",
+        "on_script_error": "fail", 
+        "script": {
+          "source": """
+        emit(doc['voltage'].value * params['multiplier'])
+        """,
+          "params": {
+            "multiplier": 4
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+#### 使用运行时字段探索数据
+
+### 字段数据类型
+
+#### Common类型
+
+- `binary` 二进制值，使用Base64编码成字符串
+- `boolean` true或false
+- `Keywords` 包含：`keyword`、`constant_keyword`、`wildcard`
+- `Numbers` 数值类型，比如long、double
+- `Dates` 日期类型，包括date和date_nanos
+- `alias` 别名
+
+#### 对象和关系类型
+
+- object JSON对象
+- flattened 一整个json对象当作一个字段的值
+- nested 嵌套类型
+- join 在同一个索引中定义文档的父子关系
+
+#### 结构化的数据类型
+
+- Range 范围类型，比如：`long_range`, `double_range`, `date_range`, `ip_range`
+- ip ipv4地址和ipv6地址
+- version 软件版本
+- murmru3 计算和存储值的哈希
+
+#### 聚合数据类型
+
+- `aggregate_metric_double`
+- histogram
+
+#### 文本搜索类型
+
+- text 包含text和`match_only_text`
+- annotated-text
+- completion
+- `search_as_you_type`
+- `token_count`
+
+#### 文档排序类型
+
+- dense_vector
+- rank_feature
+- rank_features
+
+#### 空间数据类型
+
+- geo_point
+- geo_shape
+- point
+- shape
+
+#### 其他类型
+
+- percolator
+
+#### 数组
+
+没有专门的数组类型的字段类型，数字中所有的数据的类型必须一样
+
+#### Multi-fields
+
+可以为一个字段指定多个分析器。
+
+## 合并模块
+
+## Similarity模块
+
+## 慢日志模块
+
+## 存储模块
+
+## Translog模块
+
+## 保留历史模块
+
+## 索引排序模块
+
+## 索引压力模块
 
 # 使用
 
@@ -2115,3 +2526,253 @@ path:
 ## 网络host设置
 
 默认情况下ElasticSearch只绑定了回环地址：`127.0.0.1`和`[::1]`，可以通过`network.host`来配置实际的IP地址：`network.host: 192.169.1.10`
+
+## 服务发现和集群设置
+
+ElasticSearch默认绑定到本地地址的9300端口和9305端口，可以和同一服务器上的其他的节点进行通信，如果想要和其他的服务器上的节点进行通信，需要配置`discovery.seed_hosts`，示例：
+
+```yaml
+discovery.seed_hosts:
+   - 192.168.1.10:9300
+   - 192.168.1.11 
+   - seeds.mydomain.com 
+   - [0:0:0:0:0:ffff:c0a8:10c]:9301 
+```
+
+第一次启动集群的时候，需要设置参与选举master的节点配置：`cluster.initial_master_nodes`，配置的是节点名字。第一次选举成功后，需要将此设置移除掉。示例：
+
+```yaml
+cluster.initial_master_nodes: 
+   - master-node-a
+   - master-node-b
+   - master-node-c
+```
+
+## 堆大小设置
+
+Elasticsearch会根据节点的角色以及总的内存大小来自动设置JVM堆内存大小，还可以通过JVM参数来手动设置堆内存的大小。
+
+## JVM堆dump路径设置
+
+Elasticsearch默认设置dump路径在`/var/lib/elasticsearch`目录下或者在Elasticsearch安装目录下的data目录下，可以通过在`jvm.options`配置文件中设置JVM参数：`-XX:HeapDumpPath=...`来指定其他的路径
+
+## GC日志设置
+
+Elasticsearch默认记录GC日志，在`jvm.options`中设置，默认和Elasticsearch日志在同一个位置
+
+## 临时目录设置
+
+可以通过环境变量`$ES_TMPDIR`来设置临时目录位置
+
+## JVM致命错误日志设置
+
+Elasticsearch默认设置致命错误日志路径在`/var/lib/elasticsearch`目录下或者在Elasticsearch安装目录下的data目录下，可以通过在`jvm.options`配置文件中设置JVM参数：`-XX:ErrorFile=...`来指定其他的路径
+
+## 集群备份
+
+## 审计设置
+
+- `xpack.security.audit.enabled` 静态配置，设置为true表示在节点上启用审计功能，会在每个节点上创建一个`<clustername>_audit.json`文件
+- `xpack.security.audit.logfile.events.include` 动态配置，用来指定哪些事件需要被记录
+- `xpack.security.audit.logfile.events.exclude` 动态配置，用来指定哪些事件不需要被记录
+- `xpack.security.audit.logfile.events.emit_request_body` 动态配置，用来指定是否记录完整的请求体，默认false
+- `xpack.security.audit.logfile.emit_node_name` 动态设置，是否将节点名字作为一个字段写到每个审计事件中，默认false
+- `xpack.security.audit.logfile.emit_node_host_address` 动态设置，是否将节点的ip作为一个字段写到每个审计事件中，默认false
+- `xpack.security.audit.logfile.emit_node_host_name` 动态设置，是否将节点的主机名作为一个字段写到每个审计事件中，默认false
+- `xpack.security.audit.logfile.emit_node_id` 动态设置，，是否将节点的id为一个字段写到每个审计事件中，默认true
+- `xpack.security.audit.logfile.events.ignore_filters.<policy_name>.users` 动态配置，可以配置用户名列表或者`*`，配置的这些用户名将不会打印该策略的审计事件
+- `xpack.security.audit.logfile.events.ignore_filters.<policy_name>.realms` 动态配置，可以配置认证Realm的列表或者`*`，配置的这些将不会打印该策略的审计事件
+- `xpack.security.audit.logfile.events.ignore_filters.<policy_name>.actions` 动态配置，可以配置操作的列表或者`*`，配置的这些操作将不会打印该策略的审计事件
+- `xpack.security.audit.logfile.events.ignore_filters.<policy_name>.roles` 动态配置，可以配置角色的列表或者`*`，配置的这些角色将不会打印该策略的审计事件
+- `xpack.security.audit.logfile.events.ignore_filters.<policy_name>.indices` 动态配置，可以配置索引名字的列表或者`*`，配置的这些索引将不会打印该策略的审计事件
+
+## 熔断设置
+
+Elasticsearch包含多个熔断器，用来保证某些操作不会引起OutOfMemoryError。
+
+### 父熔断器
+
+- `indices.breaker.total.use_real_memory` 静态配置，设置为true表示父熔断器应该考虑实际的内存使用，设置为false表示只考虑子熔断器保留的数量，默认为true
+- `indices.breaker.total.limit` 动态配置，父熔断器的总的大小限制，如果`indices.breaker.total.use_real_memory`设置为`false`，则默认是Java堆的70%。如果`indices.breaker.total.use_real_memory`设置为`true`，则默认是JVM堆的95%
+
+### 字段数据熔断器
+
+字段数据熔断器会估算一个字段加载到字段数据缓存中需要多少的堆内存，如果需要的内存会导致缓存超过设置的内存限制，则熔断器会停止当前操作bingo返回错误。
+
+- `indices.breaker.fielddata.limit` 动态配置，字段数据熔断器的大小限制，默认是JVM堆内存的40%
+- `indices.breaker.fielddata.overhead` 动态配置，是一个常量值，估算字段数据需要的内存时会乘上这个值，默认是1.03
+
+### 请求熔断器
+
+防止每个请求需要的内存超过了总的内存设置。
+
+- `indices.breaker.request.limit` 动态配置，Limit for request breaker, defaults to 60% of JVM heap.
+- `indices.breaker.request.overhead` 动态配置，A constant that all request estimations are multiplied with to determine a final estimation. Defaults to `1`.
+
+### In flight请求熔断器
+
+- `network.breaker.inflight_requests.limit` 动态配置，Limit for in flight requests breaker, defaults to 100% of JVM heap. This means that it is bound by the limit configured for the parent circuit breaker.
+- `network.breaker.inflight_requests.overhead` 动态配置，A constant that all in flight requests estimations are multiplied with to determine a final estimation. Defaults to 2.
+
+### Accounting请求熔断器
+
+- `indices.breaker.accounting.limit`动态配置
+- `indices.breaker.accounting.overhead` 动态配置
+
+### 脚本编译熔断器
+
+- `script.max_compilations_rate` 动态配置，Limit for the number of unique dynamic scripts within a certain interval that are allowed to be compiled. Defaults to `150/5m`, meaning 150 every 5 minutes.
+
+### 正则熔断器
+
+- `script.painless.regex.enabled` 静态配置，Enables regex in Painless scripts. Accepts:
+  - `limited` 默认值，Enables regex but limits complexity using the `script.painless.regex.limit-factor` cluster setting.
+  - `true` Enables regex with no complexity limits. Disables the regex circuit breaker.
+  - `false` Disables regex. Any Painless script containing a regular expression returns an error.
+- `script.painless.regex.limit-factor` 静态配置，Limits the number of characters a regular expression in a Painless script can consider. Elasticsearch calculates this limit by multiplying the setting value by the script input’s character length.
+
+## 集群级别的共享分配和路由设置
+
+## 跨集群分片设置
+
+## 服务发现和集群信息设置
+
+## 字段数据缓存设置
+
+## 健康诊断设置
+
+## 索引生命周期管理设置
+
+
+
+## 索引管理设置
+
+- `action.auto_create_index` 动态配置，如果索引不存在则自动创建索引，默认为true
+- `action.destructive_requires_name` 动态配置，如果设置为true则删除索引的时候必须指定索引名字，不能通过`_all`或者通配符来删除所有的索引，默认为true
+- `cluster.indices.close.enable` 动态配置，可以关闭索引，默认为true
+- `reindex.remote.whitelist` 静态配置，指定可以远程reindexed的主机
+- `stack.templates.enabled` 动态配置，启用内置的索引和组件模板，默认为true
+
+## 索引恢复设置
+
+## 索引缓冲设置
+
+## 证书设置
+
+## 本地网关设置
+
+## 日志设置
+
+## 机器学习设置
+
+## 监控设置
+
+## 节点
+
+### 节点角色
+
+可以通过`elasticsearch.yml`配置文件中的`node.roles`来设置节点的角色，如果不配置这个属性，则一个节点会被赋予以下的角色：
+
+- master 可以参与master的选举
+- data 存储数据、提供查询搜索聚合等操作
+- data_content
+- data_hot
+- data_warm
+- data_cold
+- data_froizen
+- ingest
+- ml
+- remote_cluster_client
+- transform
+
+## 网络
+
+默认只绑定到了localhost，如需需要远程访问则需要在`elasticsearch.yml`配置文件中配置`network.host`
+
+- `network.host` 静态配置，设置节点的地址，默认是`_local_`
+- `http.port` 静态配置，http端口，默认是9200到9300
+- `transport.port` 静态配置，节点间通信端口，默认是9300到9400
+- `network.bind_host` 静态配置，处理请求的网络地址
+- `network.publish_host` 静态配置，节点间通信的网络地址
+- `network.tcp.keep_alive` 静态配置
+- `network.tcp.keep_idle` 静态配置
+- `network.tcp.keep_interval` 静态配置
+- `network.tcp.keep_count` 静态配置
+- `network.tcp.no_delay` 静态配置
+- `network.tcp.reuse_address` 静态配置
+- `network.tcp.send_buffer_size` 静态配置
+- `network.tcp.receive_buffer_size` 静态配置
+- `http.host` 静态配置
+- `http.bind_host` 静态配置
+- `http.publish_host` 静态配置
+- `http.publish_port`  静态配置
+- `http.max_content_length` 静态配置
+- `http.max_initial_line_length` 静态配置
+- `http.max_header_size` 静态配置
+- `http.compression`  静态配置
+- `http.compression_level` 静态配置
+- `http.cors.enabled`  静态配置
+- `http.cors.allow-origin`  静态配置
+- `http.cors.max-age`  静态配置
+- `http.cors.allow-methods` 静态配置
+- `http.cors.allow-headers`  静态配置
+- `http.cors.allow-credentials`  静态配置
+- `http.detailed_errors.enabled` 静态配置
+- `http.pipelining.max_events` 静态配置
+- `http.max_warning_header_count` 静态配置
+- `http.max_warning_header_size` 静态配置
+- `http.tcp.keep_alive` 静态配置
+- `http.tcp.keep_idle` 静态配置
+- `http.tcp.keep_interval` 静态配置
+- `http.tcp.keep_count` 静态配置
+- `http.tcp.no_delay` 静态配置
+- `http.tcp.reuse_address` 静态配置
+- `http.tcp.send_buffer_size` 静态配置
+- `http.tcp.receive_buffer_size` 静态配置
+- `http.client_stats.enabled` 静态配置
+- `http.client_stats.closed_channels.max_count` 静态配置
+- `http.client_stats.closed_channels.max_age` 静态配置
+- `transport.host`  静态配置
+- `transport.bind_host`  静态配置
+- `transport.publish_host`  静态配置
+- `transport.publish_port`  静态配置
+- `transport.connect_timeout`  静态配置
+- `transport.compress`  静态配置
+- `transport.compression_scheme`  静态配置
+- `transport.tcp.keep_alive`  静态配置
+- `transport.tcp.keep_idle`  静态配置
+- `transport.tcp.keep_interval`  静态配置
+- `transport.tcp.keep_count`  静态配置
+- `transport.tcp.no_delay`  静态配置
+- `transport.tcp.reuse_address`  静态配置
+- `transport.tcp.send_buffer_size`  静态配置
+- `transport.tcp.receive_buffer_size`  静态配置
+- `transport.ping_schedule`  静态配置
+
+## 节点查询缓存设置
+
+使用filter进行查询的时候数据会缓存到节点缓存中，每个节点只有一个查询缓存，被所有分片共享，使用LRU过期策略。默认缓存最大10000条，不超过堆内存的10%。
+
+- `indices.queries.cache.size` 静态配置 控制缓存的内存的大小，可以是百分数（10%)也可以是准确的大小(512mb)，默认是10%
+- `index.queries.cache.enabled` 静态配置，可以配置到每个索引上，控制是否启用查询缓存，默认是true
+
+## 搜索设置
+
+- `indices.query.bool.max_clause_count` 静态配置，一个查询可以包含的最大的子句，默认4096
+- `search.max_buckets` 动态配置，一次响应中的最大的聚合的桶的个数，默认65536
+- `indices.query.bool.max_nested_depth` 静态配置，布尔查询最大的嵌套深度，默认20
+
+## 安全设置
+
+## 共享请求缓存设置
+
+## 快照和恢复设置
+
+## Transforms设置
+
+## 线程池
+
+## Watcher设置
+
+
+
