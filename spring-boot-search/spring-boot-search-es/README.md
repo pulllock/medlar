@@ -762,6 +762,45 @@ PUT my-index-000001/
 
 可以为一个字段指定多个分析器。
 
+#### Aggregate metric
+
+#### Alias
+
+可以为字段设置别名，别名可以在搜索中使用
+
+```json
+PUT trips
+{
+  "mappings": {
+    "properties": {
+      "distance": {
+        "type": "long"
+      },
+      "route_length_miles": {
+        "type": "alias",
+        "path": "distance" 
+      },
+      "transit_mode": {
+        "type": "keyword"
+      }
+    }
+  }
+}
+
+GET _search
+{
+  "query": {
+    "range" : {
+      "route_length_miles" : {
+        "gte" : 39
+      }
+    }
+  }
+}
+```
+
+
+
 ## 合并模块
 
 ## Similarity模块
