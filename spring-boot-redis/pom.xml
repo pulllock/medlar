@@ -10,6 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>spring-boot-redis</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>spring-boot-redis-standalone</module>
+        <module>spring-boot-redis-sentinel</module>
+    </modules>
 
     <properties>
         <spring-boot.version>2.7.3</spring-boot.version>
