@@ -1,3 +1,76 @@
 version: "3.7"
 
+services:
+  master:
+    image: redis:6.2.7
+    container_name: redis-master
+    restart: always
+    # --requirepass 12345678
+    command: redis-server --appendonly yes
+    ports:
+      - 6379:6379
+    networks:
+      - local_redis_sentinel_net
 
+  slave1:
+    image: redis:6.2.7
+    container_name: redis-slave-1
+    restart: always
+    # --requirepass 12345678 --masterauth 12345678
+    command: redis-server --slaveof redis-master 6379 --appendonly yes
+    ports:
+      - 6380:6379
+    networks:
+      - local_redis_sentinel_net
+
+  slave2:
+    image: redis:6.2.7
+    container_name: redis-slave-2
+    restart: always
+    # --requirepass 12345678 --masterauth 12345678
+    command: redis-server --slaveof redis-master 6379 --appendonly yes
+    ports:
+      - 6381:6379
+    networks:
+      - local_redis_sentinel_net
+
+  sentinel1:
+    image: redis:6.2.7
+    container_name: redis-sentinel-1
+    restart: always
+    ports:
+      - 26379:26379
+    networks:
+      - local_redis_sentinel_net
+    command: redis-sentinel /usr/local/etc/redis/sentinel.conf
+    volumes:
+      - ./sentinel1.conf:/usr/local/etc/redis/sentinel.conf
+
+  sentinel2:
+    image: redis:6.2.7
+    container_name: redis-sentinel-2
+    restart: always
+    ports:
+      - 26380:26379
+    networks:
+      - local_redis_sentinel_net
+    command: redis-sentinel /usr/local/etc/redis/sentinel.conf
+    volumes:
+      - ./sentinel2.conf:/usr/local/etc/redis/sentinel.conf
+
+  sentinel3:
+    image: redis:6.2.7
+    container_name: redis-sentinel-3
+    restart: always
+    ports:
+      - 26381:26379
+    networks:
+      - local_redis_sentinel_net
+    command: redis-sentinel /usr/local/etc/redis/sentinel.conf
+    volumes:
+      - ./sentinel3.conf:/usr/local/etc/redis/sentinel.conf
+
+# 定义网络：local_redis_sentinel_net
+networks:
+  local_redis_sentinel_net:
+    name: local_redis_sentinel_net
