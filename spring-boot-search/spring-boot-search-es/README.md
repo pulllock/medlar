@@ -250,7 +250,27 @@ curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/accounts/_bu
 
 ## Analysis模块
 
-定义分析器（analyzers）、分词器（tokenizers）、过滤器（token filters、character filters），顺序如下：character filters（0个或多个）--> tokenizers（一个）--> token filters（0个或多个）。
+analyzer包含三块：
+
+- character filters（字符过滤器）对原始的文本流进行处理，可以添加、删除、修改字符，一个analyzer可以包含0个或者多个character filters。
+- tokenizers（分词器）对字符流进行处理，将其分成单独的词，同时也会记录每个词的顺序和位置等，一个analyzer必须包含一个tokenizer。
+- token filters（分词过滤器）对分完词的流进行处理，可以添加、删除、修改词，一个analyzer可以有0个或者多个token filters。
+
+文本分析会在两个地方触发：
+
+- 索引的时候，text类型的字段的值会触发文本分析
+- 搜索的时候，在对text类型的字段进行搜索的时候，会对搜索的字符串进行文本分析
+
+Stemming词干提取，将一个词还原成原形，stemmer token filters有两种：
+
+- Algorithmic stemmers，基于一个规则集合来进行词干提取，有如下的token filters：
+  - stemmer
+  - kstem
+  - porter_stem
+  - snowball
+- Dictionary stemmers，基于一个字典来查找词干
+
+tokenizers定义分析器（analyzers）、分词器（tokenizers）、过滤器（token filters、character filters），顺序如下：character filters（0个或多个）--> tokenizers（一个）--> token filters（0个或多个）。
 
 - `analysis.analyzer.default`：
 - `analysis.analyzer.default_search`：
