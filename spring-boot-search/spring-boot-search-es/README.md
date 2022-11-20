@@ -799,7 +799,364 @@ GET _search
 }
 ```
 
+#### 数组
 
+Elasticsearch中没有array数据类型，任何字段都可以有0个或者多个值，在数组中的值必须是相同的数据类型，往数组中添加的第一个值的数据类型决定了数组的类型
+
+#### Binary类型
+
+binary类型字段可以存储一个使用Base64编码的字符串，默认不会存储也不可搜索，binary类型的字段可以有如下的参数：
+
+- `doc_values`：true或false，默认false
+- `store`：true或false，默认false
+
+#### Boolean类型
+
+可表示为False的有：`false`、`"false"`、`""（空字符串）`
+
+可表示为True的有：`true`、`"true"`
+
+Boolean类型的字段可以有如下的参数：
+
+- `doc_values`：true或false，默认false
+- `index`：true或false，默认true
+- `null_value`
+- `on_script_error`
+- `script`
+- `store`：true或false，默认false
+- `meta`
+
+#### Completion类型
+
+completion类型字段有如下的参数：
+
+- `analyzer`：默认是simple
+- `search_analyzer`：默认是`analyzer`的值
+- `preserve_separators`：默认是true
+- `preserve_position_increments`：默认是true
+- `max_input_length`：默认50
+
+#### Date类型
+
+Elasticsearch中date类型可以是如下的：
+
+- 按照日期格式存储的字符串
+- 毫秒表示的数字类型
+- 秒表示的数字类型
+
+date类型数据在内部会被转换为UTC时间，并以毫秒表示的数字类型存储。date类型的格式可以手动指定，如果不指定则默认是：`strict_date_optional_time||epoch_millis`。date类型有如下的参数：
+
+- `doc_values`：true或false，默认false
+- `format`：默认是`strict_date_optional_time||epoch_millis`
+- `locale`
+- `ignore_malformed`：true或false，默认false
+- `index`：true或false，默认true
+- `null_value`
+- `on_script_error`
+- `script`
+- `store`：true或false，默认false
+- `meta`
+
+#### Date nanoseconds类型
+
+date_nanos将日期类型存储为纳秒，格式可以手动指定，如果不指定默认是：`strict_date_optional_time_nanos||epoch_millis`
+
+#### Dense vector类型
+
+dense_vector类型的字段存储数字类型的密集向量，不支持聚合和排序。
+
+#### Flattened类型
+
+object类型字段默认会将子字段分别分开进行映射和索引，使用flattened类型字段，可以将一个object类型字段整个的当作一个字段。flattened类型字段和keyword类型功能差不多，flattened类型字段目前有如下的查询类型：
+
+- `term`, `terms`, and `terms_set`
+- `prefix`
+- `range`
+- `match` and `multi_match`
+- `query_string` and `simple_query_string`
+- `exists`
+
+flattened类型有如下的参数：
+
+- depth_limit
+- doc_values
+- eager_global_ordinals
+- ignore_above
+- index
+- index_options
+- null_value
+- similarity
+- split_queries_on_whitespace
+
+#### Geopoint类型
+
+geo_point类型存储经纬度
+
+#### Geoshape类型
+
+geo_shape
+
+#### Histogram类型
+
+histogram
+
+#### IP类型
+
+ip
+
+#### Join类型
+
+join可以在同一个索引中创建父子关系
+
+#### Keyword类型
+
+包含如下的类型：
+
+- keyword
+- constant_keyword
+- wildcard
+
+keyword的参数：
+
+- `doc_values`：true或false，默认true
+- `eager_global_ordinals`，true或false，默认false
+- `fields`
+- `ignore_above`
+- `index`：true或false，默认true
+- `index_options`
+- `meta`
+- `norms`
+- `null_value`
+- `on_script_error`
+- `script`
+- `store`：true或false，默认false
+- `similarity`
+- `normalizer`
+- `split_queries_on_whitespace`：true或false，默认false
+- `time_series_dimension`
+
+constant_keyword是在一个字段在索引中所有的文档中都是同一个值的情况使用，参数有如下：
+
+- `meta`
+- `value`
+
+wildcard类型参数有如下：
+
+- `null_value`
+- `ignore_above`
+
+#### Nested类型
+
+nested类型是一种特殊的object类型，可以让对象类型的数组进行独立查询，参数有如下：
+
+- `dynamic`：默认为true，可以选：true，false，strict
+- `properties`
+- `include_in_parent`：true或false，默认false
+- `include_in_root`：true或false，默认false
+
+每一个nested对象会被分开索引，如果有一个文档包含100个user对象，则会有101个lucene文档被创建。
+
+- `index.mapping.nested_fields.limit`：一个索引中最大的nested类型的字段，默认50
+- `index.mapping.nested_objects.limit`：一个文档中所有的nested类型的字段能包含的nested类型的对象的最大值，默认是10000
+
+#### Numberic类型
+
+类型包括：
+
+- long
+- integer
+- short
+- byte
+- double
+- float
+- hal_float
+- scaled_float
+- unsigned_long
+
+参数如下：
+
+- `coerce`
+- `doc_values`
+- `ignore_malformed`
+- `index`
+- `meta`
+- `null_value`
+- `on_script_error`
+- `script`
+- `store`
+- `time_series_dimension`
+- `time_series_metric`
+
+scaled_float的参数如下：
+
+- `scaling_factor`
+
+#### Object类型
+
+object类型默认内部会将结构打平，变成一个key-value列表，参数如下：
+
+- `dynamic`
+- `enabled`
+- `subobjects`
+- `properties`
+
+#### Percolator类型
+
+percolator
+
+#### Point类型
+
+point
+
+#### Range类型
+
+类型有：
+
+- integer_range
+- float_range
+- long_range
+- double_range
+- date_range
+- ip_range
+
+参数：
+
+- `coerce`
+- `index`
+- `store`
+
+#### Rank feature类型
+
+rank_feature
+
+#### Rank features类型
+
+rank_features
+
+#### Search-as-you-type
+
+search_as_you_type
+
+#### Shape类型
+
+shape
+
+#### Text类型
+
+有如下类型：
+
+- text
+- match_only_text
+
+text类型参数：
+
+- `analyzer`
+- `eager_global_ordinals`
+- `fielddata`
+- `fielddata_frequency_filter`
+- `fields`
+- `index`
+- `index_options`
+- `index_prefixes`
+- `index_phrases`
+- `norms`
+- `position_increment_gap`
+- `store`
+- `search_analyzer`
+- `search_quote_analyzer`
+- `similarity`
+- `term_vector`
+- `meta`
+
+match_only_text类型的参数有：
+
+- `fields`
+- `meta`
+
+#### Token count类型
+
+token_count
+
+#### Unsigned long类型
+
+unsigned_long
+
+#### Version类型
+
+version，是一个特殊的keyword类型字段，可以处理软件的版本号，参数如下：
+
+- `meta`
+
+### Metadata字段
+
+每个文档都有一个元数据
+
+#### ID类型的元数据字段
+
+- `_index`：文档所属的索引
+- `_id`：文档的ID
+
+#### 文档source元数据字段
+
+- `_source`：文档的原始的json数据
+- `_size`：`_source`字段的字节大小
+
+#### Doc count元数据字段
+
+- `_doc_count`
+
+#### Indexing元数据字段
+
+- `_field_names`
+- `_ignored`
+
+#### Routing元数据字段
+
+- `_routing`
+
+#### 其他元数据字段
+
+- `_meta`
+- `_tier`
+
+### Mapping参数
+
+- `analyzer`
+- `coerce`
+- `copy_to`
+- `doc_values`
+- `dynamic`
+- `eager_global_ordinals`
+- `enabled`
+- `fielddata`
+- `fields`
+- `format`
+- `ignore_above`
+- `ignore_malformed`
+- `index_options`
+- `index_phrases`
+- `index_prefixes`
+- `index`
+- `meta`
+- `normalizer`
+- `norms`
+- `null_value`
+- `position_increment_gap`
+- `properties`
+- `search_analyzer`
+- `similarity`
+- `subobjects`
+- `store`
+- `term_vector`
+
+### Mapping相关的限制设置
+
+- `index.mapping.total_fields.limit`：一个索引中最大的字段数量，默认1000
+- `index.mapping.depth.limit`：一个字段对大的深度，默认20
+- `index.mapping.nested_fields.limit`：一个索引中最大的nested类型的字段，默认50
+- `index.mapping.nested_objects.limit`：一个文档中所有的字段中能包含的nested类型的对象的最大值，默认10000
+- `index.mapping.field_name_length.limit`：字段名长度，默认`Long.MAX_VALUE`
+- `index.mapping.dimension_fields.limit`：默认16
 
 ## 合并模块
 
