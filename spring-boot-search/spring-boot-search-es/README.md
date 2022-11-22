@@ -270,129 +270,90 @@ Stemming词干提取，将一个词还原成原形，stemmer token filters有两
   - snowball
 - Dictionary stemmers，基于一个字典来查找词干
 
-tokenizers定义分析器（analyzers）、分词器（tokenizers）、过滤器（token filters、character filters），顺序如下：character filters（0个或多个）--> tokenizers（一个）--> token filters（0个或多个）。
+### 配置文本分析
 
-- `analysis.analyzer.default`：
-- `analysis.analyzer.default_search`：
+Elasticsearch在文本分析时默认使用standard分析器。
 
-示例1：
+#### 创建自定义分析器
 
-```
-PUT /index_name
-{
-  "settings": {
-    "analysis": {
-      "analyzer": {
-        "std_english": {
-          "type": "standard",
-          "stopwords": "_english_"
-        }
-      }
-    }
-  },
-  "mapings": {
-    "properties": {
-      "text_field": {
-        "type": "text",
-        "analyzer": "standard",
-        "fields": {
-          "english": {
-            "type": "text",
-            "analyzer": "std_english"
-          }
-        }
-      }
-    }
-  }
-}
-```
+一个分析器包含如下：
 
-示例2：
+- 0或者多个字符过滤器character filters
+- 一个分词器tokenizer
+- 0或者多个分词过滤器token filters
 
-```
-PUT /index_name
-{
-  "settings": {
-    "analysis": {
-      "analyzer": {
-        "my_custom_analyzer": {
-          "type": "custom",
-          "tokenizer": "standard",
-          "char_filter": [
-            "html_strip"
-          ],
-          "filter": [
-            "lowercase",
-            "asciifolding"
-          ]
-        }
-      }
-    }
-  }
-}
-```
+自定义的分析器可以有如下的参数：
 
-示例3：
+- type：分析器类型，自定义的使用custom或者不添加此参数
+- tokenizer：分词器（必须）
+- char_filter：字符过滤器（可选）
+- filter：分词过滤器（可选）
+- position_increment_gap：默认100
 
-```
-PUT /index_name
-{
-  "settings": {
-    "analysis": {
-      "analyzer": {
-        "my_custom_analyzer": {
-          "char_filter": ["emoticons"],
-          "tokenizer": "punctuation",
-          "filter": [
-            "lowercase",
-            "endlish_stop"
-          ]
-        }
-      },
-      "tokenizer": {
-        "punctuation": {
-          "type": "pattern",
-          "pattern": "[ .,!?]"
-        }
-      },
-      "char_filter": {
-        "emoticons": {
-          "type": "mapping",
-          "mappings": [
-            ":) => _happy_",
-            ":( => _sad_"
-          ]
-        }
-      },
-      "filter": {
-        "endlish_stop": {
-          "type": "stop",
-          "stopwords": "_english_"
-        }
-      }
-    }
-  }
-}
-```
+Elasticsearch在对文档进行索引的时候按照如下的顺序来使用分析器：
 
-示例4：
+1. 在mapping中的字段上指定的analyzer参数
+2. `analysis.analyzer.default`中配置的分析器
+3. 如果上面两个都没有，则使用standard分析器
 
-```
-PUT /index_name
-{
-  "settings": {
-    "analysis": {
-      "analyzer": {
-        "default": {
-          "type": "simple"
-        }
-      }
-    }
-  }
-}
-```
+Elasticsearch在搜索的时候按照如下的顺序来使用分析器：
 
+1. 在搜索参数中指定的analyzer参数的值
+2. 在mapping中的字段上指定的search_analyzer参数
+3. `analysis.analyzer.default_search`中配置的分析器
+4. 在mapping中的字段上指定的analyzer参数
+5. 如果上面4个都没有，则使用standard分析器
 
+### 内置的分析器
+
+- Standard Analyzer: standard
+- Simple Analyzer: simple
+- Whitespace Analyzer: whitespace
+- Stop Analyzer: stop
+- Keyword Analyzer: keyword
+- Pattern Analyzer: pattern
+- Language Analyzer: 指定语言，比如：english或者french
+- Fingerprint Analyzer: fingerprint
+
+### 分词器
+
+分词器接收一个字符流并对其进行分词，将字符流分割成一个个独立的词，输出分词的流。
+
+内置的分词器：
+
+- Standard Tokenizer: standard
+- Letter Tokenizer: letter
+- Lowercase Tokenizer: lowercase
+- Whitespace Tokenizer: whitespace
+- UAX URL Email Tokenizer: uax_url_email
+- Classic Tokenizer: classic
+- Thai Tokenizer: thai
+- N-Gram Tokenizer: ngram
+- Edge N-Gram Tokenizer: edge_ngram
+- Keyword Tokenizer: keyword
+- Pattern Tokenizer: pattern
+- Simple Pattern Tokenizer: simple_pattern
+- Char Group Tokenizer: char_group
+- Simple Pattern Split Tokenizer: simple_pattern_split
+- Path Tokenizer: path_hierarchy
+
+### 分词过滤器
+
+分词过滤器可以接收一个分词的流，对分词进行修改、删除、添加操作
+
+### 字符过滤器
+
+字符过滤器用来处理字符流，之后会将处理后的字符流传给分词器，字符过滤器接受原始的文本字符流，可以添加、删除、修改字符。
+
+内置的字符过滤器：
+
+- HTML Strip Character Filter: html_strip
+- Mapping Character Filter: character
+- Pattern Replace Character Filter: pattern_replace
+
+### Normalizers
+
+Normalizer和分析器类似，但是Normalizer不会进行分词，Normalizer没有分词器，只有字符过滤器和分词过滤器，只对keyword类型字段有效
 
 ## 索引分片分配模块
 
