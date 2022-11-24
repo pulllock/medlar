@@ -3153,3 +3153,19 @@ Elasticsearch包含多个熔断器，用来保证某些操作不会引起OutOfMe
 
 
 
+# Query DSL
+
+## Query和Filter
+
+默认情况下Elasticsearch会将匹配的结果按照一个相关性分值进行排序，相关性分值是一个正的浮点数，在`_score`元数据字段中，相关性分值越高表示搜索结果越匹配。
+
+查询语句分为query和filter两种方式，query方式会计算并返回相关性分值，而filter则不会计算和返回相关性分值，filter查询结果会被缓存。
+
+## 复合查询
+
+- bool
+- boosting
+- constant_score
+- dis_max
+- function_score
+
