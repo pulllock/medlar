@@ -3169,3 +3169,51 @@ Elasticsearch包含多个熔断器，用来保证某些操作不会引起OutOfMe
 - dis_max
 - function_score
 
+### Boolean query
+
+bool query和Lucene的BooleanQuery一样，查询子句可以使用如下的：
+
+- must
+- filter：filter子句在filter上下文中执行，不会计算相关性分值
+- should
+- must_not：must_not子句在filter上下文中执行，不会计算相关性分值
+
+### Boosting query
+
+可以用来减少相关性分值，示例：
+
+```
+GET /_search
+{
+  "query": {
+    "boosting": {
+      "positive": {
+        "term": {
+          "text": "apple"
+        }
+      },
+      "negative": {
+        "term": {
+          "text": "pie tart fruit crumble tree"
+        }
+      },
+      "negative_boost": 0.5
+    }
+  }
+}
+```
+
+参数有如下：
+
+- positive：查询对象，必须，返回的文档必须匹配到该查询
+- negative：查询对象，必须，该查询匹配到的文档会被减少相关性分值
+- negative_boost：浮点型数字，必须，0到1.0之间的数字，用来减少的相关性分值
+
+### Constant query
+
+给filter查询指定一个常数的相关性分值，参数：
+
+- filter：查询对象，必须
+- boost：浮点型数字，可选，默认1.0
+
+### Disjunction max query
