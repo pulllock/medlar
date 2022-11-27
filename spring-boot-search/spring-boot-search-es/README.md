@@ -3217,3 +3217,99 @@ GET /_search
 - boost：浮点型数字，可选，默认1.0
 
 ### Disjunction max query
+
+dis_max可以实现多字段搜索的最佳字段匹配，可以使用多个字段查询文档，如果一个文档的多个字段都能匹配到，则该文档的相关性分值会使用分值最高的字段的分值，使用示例：
+
+```
+GET /_search
+{
+  "query": {
+    "dis_max": {
+      "queries": [
+        { "term": { "title": "Quick pets" } },
+        { "term": { "body": "Quick pets" } }
+      ],
+      "tie_breaker": 0.7
+    }
+  }
+}
+```
+
+参数如下：
+
+- queries：查询对象数组，必须
+- tie_breaker：浮点型数字，可选，0到1.0之间的数字，可以减少查询的相关性分值，默认是0.0
+
+### Function score query
+
+elasticsearch的搜索结果是按照相关性分值进行排序的，相关性分值也可以通过`function_score`来进行控制。
+
+单function示例：
+
+```
+GET /_search
+{
+  "query": {
+    "function_score": {
+      "query": { "match_all": {} },
+      "boost": "5",
+      "random_score": {}, 
+      "boost_mode": "multiply"
+    }
+  }
+}
+```
+
+多个function示例：
+
+```
+GET /_search
+{
+  "query": {
+    "function_score": {
+      "query": { "match_all": {} },
+      "boost": "5", 
+      "functions": [
+        {
+          "filter": { "match": { "test": "bar" } },
+          "random_score": {}, 
+          "weight": 23
+        },
+        {
+          "filter": { "match": { "test": "cat" } },
+          "weight": 42
+        }
+      ],
+      "max_boost": 42,
+      "score_mode": "max",
+      "boost_mode": "multiply",
+      "min_score": 42
+    }
+  }
+}
+```
+
+参数：
+
+- score_mode：决定计算出来的分数怎么合并
+  - multiply：相乘，默认值
+  - sum：相加
+  - avg：平均
+  - first：取第一个匹配的
+  - max：最大
+  - min：最小
+- boost_mode：
+  - multiply：query score和function score相乘，默认值
+  - replace：只使用function score
+  - sum：query score和function score相加
+  - avg：平均
+  - max：query score和function score取最大
+  - min：query score和function score取最小
+
+function_score提供如下几种score函数：
+
+- script_score
+- weight
+- random_score
+- field_value_factor
+- decay functions：`gauss`, `linear`, `exp`
