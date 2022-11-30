@@ -3313,3 +3313,509 @@ function_score提供如下几种score函数：
 - random_score
 - field_value_factor
 - decay functions：`gauss`, `linear`, `exp`
+
+## 全文搜索
+
+- intervals：允许用户精确控制查询词在文档中出现的先后顺序，实现了对terms顺序、terms之间的距离以及他们之间的包含关系的灵活控制
+- match：全文搜索的标准查询，包括模糊匹配、短语或近似匹配
+- match_bool_prefix：搜索中的词会按照term查询进行搜索，使用bool查询组合多个词的查询，最后一个词则是使用prefix查询
+- match_phrase：和match查询类似，match_phrase用来匹配短语
+- match_phrase_prefix：和match_phrase类似，但是最后一个词使用wildcard查询
+- multi_match：支持多个字段的match查询
+- combined_fields：支持搜索多个文本字段，就好像他们的内容被索引到一个组合字段一样
+- query_string：支持Lucene的query string语法，允许在一个查询语句中使用多个特殊的条件关键字（AND、OR、NOT）对多个字段进行查询，专业人士使用，不适合开放给普通用户
+- simple_query_string：比query_string更严格，更简单，适合开放给用户
+
+### intervals
+
+允许用户精确控制查询词在文档中出现的先后顺序，实现了对terms顺序、terms之间的距离以及他们之间的包含关系的灵活控制
+
+使用示例：
+
+```
+POST _search
+{
+  "query": {
+    "intervals" : {
+      "my_text" : {
+        "all_of" : {
+          "ordered" : true,
+          "intervals" : [
+            {
+              "match" : {
+                "query" : "my favorite food",
+                "max_gaps" : 0,
+                "ordered" : true
+              }
+            },
+            {
+              "any_of" : {
+                "intervals" : [
+                  { "match" : { "query" : "hot water" } },
+                  { "match" : { "query" : "cold porridge" } }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+```
+
+参数：
+
+- field：要搜索的字段
+  - match
+    - query：要搜索的内容
+    - max_gaps：匹配的词之间的最大距离，默认-1
+    - ordered：默认false，如果为true则匹配的词需要按照指定的顺序
+    - analyzer
+    - filter
+    - user_field
+  - prefix
+    - prefix
+    - analyzer
+    - user_field
+  - wildcard
+    - pattern
+    - analyzer
+    - user_field
+  - fuzzy
+    - term
+    - prefix_length
+    - transpositions
+    - fuzziness
+    - analyzer
+    - use_field
+  - all_of
+    - intervals
+    - max_gaps
+    - ordered
+    - filter
+  - any_of
+    - intervals
+    - filter
+  - filter
+    - after
+    - before
+    - contained_by
+    - containing
+    - not_contained_by
+    - not_containing
+    - not_overlapping
+    - overlapping
+    - script
+
+### match
+
+全文搜索的标准查询，包括模糊匹配、短语或近似匹配，搜索条件会先被分析器进行分析。match查询是bool类型的查询，默认的operator是OR。
+
+使用示例：
+
+```
+GET /_search
+{
+  "query": {
+    "match": {
+      "message": {
+        "query": "this is a test"
+      }
+    }
+  }
+}
+```
+
+参数：
+
+- field：要搜索的字段
+  - query：要搜索的值，文本、数字、布尔值、日期
+  - analyzer
+  - auto_generate_synonyms_phrase_query：默认true
+  - fuzziness
+  - max_expansions：默认50
+  - prefix_length：默认0
+  - fuzzy_transpositions：默认true
+  - fuzzy_rewrite
+  - lenient：默认false
+  - operator：
+    - OR：默认
+    - AND
+  - minimum_should_match
+  - zero_terms_query：
+    - none：默认
+    - all
+
+### match_bool_prefix
+
+match_bool_prefix会对搜索条件进行分析，对分析后的词构造一个bool查询，最后一个词则使用prefix查询。
+
+使用示例：
+
+```
+GET /_search
+{
+  "query": {
+    "match_bool_prefix" : {
+      "message" : "quick brown f"
+    }
+  }
+}
+```
+
+这个查询类似于如下的bool查询：
+
+```
+GET /_search
+{
+  "query": {
+    "bool" : {
+      "should": [
+        { "term": { "message": "quick" }},
+        { "term": { "message": "brown" }},
+        { "prefix": { "message": "f"}}
+      ]
+    }
+  }
+}
+```
+
+### match_phrase
+
+和match查询类似，match_phrase用来匹配短语
+
+使用示例：
+
+```
+GET /_search
+{
+  "query": {
+    "match_phrase": {
+      "message": "this is a test"
+    }
+  }
+}
+```
+
+### match_phrase_prefix
+
+和match_phrase类似，但是最后一个词使用wildcard查询
+
+使用示例：
+
+```
+GET /_search
+{
+  "query": {
+    "match_phrase_prefix": {
+      "message": {
+        "query": "quick brown f"
+      }
+    }
+  }
+}
+```
+
+参数：
+
+- field：要搜索的字段
+  - query：要搜索的值
+  - analyzer
+  - max_expansions：默认50
+  - slop：默认0
+  - zero_terms_query
+    - none：默认
+    - all
+
+### combined_fields
+
+支持搜索多个文本字段，就好像他们的内容被索引到一个组合字段一样
+
+
+
+## Term级别查询
+
+term查询不会对搜索的条件进行分析。
+
+- exists：只查找指定字段有索引值的文档
+- fuzzy：模糊查询
+- ids：id查询
+- prefix：前缀查询
+- range：范围查询
+- regexp：正则查询
+- term：精确匹配词查询
+- terms：包含一个或多个精确匹配词查询
+- terms_set：可以指定能匹配的最小数量
+- wildcard：通配符查询
+
+### exists
+
+只查找指定字段有索引值的文档，一个文档的字段可能没有索引值，可能有的原因有如下：
+
+- 字段的值是null或者`[]`
+- 字段的是否索引设置为了false：`"index":false`
+- 设置了`ignore_above`，字段的值的长度超过了该值
+- 字段的值有问题，但是设置了`ignore_malformed`，这个字段的值会被丢弃或不进行索引
+
+使用示例：
+
+```
+GET /_search
+{
+  "query": {
+    "exists": {
+      "field": "user"
+    }
+  }
+}
+```
+
+参数：
+
+- field: 比如，要搜索的字段名字
+
+### fuzzy
+
+模糊查询，可以在输入错误的时候也能搜索到数据
+
+使用示例，简单查询：
+
+```
+GET /_search
+{
+  "query": {
+    "fuzzy": {
+      "user.id": {
+        "value": "ki"
+      }
+    }
+  }
+}
+```
+
+使用示例，高级查询：
+
+```
+GET /_search
+{
+  "query": {
+    "fuzzy": {
+      "user.id": {
+        "value": "ki",
+        "fuzziness": "AUTO",
+        "max_expansions": 50,
+        "prefix_length": 0,
+        "transpositions": true,
+        "rewrite": "constant_score"
+      }
+    }
+  }
+}
+```
+
+参数：
+
+- field：要搜索的字段
+  - value：需要搜索的值
+  - fuzziness
+  - max_expansions
+  - prefix_length
+  - transpositions
+  - rewrite
+
+### ids
+
+id查询，使用示例：
+
+```
+GET /_search
+{
+  "query": {
+    "ids" : {
+      "values" : ["1", "4", "100"]
+    }
+  }
+}
+```
+
+### prefix
+
+前缀查询，使用示例：
+
+```
+GET /_search
+{
+  "query": {
+    "prefix": {
+      "user.id": {
+        "value": "ki"
+      }
+    }
+  }
+}
+```
+
+参数：
+
+- field：要搜索的字段
+  - value：要搜索的值
+  - rewrite
+  - case_insensitive
+
+### range
+
+范围查询，使用示例：
+
+```
+GET /_search
+{
+  "query": {
+    "range": {
+      "age": {
+        "gte": 10,
+        "lte": 20,
+        "boost": 2.0
+      }
+    }
+  }
+}
+```
+
+参数：
+
+- field：要搜索的字段
+  - gt：大于
+  - gte：大于等于
+  - lt：小于
+  - let：小于等于
+  - format：日期的格式
+  - relation：
+    - INTERSECTS：默认
+    - CONTAINS
+    - WITHIN
+  - time_zone
+  - boost：浮点数，增加或减少相关性分值，默认为1.0
+
+### regexp
+
+正则查询，使用示例：
+
+```
+GET /_search
+{
+  "query": {
+    "regexp": {
+      "user.id": {
+        "value": "k.*y",
+        "flags": "ALL",
+        "case_insensitive": true,
+        "max_determinized_states": 10000,
+        "rewrite": "constant_score"
+      }
+    }
+  }
+}
+```
+
+### term
+
+精确匹配词查询，不要在text类型的字段上使用term查询，要搜索text类型的字段使用match查询。
+
+使用示例：
+
+```
+GET /_search
+{
+  "query": {
+    "term": {
+      "user.id": {
+        "value": "kimchy",
+        "boost": 1.0
+      }
+    }
+  }
+}
+```
+
+参数：
+
+- field：要查询的字段
+  - value：要查询的值
+  - boost：浮点数，增加或者减少相关性分值，默认是1.0，0到1.0之间的值用来减少相关性分值，大于1.0的值用来增加相关性分值
+  - case_insensitive
+
+### terms
+
+可以使用多个词进行精确匹配查询
+
+使用示例：
+
+```
+GET /_search
+{
+  "query": {
+    "terms": {
+      "user.id": [ "kimchy", "elkbee" ],
+      "boost": 1.0
+    }
+  }
+}
+```
+
+参数：
+
+- field：要搜索的字段，值是数组
+- boost：浮点数，可以用来增加或者减少相关性分值
+
+### terms_set
+
+可以指定能匹配的最小数量
+
+使用示例：
+
+```
+GET /job-candidates/_search
+{
+  "query": {
+    "terms_set": {
+      "programming_languages": {
+        "terms": [ "c++", "java", "php" ],
+        "minimum_should_match_field": "required_matches"
+      }
+    }
+  }
+}
+```
+
+### wildcard
+
+通配符查询
+
+使用示例：
+
+```
+GET /_search
+{
+  "query": {
+    "wildcard": {
+      "user.id": {
+        "value": "ki*y",
+        "boost": 1.0,
+        "rewrite": "constant_score"
+      }
+    }
+  }
+}
+```
+
+参数：
+
+- field：要搜索的字段
+  - boost：浮点型数值，可以增加或者减少相关性分值
+  - case_insensitive
+  - rewrite
+  - value：支持如下两种通配符：
+    - `?`：匹配单个字符
+    - `*`：匹配0或多个字符
+  - wildcard：value的别名参数
