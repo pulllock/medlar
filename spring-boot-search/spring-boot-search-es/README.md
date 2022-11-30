@@ -3530,9 +3530,99 @@ GET /_search
 
 ### combined_fields
 
-支持搜索多个文本字段，就好像他们的内容被索引到一个组合字段一样
+支持搜索多个文本字段，就好像他们的内容被索引到一个组合字段一样，combined_fields需要搜索的所有字段都是一样的analyzer，multi_match则不需要所有字段都是一样的analyzer
 
+使用示例：
 
+```
+GET /_search
+{
+  "query": {
+    "combined_fields" : {
+      "query":      "database systems",
+      "fields":     [ "title", "abstract", "body"],
+      "operator":   "and"
+    }
+  }
+}
+```
+
+参数：
+
+- fields：要查询的字段
+  - query：要查询的条件
+  - auto_generate_synonyms_phrase_query
+  - operator
+    - or：默认
+    - and
+  - minimum_should_match
+  - zero_terms_query
+    - none：默认
+    - all
+
+### multi_match
+
+支持多个字段的match查询，搜索的字段名字可以使用通配符来匹配，可以使用`^`来给字段改变相关性分值
+
+使用示例：
+
+```
+GET /_search
+{
+  "query": {
+    "multi_match" : {
+      "query":    "this is a test", 
+      "fields": [ "subject", "message" ] 
+    }
+  }
+}
+```
+
+multi_match的type参数可以有如下的选择：
+
+- best_fields：默认，在所有字段中查询，但是使用最匹配的字段的分值
+- most_fields：在所有字段中查询，并将所有的查询到的字段的分值合并
+- cross_fields
+- phrase
+- phrase_prefix
+- bool_prefix
+
+### query_string
+
+支持Lucene的query string语法，允许在一个查询语句中使用多个特殊的条件关键字（AND、OR、NOT）对多个字段进行查询，专业人士使用，不适合开放给普通用户
+
+使用示例：
+
+```
+GET /_search
+{
+  "query": {
+    "query_string": {
+      "query": "(new york city) OR (big apple)",
+      "default_field": "content"
+    }
+  }
+}
+```
+
+### simple_query_string
+
+比query_string更严格，更简单，适合开放给用户
+
+使用示例：
+
+```
+GET /_search
+{
+  "query": {
+    "simple_query_string" : {
+        "query": "\"fried eggs\" +(eggplant | potato) -frittata",
+        "fields": ["title^5", "body"],
+        "default_operator": "and"
+    }
+  }
+}
+```
 
 ## Term级别查询
 
@@ -3819,3 +3909,14 @@ GET /_search
     - `?`：匹配单个字符
     - `*`：匹配0或多个字符
   - wildcard：value的别名参数
+
+## Geo
+
+## Shape
+
+## Joining
+
+有两种形式的join：
+
+- nested
+- has_child和has_parent：需join关系的字段需要在同一个索引的不同文档之间
