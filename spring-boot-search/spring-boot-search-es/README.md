@@ -6,7 +6,6 @@
 docker network create elastic
 docker pull docker.elastic.co/elasticsearch/elasticsearch:8.2.2
 docker run --name es01 --net elastic -p 9200:9200 -p 9300:9300 -it docker.elastic.co/elasticsearch/elasticsearch:8.2.2
-
 ```
 
 启动es之后可以在打印的日志中找到用户名、密码、以及在Kibana上使用的enrollment token，找到了之后记下来，后续登录ES以及Kibana使用，如果没记下来可以使用下面的进行重置密码以及重置enrollment token。
@@ -221,7 +220,6 @@ curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/accounts/_bu
   - checksum
   - true
 
-
 ### 动态的设置
 
 - `index.number_of_replicas`：主分片的副数量，默认1
@@ -357,16 +355,12 @@ Normalizer和分析器类似，但是Normalizer不会进行分词，Normalizer�
 
 ## 索引分片分配模块
 
-
-
 - Shard allocation filtering
 - Delayed allocation
 - Total shads per node
 - Data tier allocation
 
 ## Index blocks
-
-
 
 ## Mapper模块
 
@@ -381,17 +375,17 @@ Normalizer和分析器类似，但是Normalizer不会进行分词，Normalizer�
 
 默认的动态数据类型
 
-| JSON数据类型                                         | `"dynamic":"true"`             | `"dynamic":"runtime"`          | 备注                                                         |
-| ---------------------------------------------------- | ------------------------------ | ------------------------------ | ------------------------------------------------------------ |
-| `null`                                               | 不添加字段                     | 不添加字段                     |                                                              |
-| `true` or `false`                                    | `boolean`                      | `boolean`                      |                                                              |
-| `double`                                             | `float`                        | `double`                       |                                                              |
-| `long`                                               | `long`                         | `long`                         |                                                              |
-| `object`                                             | `object`                       | 不添加字段                     |                                                              |
-| `array`                                              | 依赖于数组中第一个不为null的值 | 依赖于数组中第一个不为null的值 |                                                              |
-| `string`如果匹配到`dynamic_date_formats`中配置的格式 | `date`                         | `date`                         | `dynamic_date_formats`默认值：`["strict_date_optional_time","yyyy/MM/dd HH:mm:ss Z||yyyy/MM/dd Z"]` |
-| `string`匹配到是数字                                 | `float` or `long`              | `double` or `long`             |                                                              |
-| `string`如果不是日期也不是数组                       | `text`类型， `.keyword`子类型  | `keyword`                      |                                                              |
+| JSON数据类型                                  | `"dynamic":"true"`      | `"dynamic":"runtime"` | 备注                                                                             |
+| ----------------------------------------- | ----------------------- | --------------------- | ------------------------------------------------------------------------------ |
+| `null`                                    | 不添加字段                   | 不添加字段                 |                                                                                |
+| `true` or `false`                         | `boolean`               | `boolean`             |                                                                                |
+| `double`                                  | `float`                 | `double`              |                                                                                |
+| `long`                                    | `long`                  | `long`                |                                                                                |
+| `object`                                  | `object`                | 不添加字段                 |                                                                                |
+| `array`                                   | 依赖于数组中第一个不为null的值       | 依赖于数组中第一个不为null的值     |                                                                                |
+| `string`如果匹配到`dynamic_date_formats`中配置的格式 | `date`                  | `date`                | `dynamic_date_formats`默认值：`["strict_date_optional_time","yyyy/MM/dd HH:mm:ss Z |
+| `string`匹配到是数字                            | `float` or `long`       | `double` or `long`    |                                                                                |
+| `string`如果不是日期也不是数组                       | `text`类型， `.keyword`子类型 | `keyword`             |                                                                                |
 
 ##### 禁用date检测
 
@@ -1202,8 +1196,6 @@ GET customer/_search
 }
 ```
 
-
-
 ## _cat查看集群运行状况
 
 - `GET /_cat/health?v` 查看健康状态
@@ -1257,7 +1249,6 @@ PUT /user/_doc/1?pretty
   "_seq_no" : 0,
   "_primary_term" : 1
 }
-
 ```
 
 ## 查询文档
@@ -1322,7 +1313,6 @@ GET /user/_mget
   "ids": ["1","2"]
 }
 ```
-
 
 ## 覆盖文档
 
@@ -1459,7 +1449,6 @@ POST /user/_update_by_query/
   }
 }
 ```
-
 
 ## 删除文档
 
@@ -3020,8 +3009,6 @@ Elasticsearch包含多个熔断器，用来保证某些操作不会引起OutOfMe
 
 ## 索引生命周期管理设置
 
-
-
 ## 索引管理设置
 
 - `action.auto_create_index` 动态配置，如果索引不存在则自动创建索引，默认为true
@@ -3150,8 +3137,6 @@ Elasticsearch包含多个熔断器，用来保证某些操作不会引起OutOfMe
 ## 线程池
 
 ## Watcher设置
-
-
 
 # Query DSL
 
@@ -3912,7 +3897,15 @@ GET /_search
 
 ## Geo
 
+- geo_bounding_box
+- geo_distance
+- geo_grid
+- geo_polygon
+- geo_shape
+
 ## Shape
+
+- shape
 
 ## Joining
 
@@ -3920,3 +3913,950 @@ GET /_search
 
 - nested
 - has_child和has_parent：需join关系的字段需要在同一个索引的不同文档之间
+
+### nested
+
+使用示例：
+
+```
+GET /my-index-000001/_search
+{
+  "query": {
+    "nested": {
+      "path": "obj1",
+      "query": {
+        "bool": {
+          "must": [
+            { "match": { "obj1.name": "blue" } },
+            { "range": { "obj1.count": { "gt": 5 } } }
+          ]
+        }
+      },
+      "score_mode": "avg"
+    }
+  }
+}
+```
+
+参数：
+
+- path：要搜索的nested对象的路径
+- query：要搜索的内容
+- score_mode
+  - avg：默认
+  - max
+  - min
+  - none
+  - sum
+- ignore_unmapped：默认false
+
+### has_child
+
+创建索引的mapping：
+
+```
+PUT /my-index-000001
+{
+  "mappings": {
+    "properties": {
+      "my-join-field": {
+        "type": "join",
+        "relations": {
+          "parent": "child"
+        }
+      }
+    }
+  }
+}
+```
+
+查询示例：
+
+```
+GET /_search
+{
+  "query": {
+    "has_child": {
+      "type": "child",
+      "query": {
+        "match_all": {}
+      },
+      "max_children": 10,
+      "min_children": 2,
+      "score_mode": "min"
+    }
+  }
+}
+```
+
+参数：
+
+- type
+- query
+- ignore_unmapped：默认false
+- max_children
+- min_children
+- score_mode
+  - none：默认
+  - avg
+  - max
+  - min
+  - sum
+
+### has_parent
+
+创建索引的mapping：
+
+```
+PUT /my-index-000001
+{
+  "mappings": {
+    "properties": {
+      "my-join-field": {
+        "type": "join",
+        "relations": {
+          "parent": "child"
+        }
+      },
+      "tag": {
+        "type": "keyword"
+      }
+    }
+  }
+}
+```
+
+查询示例：
+
+```
+GET /my-index-000001/_search
+{
+  "query": {
+    "has_parent": {
+      "parent_type": "parent",
+      "query": {
+        "term": {
+          "tag": {
+            "value": "Elasticsearch"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+参数：
+
+- parent_type
+- query
+- score：默认false
+- ignore_unmapped：默认false
+
+### parent_id
+
+使用示例：
+
+```
+GET /my-index-000001/_search
+{
+  "query": {
+      "parent_id": {
+          "type": "my-child",
+          "id": "1"
+      }
+  }
+}
+```
+
+参数：
+
+- type
+- id
+- ignore_unmapped：默认false
+
+## match_all
+
+最简单的查询，会匹配到所有的文档，匹配到的文档的相关性分值_score都是1.0，查询的时候可以使用boost来指定相关性分值
+
+## match_none
+
+和match_all相反，不会匹配到任何文档
+
+## Span查询
+
+同段、同句搜索的场景可以使用span查询，有如下的查询：
+
+- span_containing
+- span_field_masking
+- span_first
+- span_multi
+- span_near
+- span_not
+- span_or
+- span_term
+- span_within
+
+## 其他的一些查询
+
+- distance_feature
+- more_like_this
+- percolate
+- rank_feature
+- script
+- script_score
+- wrapper
+- pinned
+
+# Aggregations
+
+有三种分类：
+
+- Metric：指标聚合，对字段进行统计分析，数学运算，比如sum、avg
+- Bucket：桶聚合，满足特定条件的文档的集合
+- Pipeline：管道聚合，对聚合结果进行二次聚合
+
+使用示例：
+
+```
+GET /my-index-000001/_search
+{
+  "aggs": {
+    "my-agg-name": {
+      "terms": {
+        "field": "my-field"
+      }
+    }
+  }
+}
+```
+
+## Bucket aggregations
+
+- adjacency matrix
+- auto-interval date histogram
+- categorize text
+- children
+- composite
+- date histogram
+- date range
+- diversified sampler
+- filter
+- filters
+- frequent items
+- geo-distance
+- geohash grid
+- geohex grid
+- geotile grid
+- global
+- histogram
+- ip prefix
+- ip range
+- missing
+- multi terms
+- nested
+- parent
+- random sampler
+- range
+- rare terms
+- reverse nested
+- sampler
+- significant terms
+- significant text
+- terms
+- variable width histogram
+- subtleties of bucketing range fields
+
+## Metrics aggregations
+
+- avg
+- boxplot
+- cardinality
+- extended stats
+- geo-bounds
+- geo-centroid
+- geo-line
+- matrix stats
+- max
+- median absolute deviation
+- min
+- percentile ranks
+- percentiles
+- rate
+- scripted metric
+- stats
+- string stats
+- sum
+- t-test
+- top hits
+- top metrics
+- value count
+- weighted avg
+
+### avg
+
+可以用在数值型的字段或者histogram类型的字段上
+
+使用示例：
+
+```
+POST /exams/_search?size=0
+{
+  "aggs": {
+    "avg_grade": { "avg": { "field": "grade" } }
+  }
+}
+```
+
+参数：
+
+- field：要进行聚合的字段
+- missing：如果要聚合的字段没有值，可以使用该字段指定一个默认的值
+
+## Pipeline aggregations
+
+- average bucket
+- bucket script
+- bucket count k-s test
+- bucket correlation
+- bucket selector
+- bucket sort
+- change point
+- cumulative cardinality
+- cumulative sum
+- derivative
+- extended stats bucket
+- inference bucket
+- max bucket
+- min bucket
+- moving function
+- moving percentiles
+- normalize
+- percentiles bucket
+- serial differencing
+- stats bucket
+- sum bucket
+
+# 命令行工具
+
+- elasticsearch-certgen
+- elasticsearch-certutil
+- elasticsearch-create-enrollment-token
+- elasticsearch-croneval
+- elasticsearch-keystore
+- elasticsearch-node
+- elasticsearch-reconfigure-node
+- elasticsearch-reset-password
+- elasticsearch-saml-metadata
+- elasticsearch-setup-passwords
+- elasticsearch-shard
+- elasticsearch-syskeygen
+- elasticsearch-users
+
+# REST APIS
+
+## 通用的选项
+
+- `pretty=true`：返回的json结果会被格式化，只在开发和调试的时候使用
+- `format=yaml`：返回yaml格式的结果
+- `human=false`：可读的格式，默认是false
+- `filter_path=took,hits.hits._id,hits.hits._score`：可以控制返回的数据，使用逗号分割，也支持使用`*`和`**`通配符来制定字段的名字
+- `flat_settings=true`：控制返回的settings结果以平铺的方式展示
+- `error_trace=true`：可返回错误的stack trace信息
+
+## Document APIs
+
+单文档APIs：
+
+- Index
+- Get
+- Delete
+- Update
+
+多文档APIs：
+
+- Multi get
+- Bulk
+- Delete by query
+- Update by query
+- Reindex
+
+### Index API
+
+#### 请求
+
+- `PUT /<target>/_doc/<_id>`
+- `POST /<target>/_doc/`
+- `PUT /<target>/_create/<_id>`
+- `POST /<target>/_create/<_id>`
+
+#### Path参数
+
+- `<target>`：index或者data stream的名字
+- `<_id>`：文档的唯一id
+
+#### Query参数
+
+- if_seq_no：如果文档是指定的sq_no才执行操作
+- if_primary_term：如果文档的primary term是指定的值时才执行操作
+- op_type：
+  - index：默认
+  - create：指定的id的文档必须不存在，否则操作失败
+- pipeline：指定pipline的ID
+- refresh：
+  - true：
+  - false：默认
+  - wait_for
+- routing
+- timeout：默认1m
+- version
+- version_type：
+  - external
+  - external_gte
+- wait_for_active_shards：默认1
+- require_alias：
+  - true
+  - false：默认
+
+#### Request body
+
+- `<field>`：json格式的文档数据
+
+#### Response body
+
+- `_shards`
+- `_shards.total`
+- `_shards.successful`
+- `_shards.failed`
+- `_index`
+- `_type`
+- `_id`
+- `_version`
+- `_seq_no`
+- `_primary_term`
+- `result`
+
+### Get API
+
+#### Request
+
+- `GET <index>/_doc/<_id>`
+
+- `HEAD <index>/_doc/<_id>`
+
+- `GET <index>/_source/<_id>`
+
+- `HEAD <index>/_source/<_id>`
+
+#### Path参数
+
+- `<index>`
+
+- `<_id>`
+
+#### Query参数
+
+- `preference`
+
+- `realtime`
+
+- `refresh`
+
+- `routing`
+
+- `stored_fields`
+
+- `_source`
+
+- `_source_excludes`
+
+- `_source_includes`
+
+- `version`
+
+- `version_type`
+
+#### Response body
+
+- `_index`
+
+- `_id`
+
+- `_version`
+
+- `_seq_no`
+
+- `_primary_term`
+
+- `found`
+
+- `_routing`
+
+- `_source`
+
+- `_fields`
+
+### Delete API
+
+Request
+
+- `DELETE /<index>/_doc/<_id>`
+
+#### Path参数
+
+- `<index>`
+
+- `<_id>`
+
+#### Query参数
+
+- `if_seq_no`
+
+- `if_primary_term`
+
+- `refresh`
+
+- `routing`
+
+- `timeout`
+
+- `version`
+
+- `version_type`
+
+- `wait_for_active_shards`
+
+### Delete by query API
+
+#### Request
+
+- `POST /<target>/_delete_by_query`
+
+#### Path parameters
+
+- `<target>`
+
+#### Query parameters
+
+- `allow_no_indices`
+
+- `analyzer`
+
+- `analyze_wildcard`
+
+- `conflicts`
+
+- `default_operator`
+
+- `df`
+
+- `expand_wildcards`
+  
+  - `all`
+  
+  - `open`
+  
+  - `closed`
+  
+  - `hidden`
+  
+  - `none`
+
+- `from`
+
+- `ignore_unavailable`
+
+- `lenient`
+
+- `max_docs`
+
+- `preference`
+
+- `q`
+
+- `request_cache`
+
+- `refresh`
+
+- `requests_per_second`
+
+- `routing`
+
+- `scroll`
+
+- `scroll_size`
+
+- `search_type`
+  
+  - `query_then_fetch`
+  
+  - `dfs_query_then_fetch`
+
+- `search_timeout`
+
+- `slices`
+
+- `sort`
+
+- `stats`
+
+- `terminate_after`
+
+- `timeout`
+
+- `version`
+
+- `wait_for_active_shards`
+
+#### Request body
+
+- `query`
+
+#### Response body
+
+- `took`
+
+- `timed_out`
+
+- `total`
+
+- `deleted`
+
+- `batches`
+
+- `version_conflicts`
+
+- `noops`
+
+- `retries`
+
+- `throttled_millis`
+
+- `requests_per_second`
+
+- `throttled_until_millis`
+
+- `failures`
+
+### Update API
+
+#### Request
+
+- `POST /<index>/_update/<_id>`
+
+#### Path parameters
+
+- `<index>`
+
+- `<_id>`
+
+#### Query parameters
+
+- `if_seq_no`
+
+- `if_primary_term`
+
+- `lang`
+
+- `require_alias`
+
+- `refresh`
+
+- `retry_on_conflict`
+
+- `routing`
+
+- `_source`
+
+- `_source_excludes`
+
+- `_source_includes`
+
+- `timeout`
+
+- `wait_for_active_shards`
+
+### Update By Query API
+
+#### Request
+
+- `POST /<target>/_update_by_query`
+
+#### Path parameters
+
+- `<target>`
+
+#### Query parameters
+
+- `allow_no_indices`
+
+- `analyzer`
+
+- `analyze_wildcard`
+
+- `conflicts`
+
+- `default_operator`
+
+- `df`
+
+- `expand_wildcards`
+  
+  - `all`
+  
+  - `open`
+  
+  - `closed`
+  
+  - `hidden`
+  
+  - `none`
+
+- `from`
+- `ignore_unavailable`
+
+- `lenient`
+
+- `max_docs`
+
+- `pipeline`
+
+- `preference`
+
+- `q`
+
+- `request_cache`
+
+- `refresh`
+
+- `requests_per_second`
+
+- `routing`
+
+- `scroll`
+
+- `scroll_size`
+
+- `search_type`
+  
+  - `query_then_fetch`
+  
+  - `dfs_query_then_fetch`
+
+- `search_timeout`
+
+- `slices`
+
+- `sort`
+
+- `stats`
+
+- `terminate_after`
+
+- `timeout`
+
+- `version`
+
+- `wait_for_active_shards`
+
+#### Request body
+
+- `query`
+
+#### Response body
+
+- `took`
+
+- `timed_out`
+
+- `total`
+
+- `updated`
+
+- `deleted`
+
+- `batches`
+
+- `version_conflicts`
+
+- `noops`
+
+- `retries`
+
+- `throttled_millis`
+
+- `requests_per_second`
+
+- `throttled_until_millis`
+
+- `failures`
+
+### Multi get (mget) API
+
+#### Request
+
+- `GET /_mget`
+
+- `GET /<index>/_mget`
+
+#### Path parameters
+
+- `<index>`
+
+#### Query parameters
+
+- `preference`
+
+- `realtime`
+
+- `refresh`
+
+- `routing`
+
+- `stored_fields`
+
+- `_source`
+
+- `_source_excludes`
+
+- `_source_includes`
+
+#### Request body
+
+- `docs`
+  
+  - `_id`
+  
+  - `_index`
+  
+  - `routing`
+  
+  - `_source`
+    
+    - `source_include`
+    
+    - `source_exclude`
+  
+  - `_stored_fields`
+
+- `ids`
+
+### Bulk API
+
+#### Request
+
+- `POST /_bulk`
+
+- `POST /<target>/_bulk`
+
+#### Path parameters
+
+- `<target>`
+
+#### Query parameters
+
+- `pipeline`
+
+- `refresh`
+
+- `require_alias`
+
+- `routing`
+
+- `_source`
+
+- `_source_excludes`
+
+- `_source_includes`
+
+- `timeout`
+
+- `wait_for_active_shards`
+
+#### Request body
+
+- `create`
+  
+  - `_index`
+  
+  - `_id`
+  
+  - `require_alias`
+  
+  - `dynamic_templates`
+
+- `delete`
+  
+  - `_index`
+  
+  - `_id`
+  
+  - `require_alias`
+
+- `index`
+  
+  - `_index`
+  
+  - `_id`
+  
+  - `require_alias`
+  
+  - `dynamic_templates`
+
+- `update`
+  
+  - `_index`
+  
+  - `_id`
+  
+  - `require_alias`
+
+- `doc`
+
+- `<fields>`
+
+#### Response body
+
+- `took`
+
+- `errors`
+
+- `items`
+  
+  - `<action>`：create, delete, index, update
+    
+    - `_index`
+    
+    - `_id`
+    
+    - `_version`
+    
+    - `result`
+    
+    - `_shards`
+      
+      - `total`
+      
+      - `successful`
+      
+      - `failed`
+    
+    - `_seq_no`
+    
+    - `_primary_term`
+    
+    - `status`
+    
+    - `error`
+      
+      - `type`
+      
+      - `reason`
+      
+      - `index_uuid`
+      
+      - `shard`
+      
+      - `index`
+
+
