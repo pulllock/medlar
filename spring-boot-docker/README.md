@@ -219,14 +219,46 @@ docker run -d -p 8080:8080 --network spring_boot_docker_app_network -v /tmp/app_
 
 - `docker build`：用Dockerfile来构建一个镜像
 - `docker container`：管理容器
+  - `docker container run`：从镜像启动容器
+    - `docker container run <options> <image>:<tag> <app>`
+    - `docker container run --restart always`：指定重启策略：
+      - `always`
+      - `unless-stopped`
+      - `on-failed`
+  - `docker container ls`：查看处于运行状态的容器
+  - `docker container ls -a`：查看所有的容器
+  - `docker container exec`：将shell连接到一个运行的容器终端
+  - `docker container start`：启动容器
+  - `docker container stop`：停止容器
+  - `docker container pause`：暂停容器
+  - `docker container rm`：移除容器
+  - `docker container inspect`：显示容器的配置恶化运行时信息
 - `docker cp`：在容器和本机之间进行相互拷贝
 - `docker exec`：在正在运行的容器中执行命令
 - `docker history`：显示镜像的历史
 - `docker image`：管理镜像
+  - `docker image ls`：列出镜像
+  - `docker image ls --filter`：过滤返回的镜像列表内容
+    - `dangling`：true表示返回悬虚镜像，false表示返回非悬虚镜像，示例：`docker image ls --filter dangling==true`
+    - `before`：需要镜像名或ID作为参数，返回之前被创建的全部镜像
+    - `since`：与before类似，返回的是指定镜像之后创建的全部镜像
+    - `label`：根据标签的名称或值对镜像进行过滤
+  - `docker image ls --digests`：查看镜像摘要
+  - `docker image build`：根据Dockerfile来创建新的镜像
+  - `docker image rm`：移除镜像
+  - `docker image pull`：拉取镜像
+  - `docker image inspect`：查看镜像的元数据
+  - `docker image rm`：移除镜像
+  - `docker image push`：推送镜像到仓库
+  - `docker image history`：查看在镜像构建过程中都执行了哪些指令
 - `docker images`：列出镜像
 - `docker info`：显示系统信息
 - `docker logs`：获取容器的日志
 - `docker network`：管理网络
+  - `docker network ls`：列出网络
+  - `docker network inspect`：查看网络的详细信息
+  - `docker network create`：创建网络
+    - `docker network create -d bridge localnet`：创建一个单机桥接网络，名字为localnet
 - `docker port`：列出容器的端口映射或者设置容器的端口映射
 - `docker ps`：列出容器
 - `docker pull`：从仓库拉取镜像
@@ -242,6 +274,18 @@ docker run -d -p 8080:8080 --network spring_boot_docker_app_network -v /tmp/app_
 - `docker top`：查看一个容器中正在运行的进程
 - `docker version`：显示Docker版本信息
 - `docker volume`：管理卷
+  - `docker volume ls`：列出卷
+  - `docker volume create`：创建卷
+  - `docker volume inspect`：查看卷详情
+  - `docker volume prune`：删除未装入到某个容器或者服务的所有卷
+  - `docker volume rm`：删除指定卷
+- `docker search`：命令行的方式搜索Docker Hub
+- `docker login`：登陆
+- `docker save`：导出镜像到本地文件
+- `docker load`：将导出的镜像tar文件导入到本地镜像库
+- `docker create`：创建一个容器
+- `docker export`：导出容器，将已创建的容器导出到一个文件
+- `docker import`：导入容器，变成镜像
 
 ## docker build
 
@@ -581,7 +625,7 @@ docker top CONTAINER[ps OPTIONS]
 - `docker compose rm`：移除已经停止的容器
 - `docker compose start`：启动服务
 - `docker compose stop`：停止服务
-- `docker compose top`：显示运行中的进行
+- `docker compose top`：显示运行中的进程
 - `docker compose unpause`：恢复暂停中的服务
 - `docker compose up`：创建并启动容器
 
