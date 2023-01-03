@@ -1,0 +1,17 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: spring-cloud-gateway-service-1
+
+eureka:
+  instance:
+    instance-id: spring-cloud-gateway-service-1
+    hostname: spring-cloud-gateway-service-1
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka

@@ -1,0 +1,34 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: spring-cloud-gateway-server
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: spring-cloud-gateway-service-1
+          uri: lb://spring-cloud-gateway-service-1
+          predicates:
+            - Path=/gateway/s1/**
+          filters:
+            - StripPrefix=2
+        - id: spring-cloud-gateway-service-2
+          uri: lb://spring-cloud-gateway-service-2
+          predicates:
+            - Path=/gateway/s2/**
+          filters:
+            - StripPrefix=2
+
+eureka:
+  instance:
+    instance-id: spring-cloud-gateway-server
+    hostname: spring-cloud-gateway-server
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
