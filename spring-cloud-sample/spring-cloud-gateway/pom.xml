@@ -15,6 +15,7 @@
         <module>spring-cloud-gateway-server</module>
         <module>spring-cloud-gateway-service-1</module>
         <module>spring-cloud-gateway-service-2</module>
+        <module>spring-cloud-gateway-server-nacos</module>
     </modules>
 
     <properties>

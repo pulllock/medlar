@@ -1,0 +1,13 @@
+app:
+  env: dev
+  name: spring-cloud-gateway-server
+
+spring:
+  application:
+    name: ${app.name}
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        namespace: ${app.env}
+        file-extension: yaml
