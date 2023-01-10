@@ -1,0 +1,9 @@
+app:
+  env: dev
+  name: spring-cloud-gateway-server-redis
+
+spring:
+  application:
+    name: ${app.name}
+  profiles:
+    active: ${app.env:dev}

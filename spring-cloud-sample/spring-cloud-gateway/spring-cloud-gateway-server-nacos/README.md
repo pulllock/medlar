@@ -1,5 +1,7 @@
 # spring-cloud-gateway-server-nacos
 
+使用nacos来实现网关动态路由配置
+
 # Docker安装启动nacos server
 
 本地安装启动nacos server：

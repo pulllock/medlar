@@ -1,0 +1,41 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      redis:
+        enabled: true
+      redis-route-definition-repository:
+        enabled: true
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    # password:
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+
+
+eureka:
+  instance:
+    instance-id: spring-cloud-gateway-server
+    hostname: spring-cloud-gateway-server
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: gateway
