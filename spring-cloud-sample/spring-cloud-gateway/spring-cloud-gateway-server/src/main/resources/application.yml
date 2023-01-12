@@ -9,19 +9,30 @@ spring:
       discovery:
         locator:
           enabled: true
+      globalcors:
+        cors-configurations:
+          # 匹配所有请求
+          '[/**]':
+            allowed-origins:
+              - "*"
+            allowed-methods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
       routes:
         - id: spring-cloud-gateway-service-1
           uri: lb://spring-cloud-gateway-service-1
           predicates:
-            - Path=/gateway/s1/**
+            - Path=/s1/**
           filters:
-            - StripPrefix=2
+            - StripPrefix=1
         - id: spring-cloud-gateway-service-2
           uri: lb://spring-cloud-gateway-service-2
           predicates:
-            - Path=/gateway/s2/**
+            - Path=/s2/**
           filters:
-            - StripPrefix=2
+            - StripPrefix=1
 
 eureka:
   instance:
