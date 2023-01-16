@@ -20,6 +20,15 @@ spring:
               - POST
               - PUT
               - DELETE
+      default-filters:
+        - name: RequestRateLimiter
+          args:
+            # 令牌桶每秒填充速率
+            redis-rate-limiter.replenishRate: 1
+            # 令牌桶总容量
+            redis-rate-limiter.burstCapacity: 2
+            redis-rate-limiter.requestedTokens: 2
+            key-resolver: "#{@ipKeyResolver}"
       routes:
         - id: spring-cloud-gateway-service-1
           uri: lb://spring-cloud-gateway-service-1
@@ -33,6 +42,17 @@ spring:
             - Path=/s2/**
           filters:
             - StripPrefix=1
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+      # password:
+      lettuce:
+        pool:
+          max-active: 8
+          max-wait: -1ms
+          max-idle: 8
+          min-idle: 0
 
 eureka:
   instance:

@@ -32,6 +32,7 @@
         <module>spring-boot-i18n</module>
         <module>spring-boot-search</module>
         <module>spring-boot-externalized-configuration</module>
+        <module>spring-boot-rate-limiting</module>
     </modules>
 
     <properties>

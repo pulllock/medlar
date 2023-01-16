@@ -1,6 +1,7 @@
 package me.cxis.sample.cloud.gateway.server.config;
 
 import me.cxis.sample.cloud.gateway.server.filters.AuthenticationGatewayFilter;
+import me.cxis.sample.cloud.gateway.server.filters.IpKeyResolver;
 import me.cxis.sample.cloud.gateway.server.filters.LoggingGatewayFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,5 +20,10 @@ public class GatewayFilterConfig {
     @Bean
     public AuthenticationGatewayFilter authenticationGatewayFilter() {
         return new AuthenticationGatewayFilter();
+    }
+
+    @Bean
+    public IpKeyResolver ipKeyResolver() {
+        return new IpKeyResolver();
     }
 }
