@@ -2,10 +2,7 @@ package me.cxis.sample.cloud.gateway.server.config;
 
 import me.cxis.sample.cloud.gateway.server.exception.GatewayErrorAttributes;
 import me.cxis.sample.cloud.gateway.server.exception.GlobalErrorExceptionHandler;
-import me.cxis.sample.cloud.gateway.server.filters.AuthenticationGatewayFilter;
-import me.cxis.sample.cloud.gateway.server.filters.IpKeyResolver;
-import me.cxis.sample.cloud.gateway.server.filters.LoggingGatewayFilter;
-import me.cxis.sample.cloud.gateway.server.filters.RateLimiterGatewayFilterFactory;
+import me.cxis.sample.cloud.gateway.server.filters.*;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.cloud.gateway.filter.ratelimit.RateLimiter;
 import org.springframework.context.annotation.Bean;
@@ -53,5 +50,10 @@ public class GatewayFilterConfig {
     @Order(-1)
     public GlobalErrorExceptionHandler globalErrorExceptionHandler() {
         return new GlobalErrorExceptionHandler();
+    }
+
+    @Bean
+    public ResponseWrapFilter responseWrapFilter() {
+        return new ResponseWrapFilter();
     }
 }

@@ -78,7 +78,8 @@ public class LoggingGatewayFilter implements GlobalFilter, Ordered {
 
         // request
         ServerRequest serverRequest = ServerRequest.create(exchange, messageReaders);
-        // 获取原始request body中的内容，转为String类型猴
+        // 获取原始request body中的内容，转为String类型
+        // TODO 需要判断Content-Type
         Mono<String> requestBody = serverRequest.bodyToMono(String.class);
         Mono<String> modifiedBody = requestBody
                 .flatMap(originalBody -> {
@@ -119,6 +120,7 @@ public class LoggingGatewayFilter implements GlobalFilter, Ordered {
         return new ServerHttpResponseDecorator(exchange.getResponse()) {
             @Override
             public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
+                // TODO 需要判断Content-Type
                 String originalResponseContentType = exchange.getAttribute(ORIGINAL_RESPONSE_CONTENT_TYPE_ATTR);
                 HttpHeaders httpHeaders = new HttpHeaders();
                 httpHeaders.add(HttpHeaders.CONTENT_TYPE, originalResponseContentType);
