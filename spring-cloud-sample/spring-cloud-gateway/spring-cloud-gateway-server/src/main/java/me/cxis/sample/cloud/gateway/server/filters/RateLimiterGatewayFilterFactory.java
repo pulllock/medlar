@@ -2,6 +2,7 @@ package me.cxis.sample.cloud.gateway.server.filters;
 
 import com.alibaba.fastjson2.JSON;
 import me.cxis.sample.cloud.gateway.server.exception.ErrorCode;
+import me.cxis.sample.cloud.gateway.server.exception.GatewayException;
 import me.cxis.sample.cloud.gateway.server.model.result.Result;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.RequestRateLimiterGatewayFilterFactory;
@@ -12,8 +13,10 @@ import org.springframework.cloud.gateway.route.Route;
 import org.springframework.cloud.gateway.support.HttpStatusHolder;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
@@ -79,14 +82,14 @@ public class RateLimiterGatewayFilterFactory extends RequestRateLimiterGatewayFi
                     httpResponse.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
                 }
 
-                // return Mono.error(new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS, "访问受限"));
-                Result<?> result = Result.error(ErrorCode.TOO_MANY_REQUESTS);
+                return Mono.error(new GatewayException(ErrorCode.TOO_MANY_REQUESTS));
+                /*Result<?> result = Result.error(ErrorCode.TOO_MANY_REQUESTS);
 
                 return httpResponse.writeWith(Mono.just(
                         httpResponse.bufferFactory().wrap(
                                 JSON.toJSONString(result).getBytes(StandardCharsets.UTF_8)
                         )
-                ));
+                ));*/
             });
         });
     }

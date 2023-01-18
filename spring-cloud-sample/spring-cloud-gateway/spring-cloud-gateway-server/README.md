@@ -119,4 +119,5 @@ spring:
 
 # 全局异常处理
 
-- 自定义全局异常处理
+- 自定义全局异常处理，方式1实现：GatewayErrorAttributes
+- 自定义全局异常处理，方式2实现：GlobalErrorExceptionHandler
