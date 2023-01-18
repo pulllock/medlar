@@ -21,14 +21,18 @@ spring:
               - PUT
               - DELETE
       default-filters:
-        - name: RequestRateLimiter
+        - name: RateLimiter
           args:
             # 令牌桶每秒填充速率
             redis-rate-limiter.replenishRate: 1
             # 令牌桶总容量
-            redis-rate-limiter.burstCapacity: 2
-            redis-rate-limiter.requestedTokens: 2
+            redis-rate-limiter.burstCapacity: 1
+            # 每个请求从桶中取出的令牌数
+            redis-rate-limiter.requestedTokens: 1
+            # 限流用到的唯一键的解析器，使用SpEL表达式从Spring容器中获取Bean实例
             key-resolver: "#{@ipKeyResolver}"
+            # 重新设置响应码为200
+            status-code: OK
       routes:
         - id: spring-cloud-gateway-service-1
           uri: lb://spring-cloud-gateway-service-1

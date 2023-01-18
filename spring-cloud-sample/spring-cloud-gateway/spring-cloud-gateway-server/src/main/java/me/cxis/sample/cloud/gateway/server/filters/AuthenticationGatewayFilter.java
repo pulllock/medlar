@@ -1,16 +1,22 @@
 package me.cxis.sample.cloud.gateway.server.filters;
 
+import com.alibaba.fastjson2.JSON;
+import me.cxis.sample.cloud.gateway.server.exception.ErrorCode;
+import me.cxis.sample.cloud.gateway.server.model.result.Result;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * 鉴权认证过滤器
@@ -32,8 +38,17 @@ public class AuthenticationGatewayFilter implements GlobalFilter, Ordered {
         String token = request.getHeaders().getFirst("tk");
         if (StringUtils.isEmpty(token)) {
             LOGGER.info("Gateway authentication failed, token is empty");
-            response.setStatusCode(HttpStatus.UNAUTHORIZED);
-            return response.setComplete();
+            if (!response.getHeaders().containsKey(HttpHeaders.CONTENT_TYPE)) {
+                response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            }
+
+            Result<?> result = Result.error(ErrorCode.UNAUTHORIZED);
+
+            return response.writeWith(Mono.just(
+                    response.bufferFactory().wrap(
+                            JSON.toJSONString(result).getBytes(StandardCharsets.UTF_8)
+                    )
+            ));
         }
 
         // TODO 调用认证服务进行认证
