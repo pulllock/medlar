@@ -4,22 +4,24 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>medlar</artifactId>
-        <groupId>me.cxis</groupId>d
+        <groupId>me.cxis</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>spring-boot-actuator</artifactId>
+    <artifactId>spring-boot-json</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>spring-boot-actuator-datasource</module>
+        <module>spring-boot-json-fastjson</module>
+        <module>spring-boot-json-jackson</module>
+        <module>spring-boot-json-api</module>
     </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-boot.version>2.7.8</spring-boot.version>
+        <spring-boot.version>2.6.14</spring-boot.version>
     </properties>
 
     <dependencyManagement>
@@ -30,6 +32,12 @@
                 <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>me.cxis</groupId>
+                <artifactId>spring-boot-json-api</artifactId>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
