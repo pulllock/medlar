@@ -13,3 +13,14 @@ grpc:
   client:
     grpc-nacos-server-sample:
       negotiationType: plaintext
+
+
+logging:
+  level:
+    net:
+      devh:
+        boot:
+          grpc:
+            client:
+              nameresolver:
+                DiscoveryClientNameResolver: debug
