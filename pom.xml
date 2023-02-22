@@ -35,6 +35,7 @@
         <module>spring-boot-rate-limiting</module>
         <module>spring-boot-actuator</module>
         <module>spring-boot-json</module>
+        <module>java-annotation-processor-sample</module>
     </modules>
 
     <properties>
