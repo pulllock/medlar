@@ -19,6 +19,7 @@
         <module>spring-cloud-gateway</module>
         <module>grpc-eureka-server-sample</module>
         <module>grpc-eureka-client-sample</module>
+        <module>grpc-consul-sample</module>
     </modules>
     <packaging>pom</packaging>
 
