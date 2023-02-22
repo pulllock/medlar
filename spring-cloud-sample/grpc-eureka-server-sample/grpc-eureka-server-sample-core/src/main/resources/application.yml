@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: grpc-eureka-server-sample
+
+grpc:
+  server:
+    port: 9898
+
+server:
+  port: 8081
+
+eureka:
+  instance:
+    non-secure-port: ${grpc.server.port}
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
