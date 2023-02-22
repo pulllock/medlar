@@ -6,3 +6,17 @@ eureka:
     fetch-registry: false
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+spring:
+  application:
+    name: spring-cloud-eureka-server-sample
+  boot:
+    admin:
+      client:
+        url: http://localhost:8760
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

@@ -1,6 +1,10 @@
 spring:
   application:
     name: grpc-eureka-server-sample
+  boot:
+    admin:
+      client:
+        url: http://localhost:8760
 
 grpc:
   server:
@@ -15,3 +19,9 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
