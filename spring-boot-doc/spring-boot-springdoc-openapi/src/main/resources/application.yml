@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: spring-boot-springdoc-openapi
+
+management:
+  server:
+    port: 9090
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+springdoc:
+  show-actuator: true
+  use-management-port: true

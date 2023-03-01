@@ -37,6 +37,7 @@
         <module>spring-boot-json</module>
         <module>java-annotation-processor-sample</module>
         <module>spring-boot-admin</module>
+        <module>spring-boot-doc</module>
     </modules>
 
     <properties>
