@@ -1,5 +1,2 @@
-spring:
-  profiles:
-    active: perf
 server:
   port: 9080

@@ -1,5 +1,2 @@
-spring:
-  profiles:
-    active: pre
 server:
   port: 80
