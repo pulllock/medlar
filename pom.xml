@@ -38,6 +38,7 @@
         <module>java-annotation-processor-sample</module>
         <module>spring-boot-admin</module>
         <module>spring-boot-doc</module>
+        <module>spring-boot-lock</module>
     </modules>
 
     <properties>
