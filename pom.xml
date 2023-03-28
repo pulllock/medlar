@@ -11,7 +11,6 @@
     <modules>
         <module>java</module>
         <module>spring-boot</module>
-        <module>distributedlock</module>
         <module>spring</module>
         <module>spring-boot-sentinel</module>
         <module>spring-boot-mybatis</module>
