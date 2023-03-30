@@ -1,0 +1,9 @@
+# springdoc配置
+springdoc:
+  # 开启ui
+  swagger-ui:
+    enabled: true
+    disable-swagger-default-url: true
+  # 开启api-docs
+  api-docs:
+    enabled: true
