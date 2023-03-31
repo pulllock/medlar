@@ -39,6 +39,7 @@
         <module>spring-boot-doc</module>
         <module>spring-boot-lock</module>
         <module>spring-boot-websocket</module>
+        <module>rxjava</module>
     </modules>
 
     <properties>
