@@ -1,10 +1,25 @@
 # rxjava1
 
 - Observable
+- Subscriber
+- Scheduler
 - BlockingObservable
+- Single
+- Completable
+- Observer
+- Subscription
+- SingleSubscriber
+- CompletableSubscriber
 
 # 操作符
 
+- `create()`
+- `defer()`：只有当Subscriber来订阅的时候才会创建一个新的Observable对象
+- `just()`：接收某个对象作为输入，创建一个发送该对象的Observable
+- `from()`：接收一个对象作为参数来创建Observable
+- `interval()`：创建的Observable对象汇总0开始，每隔固定时间发送一个数字
+- `repeat()`：可以让Observable对象发送的数据重复发送N次
+- `timer()`：可以让Observable对象发送的数据重复发送N次
 - `filter()`
 - `map()`
 - `flatMap()`
@@ -19,8 +34,6 @@
 - `amb()`
 - `ambWith()`
 - `delay()`
-- `timer()`
-- `from()`
 - `collect()`
 - `reduce()`
 - `scan()`
@@ -48,3 +61,4 @@
 - `contains(value)`
 - `concat()`
 - `switchOnNext()`
+- `range()`
