@@ -19,12 +19,14 @@
 - `from()`：接收一个对象作为参数来创建Observable
 - `interval()`：创建的Observable对象汇总0开始，每隔固定时间发送一个数字
 - `repeat()`：可以让Observable对象发送的数据重复发送N次
-- `timer()`：可以让Observable对象发送的数据重复发送N次
+- `timer()`：可以让Observable对象发送的数据重复发送N次，在指定的时间后发送
+- `buffer()`：将数据按照规定的大小做缓存，当缓存来的数据量达到设置的上限后就将缓存的数据作为一个集合发送出去
 - `filter()`
 - `map()`
 - `flatMap()`
 - `flatMapIterable()`
 - `concatMap()`：保证顺序
+- `cast()`：将Observable发送的数据强制转化为另外一种类型
 - `merge()`
 - `mergeWith()`
 - `zip()`
@@ -36,7 +38,7 @@
 - `delay()`
 - `collect()`
 - `reduce()`
-- `scan()`
+- `scan()`：对一个序列的数据应用同一个函数进行计算，并将这个函数的结果发送出去，作为下一个数据应用这个函数时的第一个参数使用
 - `distinct()`
 - `distinctUntilChanged()`
 - `groupBy()`
