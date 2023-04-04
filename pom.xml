@@ -41,6 +41,7 @@
         <module>spring-boot-websocket</module>
         <module>rxjava</module>
         <module>reactor</module>
+        <module>spring-boot-webflux</module>
     </modules>
 
     <properties>
