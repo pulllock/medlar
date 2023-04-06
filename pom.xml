@@ -42,6 +42,7 @@
         <module>rxjava</module>
         <module>reactor</module>
         <module>spring-boot-webflux</module>
+        <module>spring-boot-cache</module>
     </modules>
 
     <properties>
