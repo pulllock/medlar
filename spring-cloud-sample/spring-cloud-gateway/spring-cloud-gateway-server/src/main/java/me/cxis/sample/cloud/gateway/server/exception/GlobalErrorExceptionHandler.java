@@ -29,8 +29,7 @@ public class GlobalErrorExceptionHandler implements ErrorWebExceptionHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
 
         if (ex instanceof ResponseStatusException) {
-            HttpStatus httpStatus = ((ResponseStatusException) ex).getStatus();
-            errorResult.setCode(httpStatus.value());
+            errorResult.setCode(((ResponseStatusException) ex).getStatusCode().value());
             errorResult.setMessage(ex.getMessage());
         }
 

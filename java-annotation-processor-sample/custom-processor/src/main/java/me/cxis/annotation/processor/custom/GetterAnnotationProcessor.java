@@ -13,7 +13,7 @@ import java.io.PrintWriter;
 import java.util.Set;
 
 @SupportedAnnotationTypes({"me.cxis.annotation.processor.custom.Getter"})
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
+@SupportedSourceVersion(SourceVersion.RELEASE_17)
 public class GetterAnnotationProcessor extends AbstractProcessor {
 
     @Override

@@ -4,7 +4,7 @@ import me.cxis.sample.cloud.user.api.controller.IUserController;
 import me.cxis.sample.cloud.user.api.model.User;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 @Component
 public class UserControllerProxy {
