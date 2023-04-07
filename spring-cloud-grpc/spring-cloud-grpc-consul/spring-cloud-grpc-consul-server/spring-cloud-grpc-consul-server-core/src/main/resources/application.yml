@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: spring-cloud-grpc-consul-server
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        metadata:
+          gRPC_port: ${grpc.server.port}
+
+grpc:
+  server:
+    port: 9898
+
+server:
+  port: 8082
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

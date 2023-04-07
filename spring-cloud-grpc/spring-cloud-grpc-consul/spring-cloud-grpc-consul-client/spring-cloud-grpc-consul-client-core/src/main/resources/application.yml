@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: spring-cloud-grpc-consul-client
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+
+grpc:
+  client:
+    spring-cloud-grpc-consul-server:
+      negotiationType: plaintext
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

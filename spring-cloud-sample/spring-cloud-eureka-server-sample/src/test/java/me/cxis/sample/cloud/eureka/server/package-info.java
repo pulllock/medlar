@@ -1,1 +1,0 @@
-package me.cxis.sample.cloud.eureka.server;

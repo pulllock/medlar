@@ -17,7 +17,7 @@
         <module>springmvc</module>
         <module>spring-boot-nacos</module>
         <module>spring-boot-grpc</module>
-        <module>spring-cloud-sample</module>
+        <module>spring-cloud</module>
         <module>spring-boot-dubbo3</module>
         <module>spring-boot-maven</module>
         <module>spring-boot-unit-test</module>
@@ -43,6 +43,8 @@
         <module>reactor</module>
         <module>spring-boot-webflux</module>
         <module>spring-boot-cache</module>
+        <module>spring-cloud-grpc</module>
+        <module>spring-cloud-gateway</module>
     </modules>
 
     <properties>

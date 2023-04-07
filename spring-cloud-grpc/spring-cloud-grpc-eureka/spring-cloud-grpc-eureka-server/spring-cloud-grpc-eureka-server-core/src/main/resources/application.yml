@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: spring-cloud-grpc-eureka-server
+  boot:
+    admin:
+      client:
+        url: http://localhost:8760
+
+grpc:
+  server:
+    port: 9898
+
+server:
+  port: 8081
+
+eureka:
+  instance:
+    non-secure-port: ${grpc.server.port}
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

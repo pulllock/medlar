@@ -1,0 +1,16 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: spring-cloud-grpc-eureka-client
+
+grpc:
+  client:
+    spring-cloud-grpc-eureka-server:
+      negotiationType: plaintext
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
