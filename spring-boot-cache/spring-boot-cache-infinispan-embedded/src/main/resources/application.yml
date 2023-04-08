@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: spring-boot-cache-infinispan-embedded
+  cache:
+    # 可使用type=none来关闭缓存
+    # type: none
