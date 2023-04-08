@@ -14,3 +14,6 @@ spring:
           max-idle: 8
           min-idle: 0
           max-wait: -1
+  cache:
+    # 可使用type=none来关闭缓存
+    # type: none
