@@ -16,6 +16,7 @@
         <module>spring-boot-cache-simple</module>
         <module>spring-boot-cache-caffeine</module>
         <module>spring-boot-cache-cache2k</module>
+        <module>spring-boot-cache-couchbase</module>
     </modules>
 
     <properties>

@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: spring-boot-cache-couchbase
+  couchbase:
+    connection-string: couchbase://127.0.0.1
+    username: Administrator
+    password: 12345678
+  data:
+    couchbase:
+      bucket-name: SpringBootCacheCouchbaseTest
+  cache:
+    # 可使用type=none来关闭缓存
+    # type: none
