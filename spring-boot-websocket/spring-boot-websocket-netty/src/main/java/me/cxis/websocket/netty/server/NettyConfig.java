@@ -1,4 +1,4 @@
-package me.cxis.websocket.netty;
+package me.cxis.websocket.netty.server;
 
 import io.netty.channel.Channel;
 import io.netty.channel.group.ChannelGroup;
