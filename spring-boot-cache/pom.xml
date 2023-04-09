@@ -19,6 +19,7 @@
         <module>spring-boot-cache-couchbase</module>
         <module>spring-boot-cache-infinispan-embedded</module>
         <module>spring-boot-cache-infinispan-remote</module>
+        <module>spring-boot-cache-hazelcast</module>
     </modules>
 
     <properties>
