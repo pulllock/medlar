@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: spring-boot-cache-infinispan-remote
+  cache:
+    # 可使用type=none来关闭缓存
+    # type: none
+infinispan:
+  remote:
+    server-list: 127.0.0.1:11222
+    auth-username: admin
+    auth-password: 12345678
