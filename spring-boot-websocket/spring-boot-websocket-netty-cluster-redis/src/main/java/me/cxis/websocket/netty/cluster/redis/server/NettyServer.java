@@ -10,11 +10,14 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
+import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.codec.serialization.ObjectEncoder;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.annotation.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +25,8 @@ import java.net.InetSocketAddress;
 
 @Component
 public class NettyServer {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(NettyServer.class);
 
     /**
      * 端口
@@ -63,33 +68,39 @@ public class NettyServer {
         bootstrap.group(bossGroup, workGroup)
                 // NIO
                 .channel(NioServerSocketChannel.class)
-                // 监听端口
-                .localAddress(new InetSocketAddress(port))
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         socketChannel.pipeline()
-                                // http编解码器
+                                // HTTP协议解析，用于握手阶段
                                 .addLast(new HttpServerCodec())
-                                .addLast(new ObjectEncoder())
+                                // HTTP协议解析，用于握手阶段，消息聚合器，将消息聚合成FullHttpRequest
+                                .addLast(new HttpObjectAggregator(65536))
+                                // 支持大文件传输
                                 .addLast(new ChunkedWriteHandler())
-                                // 分段聚合
-                                .addLast(new HttpObjectAggregator(8192))
-                                // websocket协议
+                                // WebSocket数据压缩
+                                .addLast(new WebSocketServerCompressionHandler())
+                                // WebSocket握手、控制帧处理，会处理握手、Close、Ping、Pong帧等WebSocket协议底层，并将Text和Binary数据帧传递给pipeline中下一个handler中
                                 .addLast(new WebSocketServerProtocolHandler(path, "WebSocket", true, 65536 * 10))
                                 // 自定义业务处理器
                                 .addLast(webSocketServerHandler);
                     }
                 });
 
-        ChannelFuture channelFuture = bootstrap.bind().sync();
+        ChannelFuture channelFuture = bootstrap.bind(port).sync();
+        LOGGER.info("Netty WebSocket server started on port: {}, path: {}", port, path);
         channelFuture.channel().closeFuture().sync();
+        LOGGER.info("Netty WebSocket server closed on port: {}, path: {}", port, path);
     }
 
     @PreDestroy
     public void destroy() throws InterruptedException {
         if (bossGroup != null) {
             bossGroup.shutdownGracefully().sync();
+        }
+
+        if (workGroup != null) {
+            workGroup.shutdownGracefully().sync();
         }
     }
 }
