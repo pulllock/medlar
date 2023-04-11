@@ -12,7 +12,7 @@
     <artifactId>spring-boot-mq</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>spring-boot-mq-kafka</module>
+        <module>spring-boot-mq-kafka-dynamic-consume</module>
         <module>spring-boot-mq-rocketmq</module>
     </modules>
 
