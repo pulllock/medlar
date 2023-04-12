@@ -11,8 +11,9 @@
     <packaging>pom</packaging>
     <artifactId>spring-cloud-open-feign</artifactId>
     <modules>
-        <module>spring-cloud-open-feign-server</module>
-        <module>spring-cloud-open-feign-client</module>
+        <module>apache-httpclient</module>
+        <module>okhttp</module>
+        <module>default-httpclient</module>
     </modules>
 
     <properties>

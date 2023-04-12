@@ -1,0 +1,18 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: apache-httpclient-client-core
+  cloud:
+    openfeign:
+      httpclient:
+        hc5:
+          # 开启 apache httpclient 5
+          enabled: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+service:
+  apache-httpclient-server: apache-httpclient-server-core

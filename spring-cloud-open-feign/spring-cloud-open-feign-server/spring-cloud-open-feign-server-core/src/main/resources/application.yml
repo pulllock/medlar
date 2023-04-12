@@ -1,9 +1,0 @@
-spring:
-  application:
-    name: spring-cloud-open-feign-server-core
-server:
-  port: 8080
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka

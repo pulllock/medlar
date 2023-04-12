@@ -1,0 +1,17 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: okhttp-client-core
+  cloud:
+    openfeign:
+      okhttp:
+        # 开启okhttp client
+        enabled: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+service:
+  okhttp-server: okhttp-server-core
