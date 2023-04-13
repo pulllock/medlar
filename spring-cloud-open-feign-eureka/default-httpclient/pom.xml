@@ -5,15 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>me.cxis</groupId>
-        <artifactId>spring-cloud-open-feign</artifactId>
+        <artifactId>spring-cloud-open-feign-eureka</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>apache-httpclient</artifactId>
+    <artifactId>default-httpclient</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>apache-httpclient-server</module>
-        <module>apache-httpclient-client</module>
+        <module>default-httpclient-server</module>
+        <module>default-httpclient-client</module>
     </modules>
-
 </project>
