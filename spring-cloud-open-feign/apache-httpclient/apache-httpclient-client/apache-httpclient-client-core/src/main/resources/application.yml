@@ -6,9 +6,24 @@ spring:
   cloud:
     openfeign:
       httpclient:
+        # 设置httpclient的连接超时时间，默认是2s
+        connection-timeout: 2000
+        # 设置连接池最大大小，默认200
+        max-connections: 200
         hc5:
           # 开启 apache httpclient 5
           enabled: true
+          # 设置连接超时时间，默认3s
+          connection-request-timeout: 3
+      client:
+        config:
+          # 单独设置某个服务的配置
+          apache-httpclient-server-core:
+            # 设置连接超时时间为1s
+            connect-timeout: 1000
+            # 设置读超时时间为2s
+            read-timeout: 2000
+
 eureka:
   client:
     service-url:
