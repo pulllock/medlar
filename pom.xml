@@ -47,6 +47,7 @@
         <module>spring-cloud-gateway</module>
         <module>spring-cloud-open-feign-eureka</module>
         <module>spring-cloud-loadbalancer</module>
+        <module>spring-cloud-nacos</module>
     </modules>
 
     <properties>

@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: spring-cloud-nacos-discovery-client
+  profiles:
+    active: ${app.env:dev}
