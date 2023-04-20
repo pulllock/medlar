@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: spring-cloud-nacos-config-dynamic
+  profiles:
+    active: ${app.env:dev}
+  cloud:
+    nacos:
+      config:
+        server-addr: ${nacos.server.address:127.0.0.1:8848}
