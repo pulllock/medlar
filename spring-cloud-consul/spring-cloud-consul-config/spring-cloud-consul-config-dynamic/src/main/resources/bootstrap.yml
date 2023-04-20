@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: spring-cloud-consul-config-dynamic
+  profiles:
+    active: ${app.env:dev}

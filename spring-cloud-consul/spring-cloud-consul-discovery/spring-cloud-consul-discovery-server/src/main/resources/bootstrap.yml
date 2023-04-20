@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: spring-cloud-consul-discovery-server
+  profiles:
+    active: ${app.env:dev}

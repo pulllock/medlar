@@ -1,0 +1,11 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+
+service:
+  spring-cloud-consul-discovery-server: spring-cloud-consul-discovery-server

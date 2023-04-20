@@ -48,6 +48,7 @@
         <module>spring-cloud-open-feign-eureka</module>
         <module>spring-cloud-loadbalancer</module>
         <module>spring-cloud-nacos</module>
+        <module>spring-cloud-consul</module>
     </modules>
 
     <properties>
