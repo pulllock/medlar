@@ -72,6 +72,6 @@
 1. 在应用中创建目录：`k8s`，并在`k8s`目录下创建`deployment.yaml`文件，内容参考：`spring-boot-k8s-demo-app/k8s/deployment.yaml`
 2. 部署应用：`kubectl apply -f deployment.yaml`
 3. 列出部署：`kubectl get deployments`
-4. 将deployment.yaml中配置的域名`my.local.com`配置到host中，映射到`127.0.0.1`
-4. 使用配置的域名访问测试应用：`http://my.local.com/api/spring-boot-k8s-demo-app/k8s/demo/query`
+4. 将deployment.yaml中配置的域名`mylocal.com`配置到host中，映射到`127.0.0.1`
+4. 使用配置的域名访问测试应用：`http://mylocal.com/api/spring-boot-k8s-demo-app/k8s/demo/query`
 5. 测试完成后如果要删除应用可使用：`kubectl delete -f deployment.yaml`
