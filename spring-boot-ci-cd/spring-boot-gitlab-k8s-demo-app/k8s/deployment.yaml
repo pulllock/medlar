@@ -37,7 +37,7 @@ spec:
         - name: spring-boot-gitlab-k8s-demo-app
           # 容器使用的镜像以及版本
           # 需要动态替换掉镜像的版本
-          image: spring-boot-gitlab-k8s-demo-app:1.0.0-SNAPSHOT
+          image: 192.168.1.30:8070/library/spring-boot-gitlab-k8s-demo-app:1.0.0-SNAPSHOT
           # 镜像拉取策略，IfNotPresent：如果不存在则拉取
           imagePullPolicy: IfNotPresent
           # 容器对外端口
