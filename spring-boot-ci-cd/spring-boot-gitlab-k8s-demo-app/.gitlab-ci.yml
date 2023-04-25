@@ -1,0 +1,30 @@
+stages:
+  - build
+variables:
+  # docker仓库地址
+  DOCKER_REGISTRY: 192.168.1.30:8070
+  # docker仓库中的项目
+  DOCKER_REGISTRY_PATH: library
+  # 应用名
+  APP_NAME: spring-boot-gitlab-k8s-demo-app
+maven_docker_build:
+  stage: build
+  script:
+    # 用maven构建jar包
+    - mvn clean package -U -DskipTests=true
+    # docker构建的镜像标签名字
+    - IMAGE_TAG="$DOCKER_REGISTRY/$DOCKER_REGISTRY_PATH/$APP_NAME"
+    # docker构建镜像
+    - docker build --force-rm=true --no-cache=true -t $IMAGE_TAG -t $IMAGE_TAG:$CI_PIPELINE_ID$CI_JOB_ID .
+    # 登录docker仓库
+    - docker login $DOCKER_REGISTRY -u admin -p Harbor12345
+    # 镜像推送到镜像仓库
+    - docker push -a $IMAGE_TAG
+    # 删除本地构建的镜像
+    - docker rmi $IMAGE_TAG $IMAGE_TAG:$CI_PIPELINE_ID$CI_JOB_ID
+  only:
+    - main
+deploy_k8s:
+  stage: deploy
+  script:
+    - kubectl apply -f k8s/deployment.yaml

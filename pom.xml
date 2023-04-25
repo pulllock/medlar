@@ -50,6 +50,7 @@
         <module>spring-cloud-nacos</module>
         <module>spring-cloud-consul</module>
         <module>spring-boot-k8s</module>
+        <module>spring-boot-ci-cd</module>
     </modules>
 
     <properties>

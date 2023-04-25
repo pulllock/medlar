@@ -1,0 +1,124 @@
+# api版本
+apiVersion: apps/v1
+# kind是要创建的资源类型，可以是：Deployment、Job、Ingress、Service等
+# Deployment描述一组可扩展的相同Pod
+kind: Deployment
+# metadata是资源的元数据，比如资源名称、命名空间、标签等信息
+metadata:
+  # name是必须的，定义资源的名称，同一个命名空间中必须是唯一的
+  name: spring-boot-gitlab-k8s-demo-app
+  # 命名空间
+  namespace: default
+  # 标签
+  labels:
+    # 第一个标签，key=app，value=spring-boot-gitlab-k8s-demo-app
+    app: spring-boot-gitlab-k8s-demo-app
+# spec定义Deployment资源需要的参数属性
+spec:
+  # 副本数量
+  replicas: 2
+  # 标签选择器
+  selector:
+    # 匹配标签
+    matchLabels:
+      # 匹配上面的标签，需要与上面的标签定义中的app保持一致
+      app: spring-boot-gitlab-k8s-demo-app
+  # template定义Pod的模板
+  template:
+    # metadata定义Pod的元数据，至少要定义一个label，label的key和value可以任意指定
+    metadata:
+      labels:
+        app: spring-boot-gitlab-k8s-demo-app
+    # spec是Pod的规格，此部分定义Pod中每一个容器的属性，name和image是必须的
+    spec:
+      # 容器
+      containers:
+        # 容器名
+        - name: spring-boot-gitlab-k8s-demo-app
+          # 容器使用的镜像以及版本
+          # 需要动态替换掉镜像的版本
+          image: spring-boot-gitlab-k8s-demo-app:1.0.0-SNAPSHOT
+          # 镜像拉取策略，IfNotPresent：如果不存在则拉取
+          imagePullPolicy: IfNotPresent
+          # 容器对外端口
+          ports:
+            # 对Service暴露端口
+            - containerPort: 8080
+              protocol: TCP
+          # 用来检测容器是否处于live状态，如果livenessProbe失败，则会通知kubelet当前容器不健康
+          # 然后kubelet会kill掉容器，并根据restartPolicy策略进行后续操作。
+          # 如果没有提供livenessProbe，则默认是Success
+          livenessProbe:
+            httpGet:
+              # 心跳检测接口，如果没有提供心跳接口，则设置为/。这里设置为/alive，需要应用提供一个/alive接口
+              path: /alive
+              port: 8080
+              scheme: HTTP
+            # 启动后延迟多久开始检测
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              # 心跳检测接口，如果没有提供心跳接口，则设置为/。这里设置为/alive，需要应用提供一个/alive接口
+              path: /alive
+              port: 8080
+              scheme: HTTP
+            # 启动后延迟多久开始检测
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 5
+          # CPU、内存等资源限制
+          resources:
+            requests:
+              cpu: 1
+              memory: 512Mi
+            limits:
+              cpu: 2
+              memory: 1024Mi
+
+# 以下是Service对象
+---
+apiVersion: v1
+kind: Service
+# Service元数据
+metadata:
+  # 名称
+  name: spring-boot-gitlab-k8s-demo-app
+  # 命名空间
+  namespace: default
+# 详细描述
+spec:
+  selector:
+    app: spring-boot-gitlab-k8s-demo-app
+  # Service需要暴露的端口列表
+  ports:
+    # 服务监听的端口
+    - port: 8080
+      # 需要转发到应用服务Pod的端口号
+      targetPort: 8080
+
+# 以下是Ingress对象
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: spring-boot-gitlab-k8s-demo-app
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    - host: mylocal.com
+      http:
+        paths:
+          - path: /api/spring-boot-gitlab-k8s-demo-app/(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: spring-boot-gitlab-k8s-demo-app
+                port:
+                  number: 8080
