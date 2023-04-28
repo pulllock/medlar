@@ -75,3 +75,26 @@
 4. 将deployment.yaml中配置的域名`mylocal.com`配置到host中，映射到`127.0.0.1`
 4. 使用配置的域名访问测试应用：`http://mylocal.com/api/spring-boot-k8s-demo-app/k8s/demo/query`
 5. 测试完成后如果要删除应用可使用：`kubectl delete -f deployment.yaml`
+
+# Kubernetes组件
+
+- Control Plane，控制平面，管理集群中的工作节点和Pod，也称为master node（master节点）或者head node（头节点）
+  - kube-apiserver，该组件负责公开Kubernetes API，处理接收请求的工作，是Kubernetes控制平面的前端。跟踪所有集群组件的状态并管理他们之间的交互
+  - etcd，存储Kubernetes所有集群数据的数据库，可以是控制平面的一部分，也可以在外部进行配置
+  - kube-scheduler，负责监视新创建的Pod、还未指定运行节点的Pod，选择节点来让Pod运行在上面
+  - kube-controller-manager
+    - Node Controller，节点控制器，负责节点出现故障时进行通知和响应
+    - Job Controller，任务控制器，监测代表一次性任务的Job对象，创建Pod来运行这些任务
+    - EndpointSlice controller，端点分片控制器，
+    - ServiceAccount controller，服务账号控制器，为新的命名空间创建默认的服务账号（ServiceAccount）
+  - cloud-controller-manager，云平台控制
+    - Node Controller，节点控制器
+    - Route Controller，路由控制器
+    - Service Controller，服务控制器
+- Node，节点，也称worker node（工作节点）或者计算节点，会运行容器化的应用程序
+  - kubelet，在每个节点上运行，保证容器都运行在Pod中，kubelet会接收一组PodSpecs，确保这些PodSpecs中描述的容器处于运行状态且健康，充当apiserver和Node之间的管道
+  - kube-proxy，在每个节点上运行的网络代理，实现Kubernetes种Service（服务）概念的一部分。维护节点上的网络规则，网络规则会允许集群内部或外部的网络会话与Pod进行网络通信
+  - Container Runtime，容器运行时，负责运行容器的软件，Kubernetes支持多种运行时环境：containerd、CRI-O以及实现了CRI接口的其他容器
+- Addons，插件
+  - DNS
+  - Dashboard
