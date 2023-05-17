@@ -2,7 +2,7 @@ package me.cxis.groovy.engine;
 
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import javax.script.*;
 import java.time.LocalDateTime;
 

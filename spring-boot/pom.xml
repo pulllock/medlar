@@ -17,10 +17,24 @@
         <module>spring-boot-dubbo3</module>
         <module>spring-boot-externalized-configuration</module>
         <module>spring-boot-groovy</module>
-        <module>spring-boot-grpc</module>
         <module>spring-boot-hystrix</module>
         <module>spring-boot-i18n</module>
         <module>spring-boot-json</module>
+        <module>spring-boot-k8s</module>
+        <module>spring-boot-lock</module>
+        <module>spring-boot-log</module>
+        <module>spring-boot-maven</module>
+        <module>spring-boot-mongo</module>
+        <module>spring-boot-mq</module>
+        <module>spring-boot-mybatis</module>
+        <module>spring-boot-protocol</module>
+        <module>spring-boot-rate-limiting</module>
+        <module>spring-boot-redis</module>
+        <module>spring-boot-search</module>
+        <module>spring-boot-sentinel</module>
+        <module>spring-boot-unit-test</module>
+        <module>spring-boot-webflux</module>
+        <module>spring-boot-websocket</module>
     </modules>
     <modelVersion>4.0.0</modelVersion>
 
@@ -30,12 +44,8 @@
     <name>spring-boot</name>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>17</java.version>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
         <spring-boot.version>3.0.2</spring-boot.version>
+        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -57,6 +67,12 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring-boot.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

@@ -1,6 +1,0 @@
-spring:
-  application:
-    name: grpc-server-sample
-grpc:
-  server:
-    port: 9898
