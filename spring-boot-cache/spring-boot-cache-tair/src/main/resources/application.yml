@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: spring-boot-cache-tair
+
+tair:
+  master: 127.0.0.1
+  slave: 127.0.0.1
+  groupName: public
