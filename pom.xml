@@ -16,33 +16,22 @@
         <module>spring-boot-mybatis</module>
         <module>springmvc</module>
         <module>spring-boot-nacos</module>
-        <module>spring-boot-grpc</module>
         <module>spring-cloud</module>
-        <module>spring-boot-dubbo3</module>
         <module>spring-boot-maven</module>
         <module>spring-boot-unit-test</module>
-        <module>spring-boot-docker</module>
-        <module>spring-boot-groovy</module>
         <module>spring-boot-mq</module>
         <module>spring-boot-log</module>
         <module>spring-boot-protocol</module>
         <module>spring-boot-mongo</module>
         <module>spring-boot-redis</module>
-        <module>spring-boot-i18n</module>
         <module>spring-boot-search</module>
-        <module>spring-boot-externalized-configuration</module>
         <module>spring-boot-rate-limiting</module>
-        <module>spring-boot-actuator</module>
-        <module>spring-boot-json</module>
         <module>java-annotation-processor-sample</module>
-        <module>spring-boot-admin</module>
-        <module>spring-boot-doc</module>
         <module>spring-boot-lock</module>
         <module>spring-boot-websocket</module>
         <module>rxjava</module>
         <module>reactor</module>
         <module>spring-boot-webflux</module>
-        <module>spring-boot-cache</module>
         <module>spring-cloud-grpc</module>
         <module>spring-cloud-gateway</module>
         <module>spring-cloud-open-feign-eureka</module>
@@ -50,7 +39,6 @@
         <module>spring-cloud-nacos</module>
         <module>spring-cloud-consul</module>
         <module>spring-boot-k8s</module>
-        <module>spring-boot-ci-cd</module>
     </modules>
 
     <properties>

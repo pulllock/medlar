@@ -8,8 +8,19 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modules>
-        <module>spring-boot-single</module>
+        <module>spring-boot-actuator</module>
+        <module>spring-boot-admin</module>
+        <module>spring-boot-cache</module>
+        <module>spring-boot-ci-cd</module>
+        <module>spring-boot-doc</module>
+        <module>spring-boot-docker</module>
+        <module>spring-boot-dubbo3</module>
+        <module>spring-boot-externalized-configuration</module>
+        <module>spring-boot-groovy</module>
+        <module>spring-boot-grpc</module>
         <module>spring-boot-hystrix</module>
+        <module>spring-boot-i18n</module>
+        <module>spring-boot-json</module>
     </modules>
     <modelVersion>4.0.0</modelVersion>
 
