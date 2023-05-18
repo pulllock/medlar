@@ -1,6 +1,6 @@
 spring:
   application:
-    name: grpc-nacos-server-sample
+    name: grpc-nacos-server
   cloud:
     nacos:
       config:

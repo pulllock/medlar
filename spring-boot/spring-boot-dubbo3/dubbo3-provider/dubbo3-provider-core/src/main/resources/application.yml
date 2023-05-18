@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: dubbo3-provider-core
+
+dubbo:
+  application:
+    name: ${spring.application.name}
+  registry:
+    address: zookeeper://127.0.0.1:2181
+  protocol:
+    name: grpc
+  provider:
+    timeout: 5000
+logging:
+  level:
+    root: info

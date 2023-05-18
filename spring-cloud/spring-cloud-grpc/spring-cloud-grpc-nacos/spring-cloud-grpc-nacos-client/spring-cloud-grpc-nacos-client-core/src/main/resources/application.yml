@@ -2,7 +2,7 @@ server:
   port: 8080
 spring:
   application:
-    name: grpc-nacos-client-sample
+    name: grpc-nacos-client
   cloud:
     nacos:
       config:
@@ -11,7 +11,7 @@ spring:
         server-addr: 127.0.0.1:8848
 grpc:
   client:
-    grpc-nacos-server-sample:
+    grpc-nacos-server:
       negotiationType: plaintext
 
 

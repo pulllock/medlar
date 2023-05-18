@@ -12,13 +12,13 @@
     <artifactId>spring-boot-dubbo3</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <modules>
-        <module>dubbo3-provider-sample</module>
-        <module>dubbo3-consumer-sample</module>
+        <module>dubbo3-provider</module>
+        <module>dubbo3-consumer</module>
     </modules>
     <packaging>pom</packaging>
 
     <properties>
-        <dubbo.version>3.0.5</dubbo.version>
+        <dubbo.version>3.2.1</dubbo.version>
         <grpc.version>1.42.1</grpc.version>
         <zookeeper.version>3.6.0</zookeeper.version>
         <curator.version>4.3.0</curator.version>

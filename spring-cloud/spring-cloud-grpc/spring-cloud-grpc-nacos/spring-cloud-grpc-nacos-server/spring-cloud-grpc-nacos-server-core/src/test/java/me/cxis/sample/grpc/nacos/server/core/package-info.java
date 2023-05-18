@@ -1,1 +1,0 @@
-package me.cxis.sample.grpc.nacos.server.core;

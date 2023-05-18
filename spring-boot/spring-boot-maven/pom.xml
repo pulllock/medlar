@@ -86,7 +86,7 @@
                                 </descriptorRefs>
                                 <archive>
                                     <manifest>
-                                        <mainClass>me.cxis.maven.sample.SpringBootMavenSampleApplication</mainClass>
+                                        <mainClass>me.cxis.maven.SpringBootMavenSampleApplication</mainClass>
                                     </manifest>
                                 </archive>
                             </configuration>
