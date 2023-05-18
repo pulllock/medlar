@@ -20,7 +20,6 @@
         <module>spring-boot-cache-infinispan-embedded</module>
         <module>spring-boot-cache-infinispan-remote</module>
         <module>spring-boot-cache-hazelcast</module>
-        <module>spring-boot-cache-tair</module>
     </modules>
 
     <properties>

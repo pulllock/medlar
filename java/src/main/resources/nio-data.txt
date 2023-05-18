@@ -1,4 +1,0 @@
-this is an nio text file.
-这是一行中文
-
-i can buy house!
