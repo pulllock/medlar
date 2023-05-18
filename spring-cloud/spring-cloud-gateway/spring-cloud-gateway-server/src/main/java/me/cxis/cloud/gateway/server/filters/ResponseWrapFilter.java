@@ -1,6 +1,6 @@
 package me.cxis.cloud.gateway.server.filters;
 
-import com.alibaba.fastjson2.JSON;
+import me.cxis.cloud.gateway.server.json.Json;
 import me.cxis.cloud.gateway.server.model.result.Result;
 import org.reactivestreams.Publisher;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -54,7 +54,7 @@ public class ResponseWrapFilter implements GlobalFilter, Ordered {
                 Mono<String> modifiedBody = clientResponse.bodyToMono(String.class)
                         .flatMap(originalBody -> {
                             Result<?> result = new Result<>(originalBody);
-                            return Mono.just(JSON.toJSONString(result));
+                            return Mono.just(Json.toJsonString(result));
                         });
 
                 BodyInserter<Mono<String>, ReactiveHttpOutputMessage> bodyInserter = BodyInserters

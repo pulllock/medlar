@@ -1,9 +1,9 @@
 package me.cxis.groovy.manager;
 
-import com.alibaba.fastjson.JSON;
 import me.cxis.groovy.dao.BizDao;
 import me.cxis.groovy.dao.model.ScriptDO;
 import me.cxis.groovy.engine.*;
+import me.cxis.groovy.json.Json;
 import me.cxis.groovy.model.SubmitParam;
 import me.cxis.groovy.model.SubmitResult;
 import org.slf4j.Logger;
@@ -68,7 +68,7 @@ public class BizManager {
         }
 
         // 过滤需要进行计算的数据
-        String scriptParam = JSON.toJSONString(param);
+        String scriptParam = Json.toJsonString(param);
 
         // 脚本执行的上下文
         ScriptContext context = new ScriptContext();
@@ -125,7 +125,7 @@ public class BizManager {
         }
 
         // 过滤需要进行计算的数据
-        String scriptParam = JSON.toJSONString(param);
+        String scriptParam = Json.toJsonString(param);
 
         // 脚本执行的上下文
         ScriptContext context = new ScriptContext();

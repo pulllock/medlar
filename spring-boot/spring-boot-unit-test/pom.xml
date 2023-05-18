@@ -20,10 +20,8 @@
         <spock-bom.version>2.4-M1-groovy-4.0</spock-bom.version>
         <spock-reports.version>2.5.0-groovy-4.0</spock-reports.version>
         <gmavenplus-plugin.version>2.1.0</gmavenplus-plugin.version>
-        <maven-surefire-plugin.version>3.1.0</maven-surefire-plugin.version>
-        <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
         <mybatis.starter.version>3.0.1</mybatis.starter.version>
-        <mysql-connector-java.version>8.0.29</mysql-connector-java.version>
+        <mysql-connector-j.version>8.0.33</mysql-connector-j.version>
     </properties>
 
     <dependencyManagement>
@@ -54,6 +52,12 @@
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis.starter.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
+                <version>${mysql-connector-j.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -76,24 +80,6 @@
                             </goals>
                         </execution>
                     </executions>
-                </plugin>
-
-                <!-- 单测插件 -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven-surefire-plugin.version}</version>
-                    <configuration>
-                        <includes>
-                            <include>**/*Spec</include>
-                        </includes>
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>${maven-site-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

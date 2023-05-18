@@ -17,7 +17,7 @@
     </modules>
 
     <properties>
-        <grpc.version>1.53.0</grpc.version>
+        <grpc.version>1.55.1</grpc.version>
         <grpc-starter.version>2.14.0.RELEASE</grpc-starter.version>
         <jakarta.annotation-api.version>1.3.5</jakarta.annotation-api.version>
         <protoc.version>21.0-rc-1</protoc.version>

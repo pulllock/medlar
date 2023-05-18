@@ -12,7 +12,7 @@
     <artifactId>spring-boot-hystrix</artifactId>
 
     <properties>
-        <hystrix.version>1.5.12</hystrix.version>
+        <hystrix.version>1.5.18</hystrix.version>
         <testng.version>7.7.1</testng.version>
     </properties>
 
@@ -67,4 +67,20 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

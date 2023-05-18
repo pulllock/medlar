@@ -1,10 +1,9 @@
 package me.cxis.cloud.gateway.server.nacos.route;
 
 import com.alibaba.cloud.nacos.NacosConfigManager;
-import com.alibaba.fastjson2.JSON;
 import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.api.exception.NacosException;
-import org.apache.commons.lang3.StringUtils;
+import me.cxis.cloud.gateway.server.nacos.json.Json;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
@@ -53,8 +52,8 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
     public Flux<RouteDefinition> getRouteDefinitions() {
         try {
             String configContent = nacosConfigManager.getConfigService().getConfig(DATA_ID, GROUP, 5000);
-            if (StringUtils.isNotEmpty(configContent)) {
-                List<RouteDefinition> routeDefinitions = JSON.parseArray(configContent, RouteDefinition.class);
+            if (configContent != null && configContent.length() > 0) {
+                List<RouteDefinition> routeDefinitions = Json.parseArray(configContent, RouteDefinition.class);
                 return Flux.fromIterable(routeDefinitions);
             }
         } catch (NacosException e) {

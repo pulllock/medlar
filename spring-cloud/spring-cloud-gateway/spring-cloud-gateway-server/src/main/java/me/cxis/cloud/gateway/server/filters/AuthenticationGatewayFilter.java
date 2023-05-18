@@ -1,9 +1,8 @@
 package me.cxis.cloud.gateway.server.filters;
 
-import com.alibaba.fastjson2.JSON;
 import me.cxis.cloud.gateway.server.exception.ErrorCode;
+import me.cxis.cloud.gateway.server.json.Json;
 import me.cxis.cloud.gateway.server.model.result.Result;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -36,7 +35,7 @@ public class AuthenticationGatewayFilter implements GlobalFilter, Ordered {
         }
 
         String token = request.getHeaders().getFirst("tk");
-        if (StringUtils.isEmpty(token)) {
+        if (token == null || token.length() == 0) {
             LOGGER.info("Gateway authentication failed, token is empty");
             if (!response.getHeaders().containsKey(HttpHeaders.CONTENT_TYPE)) {
                 response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
@@ -46,7 +45,7 @@ public class AuthenticationGatewayFilter implements GlobalFilter, Ordered {
 
             return response.writeWith(Mono.just(
                     response.bufferFactory().wrap(
-                            JSON.toJSONString(result).getBytes(StandardCharsets.UTF_8)
+                            Json.toJsonString(result).getBytes(StandardCharsets.UTF_8)
                     )
             ));
         }

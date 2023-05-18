@@ -1,6 +1,6 @@
 package me.cxis.dubbo3.consumer.core.cotroller;
 
-import com.alibaba.fastjson2.JSON;
+import me.cxis.dubbo3.consumer.core.json.Json;
 import me.cxis.dubbo3.provider.api.service.DubboUserServiceGrpc.IUserService;
 import me.cxis.dubbo3.provider.api.service.UserServiceOuterClass.User;
 import me.cxis.dubbo3.provider.api.service.UserServiceOuterClass.UserQuery;
@@ -26,7 +26,7 @@ public class UserController {
     public String queryUser(@RequestParam Integer userId) {
         UserQuery userQuery = UserQuery.newBuilder().setId(userId).build();
         User user = userService.getUserByQuery(userQuery);
-        LOGGER.info("query user result: {}", JSON.toJSONString(user));
+        LOGGER.info("query user result: {}", Json.toJsonString(user));
         return user.getName();
     }
 }

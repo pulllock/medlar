@@ -1,8 +1,8 @@
 package me.cxis.mybatis.origin;
 
-import com.alibaba.fastjson.JSON;
 import me.cxis.mybatis.dao.mapper.ApiDOMapper;
 import me.cxis.mybatis.dao.model.ApiDO;
+import me.cxis.mybatis.json.Json;
 import org.apache.ibatis.builder.xml.XMLConfigBuilder;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.Configuration;
@@ -24,7 +24,7 @@ public class MyBatisTest {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         try (SqlSession session = sqlSessionFactory.openSession()) {
             ApiDO apiDO = session.selectOne("me.cxis.mybatis.dao.mapper.ApiDOMapper.selectByPrimaryKey", 1L);
-            System.out.println(JSON.toJSONString(apiDO));
+            System.out.println(Json.toJsonString(apiDO));
         }
     }
 
@@ -36,7 +36,7 @@ public class MyBatisTest {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             ApiDOMapper apiDOMapper = session.getMapper(ApiDOMapper.class);
             ApiDO apiDO = apiDOMapper.selectByPrimaryKey( 1L);
-            System.out.println(JSON.toJSONString(apiDO));
+            System.out.println(Json.toJsonString(apiDO));
         }
     }
 
@@ -50,7 +50,7 @@ public class MyBatisTest {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             ApiDOMapper apiDOMapper = session.getMapper(ApiDOMapper.class);
             ApiDO apiDO = apiDOMapper.selectByPrimaryKey( 1L);
-            System.out.println(JSON.toJSONString(apiDO));
+            System.out.println(Json.toJsonString(apiDO));
         }
     }
 }

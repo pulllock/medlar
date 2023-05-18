@@ -1,6 +1,6 @@
 package me.cxis.cloud.gateway.server.exception;
 
-import com.alibaba.fastjson2.JSON;
+import me.cxis.cloud.gateway.server.json.Json;
 import me.cxis.cloud.gateway.server.model.result.Result;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.core.io.buffer.DataBufferFactory;
@@ -43,7 +43,7 @@ public class GlobalErrorExceptionHandler implements ErrorWebExceptionHandler {
 
         return response.writeWith(Mono.fromSupplier(() -> {
             DataBufferFactory bufferFactory = response.bufferFactory();
-            return bufferFactory.wrap(JSON.toJSONString(errorResult).getBytes(StandardCharsets.UTF_8));
+            return bufferFactory.wrap(Json.toJsonString(errorResult).getBytes(StandardCharsets.UTF_8));
         }));
     }
 }

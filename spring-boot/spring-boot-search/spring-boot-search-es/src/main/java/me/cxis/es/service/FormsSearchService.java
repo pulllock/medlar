@@ -8,11 +8,11 @@ import co.elastic.clients.elasticsearch.core.GetResponse;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.elastic.clients.json.JsonData;
+import jakarta.annotation.Resource;
 import me.cxis.es.config.ESClient;
 import me.cxis.es.model.SubHealth;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,7 +90,7 @@ public class FormsSearchService {
         List<StringTermsBucket> buckets = response.aggregations().get(aggKey).sterms().buckets().array();
         Map<String, Long> result = new HashMap<>();
         for (StringTermsBucket bucket : buckets) {
-            result.put(bucket.key(), bucket.docCount());
+            result.put(bucket.key().stringValue(), bucket.docCount());
         }
         return result;
     }

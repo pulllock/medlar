@@ -23,7 +23,7 @@
     </modules>
 
     <properties>
-        <infinispan-spring-boot3.version>14.0.7.Final</infinispan-spring-boot3.version>
+        <infinispan-spring-boot3.version>14.0.9.Final</infinispan-spring-boot3.version>
     </properties>
 
     <dependencyManagement>

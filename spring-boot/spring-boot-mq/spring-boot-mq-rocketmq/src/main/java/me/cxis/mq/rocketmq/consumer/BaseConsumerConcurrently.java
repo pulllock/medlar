@@ -1,6 +1,6 @@
 package me.cxis.mq.rocketmq.consumer;
 
-import com.alibaba.fastjson.JSON;
+import me.cxis.mq.rocketmq.json.Json;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
@@ -58,7 +58,7 @@ public abstract class BaseConsumerConcurrently implements MessageListenerConcurr
             boolean hasFail = false;
             for (MessageExt message : messages) {
                 // 假设消息都是json
-                if (!doConsumeMessage(JSON.toJSONString(message))) {
+                if (!doConsumeMessage(Json.toJsonString(message))) {
                     hasFail = true;
                 }
             }

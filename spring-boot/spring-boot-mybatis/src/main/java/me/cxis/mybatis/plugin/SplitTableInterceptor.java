@@ -1,8 +1,7 @@
 package me.cxis.mybatis.plugin;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import org.apache.commons.collections4.CollectionUtils;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import me.cxis.mybatis.json.Json;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.executor.statement.RoutingStatementHandler;
 import org.apache.ibatis.executor.statement.StatementHandler;
@@ -60,16 +59,16 @@ public class SplitTableInterceptor implements Interceptor {
         String originSql = boundSql.getSql();
         LOGGER.info("原始sql：{}", originSql);
 
-        JSONObject ruleObject = JSON.parseObject(SHARDING_RULE);
-        String key = ruleObject.getString("key");
-        String tableName = ruleObject.getString("table");
+        ObjectNode ruleObject = Json.parseObject(SHARDING_RULE);
+        String key = ruleObject.get("key").asText();
+        String tableName = ruleObject.get("table").asText();
 
         // 规则中有配置需要分表
         if (originSql.contains(tableName)) {
             Long userId = null;
             List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
             LOGGER.info("参数：{}", parameterMappings);
-            if (CollectionUtils.isEmpty(parameterMappings)) {
+            if (parameterMappings == null || parameterMappings.isEmpty()) {
                 throw new RuntimeException(String.format("分表需要有%s参数", key));
             }
 
@@ -98,7 +97,7 @@ public class SplitTableInterceptor implements Interceptor {
 
             LOGGER.info("原始表名：{}", tableName);
 
-            String rule = ruleObject.getString("rule");
+            String rule = ruleObject.get("rule").asText();
             LOGGER.info("分表规则rule: {}", rule);
 
             String userIdStr = String.valueOf(userId);

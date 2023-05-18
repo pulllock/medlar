@@ -1,6 +1,5 @@
 package me.cxis.cloud.gateway.session;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -19,7 +18,7 @@ public class SessionTool {
 
     public static Long getUid() {
         String uid = getRequest().getHeader("uid");
-        if (StringUtils.isEmpty(uid)) {
+        if (uid == null || uid.length() == 0) {
             return 0L;
         }
 

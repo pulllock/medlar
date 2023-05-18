@@ -19,10 +19,10 @@
 
     <properties>
         <dubbo2.version>2.6.12</dubbo2.version>
-        <zookeeper.version>3.6.0</zookeeper.version>
-        <curator.version>4.3.0</curator.version>
-        <netty-all.version>4.1.69.Final</netty-all.version>
-        <sentinel.version>1.7.2</sentinel.version>
+        <zookeeper.version>3.8.1</zookeeper.version>
+        <curator.version>5.5.0</curator.version>
+        <netty-all.version>4.1.92.Final</netty-all.version>
+        <sentinel.version>1.8.6</sentinel.version>
     </properties>
 
     <dependencyManagement>

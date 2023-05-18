@@ -30,8 +30,8 @@ public class Json {
     // 配置反序列化时允许未知属性
     MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-    MAPPER.configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, false);
-    MAPPER.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
+    MAPPER.disable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES);
+    MAPPER.enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES);
 
     // 配置序列化时允许空Bean
     MAPPER.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
@@ -109,35 +109,5 @@ public class Json {
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }
-  }
-
-  public static boolean validate(String json) {
-    if (json == null || json.length() == 0) {
-      return false;
-    }
-
-    try {
-      MAPPER.readTree(json);
-      return true;
-    } catch (JsonProcessingException e) {
-      return false;
-    }
-  }
-
-  public static boolean isArray(String json) {
-    if (json == null || json.length() == 0) {
-      return false;
-    }
-
-    try {
-      JsonNode jsonNode = MAPPER.readTree(json);
-      return jsonNode.isArray();
-    } catch (JsonProcessingException e) {
-      return false;
-    }
-  }
-
-  public static ObjectNode createObjectNode() {
-    return MAPPER.createObjectNode();
   }
 }

@@ -1,6 +1,6 @@
 package me.cxis.mybatis.plugin;
 
-import com.alibaba.fastjson.JSON;
+import me.cxis.mybatis.json.Json;
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.statement.RoutingStatementHandler;
@@ -38,7 +38,7 @@ public class SqlPrintInterceptor implements Interceptor {
     
     @Override
     public void setProperties(Properties properties) {
-        LOGGER.info("属性：{}", JSON.toJSONString(properties));
+        LOGGER.info("属性：{}", Json.toJsonString(properties));
     }
 
     @Override

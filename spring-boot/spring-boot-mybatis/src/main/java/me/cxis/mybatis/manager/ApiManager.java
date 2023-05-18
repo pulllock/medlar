@@ -5,7 +5,6 @@ import me.cxis.mybatis.dao.ApiParamDao;
 import me.cxis.mybatis.dao.model.ApiDO;
 import me.cxis.mybatis.dao.model.ApiParamDO;
 import me.cxis.mybatis.model.Api;
-import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -46,7 +45,7 @@ public class ApiManager {
 
     public List<Api> queryByName(String name) {
         List<ApiDO> apiDOS = apiDao.queryByName(name);
-        if (CollectionUtils.isEmpty(apiDOS)) {
+        if (apiDOS == null || apiDOS.isEmpty()) {
             return null;
         }
         return apiDOS
