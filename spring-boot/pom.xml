@@ -30,7 +30,6 @@
         <module>spring-boot-rate-limiting</module>
         <module>spring-boot-redis</module>
         <module>spring-boot-search</module>
-        <module>spring-boot-sentinel</module>
         <module>spring-boot-unit-test</module>
         <module>spring-boot-webflux</module>
         <module>spring-boot-websocket</module>
