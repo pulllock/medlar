@@ -15,6 +15,8 @@ public class User implements Serializable {
 
     private LocalDateTime birthday;
 
+    private LocalDateTime createTime;
+
     public Long getUserId() {
         return userId;
     }
@@ -47,6 +49,14 @@ public class User implements Serializable {
         this.birthday = birthday;
     }
 
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -54,6 +64,7 @@ public class User implements Serializable {
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", birthday=" + birthday +
+                ", createTime=" + createTime +
                 '}';
     }
 }

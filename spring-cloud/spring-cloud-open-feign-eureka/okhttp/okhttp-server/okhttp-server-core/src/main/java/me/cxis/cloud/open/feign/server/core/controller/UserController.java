@@ -28,4 +28,13 @@ public class UserController implements IUserController {
         result.setData(user);
         return result;
     }
+
+    @Override
+    public Result<User> queryByCondition(UserQuery query) {
+        LOGGER.info("query user by condition, query: {}", query);
+        User user = userService.queryUser(query);
+        Result<User> result = new Result<>();
+        result.setData(user);
+        return result;
+    }
 }

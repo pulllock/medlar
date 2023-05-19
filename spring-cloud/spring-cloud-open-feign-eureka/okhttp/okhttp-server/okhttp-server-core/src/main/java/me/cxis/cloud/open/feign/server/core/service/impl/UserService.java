@@ -19,6 +19,7 @@ public class UserService {
         user.setUserId(111L);
         user.setName("xxxxName");
         user.setBirthday(LocalDateTime.now());
+        user.setCreateTime(query.getCreateTime());
         return user;
     }
 }
