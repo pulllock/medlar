@@ -33,6 +33,7 @@
         <module>spring-boot-unit-test</module>
         <module>spring-boot-webflux</module>
         <module>spring-boot-websocket</module>
+        <module>spring-boot-session</module>
     </modules>
     <modelVersion>4.0.0</modelVersion>
 

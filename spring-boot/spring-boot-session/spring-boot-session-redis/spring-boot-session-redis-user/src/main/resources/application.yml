@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: spring-boot-session-redis-user
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password:
+      database: 0
+  session:
+    redis:
+      namespace: spring-boot-session-redis-user

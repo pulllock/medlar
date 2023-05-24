@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: spring-boot-session-jdbc-mysql-user
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/spring_boot_session_jdbc_mysql_user?autoReconnect=true&useSSL=false&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 12345678
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  session:
+    jdbc:
+      initialize-schema: always
