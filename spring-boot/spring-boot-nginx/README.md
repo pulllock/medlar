@@ -309,21 +309,21 @@ location语法规则：`location [=|~|~*|^~|!~|!~*] uri {...}`，各部分含义
 
 - `proxy_hide_header`：指定不应该传递给客户端头的列表
 
-- `proxy_`：
+- `proxy_http_version`：指定用于同上游服务器通信的HTTP协议版本
 
-- `proxy_`：
+- `proxy_ignore_client_abort`：如果设置为on，当客户端放弃连接后，nginx不会放弃同上游服务器的连接
 
-- `proxy_`：
+- `proxy_ignore_headers`：当处理来自上游服务器的响应时，该指令设置哪些头可以被忽略
 
-- `proxy_`：
+- `proxy_intercept_errors`：如果启用，nginx会显示配置的error_page错误，而不是来自于上游服务器的直接响应
 
-- `proxy_`：
+- `proxy_max_temp_file_size`：在写入内存缓冲区时，当响应与内存缓冲区不匹配时，该指令给出溢出文件的最大值
 
-- `proxy_`：
+- `proxy_pass_header`：会覆盖掉`proxy_hide_header`中设置的头，允许这些头传递到客户端
 
-- `proxy_`：
+- `proxy_pass_request_body`：如果设置为off，则会阻止请求体发送到上游服务器
 
-- `proxy_`：
+- `proxy_pass_request_headers`：，如果设置为off，则会阻止请求头发送到上游服务器
 
 - `proxy_`：
 
