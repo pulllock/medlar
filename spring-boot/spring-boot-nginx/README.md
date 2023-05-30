@@ -325,14 +325,36 @@ location语法规则：`location [=|~|~*|^~|!~|!~*] uri {...}`，各部分含义
 
 - `proxy_pass_request_headers`：，如果设置为off，则会阻止请求头发送到上游服务器
 
-- `proxy_`：
+- `proxy_`read_timeout：连接关闭前从上游服务器两次成功的读操作耗时
 
-- `proxy_`：
+- `proxy_redirect`：重写来自上游服务器的Location和Refresh头
 
-- `proxy_`：
+- `proxy_set_body`：发送到上游服务器的请求体可能会被该设置值修改
 
-- `proxy_`：
+- `proxy_set_header`：重写发送到上游服务器头的内容
 
-- `proxy_`：
+- `proxy_temp_file_write_size`：限制在同一时间内缓冲到一个临时文件的数据量，使得nginx不会过长的阻止单个请求
 
-- `proxy_`：
+- `proxy_`temp_path：设定临时文件的缓冲，用于缓冲从上游服务器来的文件，可以设定目录的层次
+
+## http upstream模块
+
+upstream定义一组上游服务器
+
+- `server`：定义一个服务器地址（带有TCP端口号的域名、IP地址、UNIX域套接字）和可选参数，参数如下：
+  - `weight`：设置服务器的权重
+  - `max_fails`：设置在`fail_timeout`时间之内尝试对一个服务器连接的最大次数，如果超过这个次数就会被标记为down
+  - `fail_timeout`：服务响应的超时时间，如果超过这个超时时间，服务器会被标记为down
+  - `backup`：备份服务器
+  - `down`：该参数标记一个服务器不再接受任何请求
+- `ip_hash`：通过IP地址的哈希值确保客户端均匀的连接所有服务器
+- `keepalive`：指定worker进程缓存到上游服务器的连接数
+- `least_conn`：会激活负载均衡算法，将请求发送到活跃连接数最少的那台服务器
+
+### 负载均衡
+
+upstream模块有三种负载均衡：
+
+- round-robin（轮询）：默认的算法
+- IP hash（IP哈希）：需要通过`ip_hash`配置激活
+- Least Connection（最少连接数）：需要通过`least_conn`配置激活
