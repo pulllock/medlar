@@ -146,9 +146,19 @@ http {
   
   - `tcp_nopush`：
 
+- `access_log`：访问日志，第一个参数是日志文件存储的路径；第二个可选参数指定`log_format`配置中设置的日志格式，默认是combined格式；第三个可选参数指明了写缓存的大小
+
+- `log_format`：日志格式
+
+- `log_not_found`：禁止在错误日志中报告404错误，默认为on
+
+- `log_subrequest`：禁止在访问日志中启用记录子请求，默认为off
+
+- `open_log_file_cache`：
+
 # nginx的server配置
 
-server配置示例：
+server定义一个虚拟主机，server配置示例：
 
 ```nginx
 server {
@@ -301,7 +311,7 @@ location语法规则：`location [=|~|~*|^~|!~|!~*] uri {...}`，各部分含义
 
 - `proxy_cookie_domain`：替代从上游服务器来的`Set-Cookie`头中的domain属性，domain属性被替换为一个字符串、一个正则表达式或者是引用的变量
 
-- `proxy_cookie_path`：替代从上游服务器来的`Ser-Cookie`头中的path属性，path属性被替换为一个字符串、一个正则表达式或者是引用的变量
+- `proxy_cookie_path source target`：替代从上游服务器来的`Ser-Cookie`头中的path属性，path属性被替换为一个字符串、一个正则表达式或者是引用的变量
 
 - `proxy_headers_hash_bucket_size`：指定头名字的最大值
 
@@ -358,3 +368,47 @@ upstream模块有三种负载均衡：
 - round-robin（轮询）：默认的算法
 - IP hash（IP哈希）：需要通过`ip_hash`配置激活
 - Least Connection（最少连接数）：需要通过`least_conn`配置激活
+
+# http模块的预定义变量
+
+| 变量                    | 说明                                                            |
+| --------------------- | ------------------------------------------------------------- |
+| `$arg_name`           | 请求中name参数                                                     |
+| `$args`               | 所有请求参数                                                        |
+| `$binary_remote_addr` | 客户端IP地址的二进制格式                                                 |
+| `$content_length`     | 请求头Content-Length的值                                           |
+| `$content_type`       | 请求头Content-Type的值                                             |
+| `$cookie_name`        | cookie标签名字                                                    |
+| `$document_root`      | 当前请求中root或者alias的值                                            |
+| `$document_uri`       | `$uri`的别名                                                     |
+| `$host`               | 如果当前有Host，该变量为请求头的Host的值；如果没有Host，则该变量等于匹配该请求的`server_name`的值 |
+| `$hostname`           | 运行nginx主机的主机名                                                 |
+| `$http_name`          | 请求头name的值                                                     |
+| `$https`              | 如果是通过SSL连接的，则该值为on，否则为空字符串                                    |
+| `$is_args`            | 如果请求有参数则该值为?，否则为空字符串                                          |
+| `$limit_rate`         |                                                               |
+| `$nginx_version`      | nginx版本                                                       |
+| `$pid`                | worker进程的ID                                                   |
+| `$query_string`       | `$args`的别名                                                    |
+| `$realpath_root`      |                                                               |
+| `$remote_addr`        | 客户端IP地址                                                       |
+| `$remote_port`        | 客户端端口                                                         |
+| `$remote_user`        | 使用http基本认证时的用户名                                               |
+| `$request`            | 从客户端收到的完整请求，包括http请求方法、URI、http协议、头、请求体                       |
+| `$request_body`       | 请求体                                                           |
+| `$request_body_file`  |                                                               |
+| `$request_completion` | 如果请求完成，则该值为OK，否则为空字符串                                         |
+| `$request_method`     | 请求使用的http方法                                                   |
+| `$request_uri`        | 请求的URI                                                        |
+| `$schema`             | 当前请求的协议                                                       |
+| `$sent_http_name`     | 响应头名字的值                                                       |
+| `$server_addr`        | 接受请求服务器的地址                                                    |
+| `$server_name`        | 接受请求的虚拟主机`server_name`的值                                      |
+| `$server_port`        | 接受请求的服务器端口                                                    |
+| `$server_protocol`    | 当前请求中使用的HTTP协议                                                |
+| `$status`             | 响应状态                                                          |
+| `$tcpinfo_rtt`        |                                                               |
+| `$tcpinfo_rttvar`     |                                                               |
+| `$tcpinfo_snd_cwnd`   |                                                               |
+| `$tcpinfo_rcv_space`  |                                                               |
+| `$uri`                | 当前请求的表转化URI                                                   |
