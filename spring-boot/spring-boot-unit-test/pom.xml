@@ -20,7 +20,7 @@
         <spock-bom.version>2.4-M1-groovy-4.0</spock-bom.version>
         <spock-reports.version>2.5.0-groovy-4.0</spock-reports.version>
         <gmavenplus-plugin.version>2.1.0</gmavenplus-plugin.version>
-        <mybatis.starter.version>3.0.1</mybatis.starter.version>
+        <mybatis.starter.version>3.0.2</mybatis.starter.version>
         <mysql-connector-j.version>8.0.33</mysql-connector-j.version>
     </properties>
 

@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: spring-boot-transaction
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/spring_boot_transaction?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 12345678
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 10
+
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/sqlmap/*.xml
+  type-aliases-package: me.cxis.spring.transaction.dao.model
+
+logging:
+  level:
+    root: debug

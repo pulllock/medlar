@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.cxis.spring.transaction.dao.mapper.UserBadgeLogMapper">
+  <resultMap id="BaseResultMap" type="me.cxis.spring.transaction.dao.model.UserBadgeLogDO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="badge_id" jdbcType="BIGINT" property="badgeId" />
+    <result column="acquire_time" jdbcType="TIMESTAMP" property="acquireTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, update_time, version, user_id, badge_id, acquire_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_badge_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user_badge_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="me.cxis.spring.transaction.dao.model.UserBadgeLogDO">
+    insert into user_badge_log (id, create_time, update_time, 
+      version, user_id, badge_id, 
+      acquire_time)
+    values (#{id,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{version,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{badgeId,jdbcType=BIGINT}, 
+      #{acquireTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="me.cxis.spring.transaction.dao.model.UserBadgeLogDO">
+    insert into user_badge_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="badgeId != null">
+        badge_id,
+      </if>
+      <if test="acquireTime != null">
+        acquire_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="badgeId != null">
+        #{badgeId,jdbcType=BIGINT},
+      </if>
+      <if test="acquireTime != null">
+        #{acquireTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="me.cxis.spring.transaction.dao.model.UserBadgeLogDO">
+    update user_badge_log
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="badgeId != null">
+        badge_id = #{badgeId,jdbcType=BIGINT},
+      </if>
+      <if test="acquireTime != null">
+        acquire_time = #{acquireTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.cxis.spring.transaction.dao.model.UserBadgeLogDO">
+    update user_badge_log
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=BIGINT},
+      badge_id = #{badgeId,jdbcType=BIGINT},
+      acquire_time = #{acquireTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.cxis.spring.transaction.dao.mapper.UserBadgeMapper">
+  <resultMap id="BaseResultMap" type="me.cxis.spring.transaction.dao.model.UserBadgeDO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="badge_id" jdbcType="BIGINT" property="badgeId" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="latest_acquire_time" jdbcType="TIMESTAMP" property="latestAcquireTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, update_time, version, user_id, badge_id, count, latest_acquire_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_badge
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user_badge
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="me.cxis.spring.transaction.dao.model.UserBadgeDO">
+    insert into user_badge (id, create_time, update_time, 
+      version, user_id, badge_id, 
+      count, latest_acquire_time)
+    values (#{id,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{version,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{badgeId,jdbcType=BIGINT}, 
+      #{count,jdbcType=INTEGER}, #{latestAcquireTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="me.cxis.spring.transaction.dao.model.UserBadgeDO">
+    insert into user_badge
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="badgeId != null">
+        badge_id,
+      </if>
+      <if test="count != null">
+        count,
+      </if>
+      <if test="latestAcquireTime != null">
+        latest_acquire_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="badgeId != null">
+        #{badgeId,jdbcType=BIGINT},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="latestAcquireTime != null">
+        #{latestAcquireTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="me.cxis.spring.transaction.dao.model.UserBadgeDO">
+    update user_badge
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="badgeId != null">
+        badge_id = #{badgeId,jdbcType=BIGINT},
+      </if>
+      <if test="count != null">
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="latestAcquireTime != null">
+        latest_acquire_time = #{latestAcquireTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.cxis.spring.transaction.dao.model.UserBadgeDO">
+    update user_badge
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=BIGINT},
+      badge_id = #{badgeId,jdbcType=BIGINT},
+      count = #{count,jdbcType=INTEGER},
+      latest_acquire_time = #{latestAcquireTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

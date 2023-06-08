@@ -1,0 +1,55 @@
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <!-- 指定数据连接驱动jar地址 -->
+    <!--<classPathEntry location="mysql-connector-java-x.jar" />-->
+
+    <!-- targetRuntime 设置生成的文件适用于mybatis的版本-->
+    <context id="mysql" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <!-- 不生成注释 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!--不在这里指定库名，在下面table标签中指定，防止同一个mysql实例下面有多个库中存在多个同名表-->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306?serverTimezone=UTC"
+                        userId="root"
+                        password="12345678">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <!-- 当useJSR310Types为true时，会jdbc对应的日期类型会转成java8中的LocateDateTime类型，如果为false，则转换成java.util.Date类型 -->
+            <property name="useJSR310Types" value="true"/>
+        </javaTypeResolver>
+
+
+        <!-- targetPackage 生成的实体类所在的包 -->
+        <!-- targetProject 生成的实体类所在的硬盘位置 -->
+        <javaModelGenerator targetPackage="me.cxis.spring.transaction.dao.model" targetProject="src/main/java">
+        </javaModelGenerator>
+
+        <!-- targetPackage和targetProject生成的mapper文件的包和位置 -->
+        <sqlMapGenerator targetPackage="mybatis/sqlmap" targetProject="src/main/resources">
+        </sqlMapGenerator>
+
+        <!-- targetPackage和targetProject生成的mapper文件的包和位置 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="me.cxis.spring.transaction.dao.mapper"
+                             targetProject="src/main/java">
+        </javaClientGenerator>
+
+        <!-- 生成对应表及类名 -->
+        <table catalog="spring_boot_transaction" tableName="user_badge" domainObjectName="UserBadgeDO" mapperName="UserBadgeMapper"
+               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <!-- 防止生成的sql中多了表名 -->
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+        </table>
+        <table catalog="spring_boot_transaction" tableName="user_badge_log" domainObjectName="UserBadgeLogDO" mapperName="UserBadgeLogMapper"
+               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <!-- 防止生成的sql中多了表名 -->
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+        </table>
+    </context>
+</generatorConfiguration>
