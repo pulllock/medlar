@@ -1,0 +1,9 @@
+logging:
+  level:
+    root: debug
+spring:
+  mvc:
+    converters:
+      preferred-json-mapper: gson
+  gson:
+    date-format: yyyy-MM-dd HH:mm:ss
