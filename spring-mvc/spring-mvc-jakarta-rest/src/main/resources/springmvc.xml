@@ -11,6 +11,8 @@
     <context:annotation-config/>
     <context:component-scan base-package="me.cxis.mvc">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
     </context:component-scan>
 
     <mvc:annotation-driven>
