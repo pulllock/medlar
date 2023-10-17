@@ -36,6 +36,7 @@
         <module>spring-boot-session</module>
         <module>spring-boot-nginx</module>
         <module>spring-boot-transaction</module>
+        <module>spring-boot-aop</module>
     </modules>
     <modelVersion>4.0.0</modelVersion>
 
