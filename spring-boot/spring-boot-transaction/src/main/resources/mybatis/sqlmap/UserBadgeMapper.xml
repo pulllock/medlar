@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="me.cxis.spring.transaction.dao.mapper.UserBadgeMapper">
-  <resultMap id="BaseResultMap" type="me.cxis.spring.transaction.dao.model.UserBadgeDO">
+<mapper namespace="fun.pullock.spring.transaction.dao.mapper.UserBadgeMapper">
+  <resultMap id="BaseResultMap" type="fun.pullock.spring.transaction.dao.model.UserBadgeDO">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -24,7 +24,7 @@
     delete from user_badge
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="me.cxis.spring.transaction.dao.model.UserBadgeDO">
+  <insert id="insert" parameterType="fun.pullock.spring.transaction.dao.model.UserBadgeDO">
     insert into user_badge (id, create_time, update_time, 
       version, user_id, badge_id, 
       count, latest_acquire_time)
@@ -32,7 +32,7 @@
       #{version,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{badgeId,jdbcType=BIGINT}, 
       #{count,jdbcType=INTEGER}, #{latestAcquireTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="me.cxis.spring.transaction.dao.model.UserBadgeDO">
+  <insert id="insertSelective" parameterType="fun.pullock.spring.transaction.dao.model.UserBadgeDO">
     insert into user_badge
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -87,7 +87,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="me.cxis.spring.transaction.dao.model.UserBadgeDO">
+  <update id="updateByPrimaryKeySelective" parameterType="fun.pullock.spring.transaction.dao.model.UserBadgeDO">
     update user_badge
     <set>
       <if test="createTime != null">
@@ -114,7 +114,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="me.cxis.spring.transaction.dao.model.UserBadgeDO">
+  <update id="updateByPrimaryKey" parameterType="fun.pullock.spring.transaction.dao.model.UserBadgeDO">
     update user_badge
     set create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="me.cxis.unit.test.junit5.dao.mapper.UserDOMapper">
-  <resultMap id="BaseResultMap" type="me.cxis.unit.test.junit5.dao.model.UserDO">
+<mapper namespace="fun.pullock.unit.test.junit5.dao.mapper.UserDOMapper">
+  <resultMap id="BaseResultMap" type="fun.pullock.unit.test.junit5.dao.model.UserDO">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -27,7 +27,7 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
 
-  <insert id="insert" parameterType="me.cxis.unit.test.junit5.dao.model.UserDO">
+  <insert id="insert" parameterType="fun.pullock.unit.test.junit5.dao.model.UserDO">
     insert into user (
       id, create_time, update_time,
       version, name, sex
@@ -37,7 +37,7 @@
     )
   </insert>
 
-  <insert id="insertSelective" parameterType="me.cxis.unit.test.junit5.dao.model.UserDO">
+  <insert id="insertSelective" parameterType="fun.pullock.unit.test.junit5.dao.model.UserDO">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -81,7 +81,7 @@
     </trim>
   </insert>
 
-  <update id="updateByPrimaryKeySelective" parameterType="me.cxis.unit.test.junit5.dao.model.UserDO">
+  <update id="updateByPrimaryKeySelective" parameterType="fun.pullock.unit.test.junit5.dao.model.UserDO">
     update user
     <set>
       <if test="createTime != null">
@@ -103,7 +103,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <update id="updateByPrimaryKey" parameterType="me.cxis.unit.test.junit5.dao.model.UserDO">
+  <update id="updateByPrimaryKey" parameterType="fun.pullock.unit.test.junit5.dao.model.UserDO">
     update user
     set create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},

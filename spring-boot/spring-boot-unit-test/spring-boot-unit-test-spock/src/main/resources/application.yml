@@ -8,4 +8,4 @@ mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations:
     - classpath:mybatis/sqlmap/*.xml
-  type-aliases-package: me.cxis.unit.test.spock.dao.model
+  type-aliases-package: fun.pullock.unit.test.spock.dao.model

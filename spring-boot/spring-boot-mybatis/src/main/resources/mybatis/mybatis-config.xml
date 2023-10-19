@@ -44,12 +44,12 @@
 
     <plugins>
         <!-- 自定义打印sql的插件 -->
-        <!--<plugin interceptor="me.cxis.mybatis.plugin.SqlPrintInterceptor">
+        <!--<plugin interceptor="plugin.mybatis.fun.pullock.SqlPrintInterceptor">
             <property name="password" value="111111"/>
         </plugin>-->
 
         <!-- 自定义分表的插件-->
-        <plugin interceptor="me.cxis.mybatis.plugin.SplitTableInterceptor"/>
+        <plugin interceptor="fun.pullock.mybatis.plugin.SplitTableInterceptor"/>
     </plugins>
 
 </configuration>

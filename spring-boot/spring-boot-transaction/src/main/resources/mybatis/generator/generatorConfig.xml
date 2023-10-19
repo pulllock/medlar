@@ -28,7 +28,7 @@
 
         <!-- targetPackage 生成的实体类所在的包 -->
         <!-- targetProject 生成的实体类所在的硬盘位置 -->
-        <javaModelGenerator targetPackage="me.cxis.spring.transaction.dao.model" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="fun.pullock.spring.transaction.dao.model" targetProject="src/main/java">
         </javaModelGenerator>
 
         <!-- targetPackage和targetProject生成的mapper文件的包和位置 -->
@@ -36,7 +36,7 @@
         </sqlMapGenerator>
 
         <!-- targetPackage和targetProject生成的mapper文件的包和位置 -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="me.cxis.spring.transaction.dao.mapper"
+        <javaClientGenerator type="XMLMAPPER" targetPackage="fun.pullock.spring.transaction.dao.mapper"
                              targetProject="src/main/java">
         </javaClientGenerator>
 

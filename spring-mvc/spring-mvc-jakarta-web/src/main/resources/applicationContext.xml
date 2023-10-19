@@ -8,11 +8,11 @@
 
     <context:property-placeholder location="classpath*:app.properties"/>
 
-    <context:component-scan base-package="me.cxis.mvc">
+    <context:component-scan base-package="fun.pullock.mvc">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-    <bean id="indexService" class="me.cxis.mvc.service.IndexService" autowire="byName">
+    <bean id="indexService" class="fun.pullock.mvc.service.IndexService" autowire="byName">
         <property name="userService" ref="userService"/>
     </bean>
 </beans>

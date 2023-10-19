@@ -42,9 +42,9 @@
 
 1. 创建一个测试用web应用部署：`kubectl create deployment demo --image=httpd --port=80`
 2. 暴露成服务：`kubectl expose deployment demo`
-3. 创建ingress资源：`kubectl create ingress demo-localhost --class=nginx --rule="demo.localdev.me/*=demo:80"`
+3. 创建ingress资源：`kubectl create ingress demo-localhost --class=nginx --rule="demo.localdev.fun/*=demo:80"`
 4. 转发本地端口到ingress控制器：`kubectl port-forward --namespace=ingress-nginx service/ingress-nginx-controller 8080:80`
-5. 访问：`http://demo.localdev.me:8080`，页面返回`It works!`，表示成功
+5. 访问：`http://demo.localdev.fun:8080`，页面返回`It works!`，表示成功
 
 验证成功后删除临时的验证资源：
 

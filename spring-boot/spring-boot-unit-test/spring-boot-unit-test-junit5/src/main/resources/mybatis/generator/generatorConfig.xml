@@ -20,13 +20,13 @@
             <property name="useJSR310Types" value="true"/>
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="me.cxis.unit.test.junit5.dao.model" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="fun.pullock.unit.test.junit5.dao.model" targetProject="src/main/java">
         </javaModelGenerator>
 
         <sqlMapGenerator targetPackage="mybatis/sqlmap" targetProject="src/main/resources">
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="me.cxis.unit.test.junit5.dao.mapper" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="fun.pullock.unit.test.junit5.dao.mapper" targetProject="src/main/java">
         </javaClientGenerator>
         <table catalog="spring_boot_unit_test" tableName="user" domainObjectName="UserDO"
                enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"

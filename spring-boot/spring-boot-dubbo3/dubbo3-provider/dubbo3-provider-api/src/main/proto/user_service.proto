@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package me.cxis.dubbo3.provider.api.service;
+package fun.pullock.dubbo3.provider.api.service;
 
 service UserService {
 
