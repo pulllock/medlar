@@ -1,0 +1,14 @@
+# curator配置
+curator:
+  # zookeeper地址
+  url: 127.0.0.1:2181
+  # 命名空间
+  namespace: spring-boot-zookeeper-curator
+  # 重试次数
+  retry-times: 1
+  # 重试间隔时间，毫秒
+  elapsed-time: 2000
+  # session超时时间，毫秒
+  session-timeout: 60000
+  # 连接超时时间，毫秒
+  connection-timeout: 10000
