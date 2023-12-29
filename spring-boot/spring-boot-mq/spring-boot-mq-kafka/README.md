@@ -97,3 +97,8 @@ services:
 - OSR（Out-of-Sync Replicas）：与leader副本同步滞后过多的副本组成OSR
 - LEO（Log End Offset）：标识当前日志文件中下一条待写入消息的offset
 - HW（High Watermark）：高水位，标识一个特定的消息偏移量，消费者只能拉取到这个偏移量之前的消息。ISR集合中最小的LEO即为分区的HW。
+
+# Kafka内置客户端API
+
+- [创建生产者并发送消息](./src/main/java/fun/pullock/mq/kafka/clients/producer/CreateProducerSendMessage.java)
+- [创建消费者并消费消息](./src/main/java/fun/pullock/mq/kafka/clients/consumer/CreateConsumerConsumeMessage.java)
