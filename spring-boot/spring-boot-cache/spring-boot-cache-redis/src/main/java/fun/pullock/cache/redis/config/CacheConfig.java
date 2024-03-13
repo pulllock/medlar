@@ -96,7 +96,7 @@ public class CacheConfig {
         redisTemplate.setHashKeySerializer(StringRedisSerializer.UTF_8);
         // Hash的value使用自定义序列化方式
         redisTemplate.setHashValueSerializer(genericJackson2JsonRedisSerializer());
-        redisTemplate.afterPropertiesSet();;
+        redisTemplate.afterPropertiesSet();
         return redisTemplate;
     }
 

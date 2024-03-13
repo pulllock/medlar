@@ -19,7 +19,7 @@ public class RedisConfig {
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(StringRedisSerializer.UTF_8);
         redisTemplate.setValueSerializer(genericJackson2JsonRedisSerializer());
-        redisTemplate.afterPropertiesSet();;
+        redisTemplate.afterPropertiesSet();
         return redisTemplate;
     }
 
