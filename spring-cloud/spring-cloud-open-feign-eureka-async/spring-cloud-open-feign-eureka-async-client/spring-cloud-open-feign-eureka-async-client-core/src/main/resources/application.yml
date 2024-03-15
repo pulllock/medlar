@@ -1,0 +1,31 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: spring-cloud-open-feign-eureka-async-client-core
+  cloud:
+    openfeign:
+      okhttp:
+        # 开启okhttp client
+        enabled: true
+      httpclient:
+        # 设置httpclient的连接超时时间，默认是2s
+        connection-timeout: 2000
+        # 设置连接池最大大小，默认200
+        max-connections: 200
+        ok-http:
+          # 设置okhttp的全局读超时时间，默认是60s
+          read-timeout: 60000
+      client:
+        config:
+          default:
+            # 日志级别
+            logger-level: full
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+service:
+  spring-cloud-open-feign-eureka-async-server: spring-cloud-open-feign-eureka-async-server-core

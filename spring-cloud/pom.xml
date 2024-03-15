@@ -19,6 +19,7 @@
         <module>spring-cloud-nacos</module>
         <module>spring-cloud-open-feign-eureka</module>
         <module>spring-cloud-grpc</module>
+        <module>spring-cloud-open-feign-eureka-async</module>
     </modules>
     <packaging>pom</packaging>
 
